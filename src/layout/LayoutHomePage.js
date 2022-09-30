@@ -1,9 +1,11 @@
-import DashboardTopbar from "modules/dashboard/DashboardTopbar";
+
+
 import React from "react";
+import Navbar from "./Navbar";
 
 const LayoutDashboard = ({ children }) => {
   return <div className="bg-lite py-10 px-[52px]">
-  <DashboardTopbar></DashboardTopbar>
+  <Navbar></Navbar>
   {children}</div>;
 };
 

@@ -1,13 +1,14 @@
+import SearchHomePage from 'modules/dashboard/SearchHomePage';
 import React from 'react';
-import DashboardSearch from './DashboardSearch';
 
-const DashboardTopbar = () => {
+
+const Navbar = () => {
     return (
         <div className='flex items-center justify-between'>
        <div className='flex items-center flex-1 gap-x-14'>
         <img srcSet='logo.png 2x' alt="logo"/>
         <div className="w-full max-w-[458px]">
-        <DashboardSearch></DashboardSearch>
+        <SearchHomePage></SearchHomePage>
         </div>
        </div>
        <div className='flex items-center gap-x-10 flex-1'>
@@ -18,4 +19,4 @@ const DashboardTopbar = () => {
     );
 };
 
-export default DashboardTopbar;
+export default Navbar;

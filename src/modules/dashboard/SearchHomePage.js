@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashboardSearch = () => {
+const SearchHomePage = () => {
   return (
     <div className="shadow-[10px_10px_20px_rgba(218, 213, 213, 0.15)] flex items-center rounded-full bg-white p-2">
       <div className="flex-1">
@@ -34,4 +34,4 @@ const DashboardSearch = () => {
   );
 };
 
-export default DashboardSearch;
+export default SearchHomePage;

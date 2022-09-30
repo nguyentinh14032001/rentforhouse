@@ -1,12 +1,12 @@
-import LayoutDashboard from 'layout/LayoutDashboard';
+import LayoutHomePage from 'layout/LayoutHomePage';
 import React from 'react';
 
 const DashBoardPage = () => {
     return (
-        <LayoutDashboard>
+        <LayoutHomePage>
             
-        </LayoutDashboard>
+        </LayoutHomePage>
     );
 };
 
-export default DashBoardPage;
+export default LayoutHomePage;
