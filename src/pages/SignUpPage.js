@@ -5,11 +5,13 @@ import { Input } from "components/input";
 import { Label } from "components/label";
 import LayoutAuthentication from "layout/LayoutAuthentication";
 import FormGroup from "components/common/FormGroup";
-import { Button } from "components/button";
+import { Button, ButtonGoogle } from "components/button";
 import { CheckBox } from "components/checkbox";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IconEyeToggle } from "components/icons";
+import useToggleValue from "hooks/UseToggleValue";
+import ClassName from "hooks/ClassName";
 
 const schema = yup.object().shape({
   fullname: yup.string().required("This field is required"),
@@ -23,7 +25,10 @@ const schema = yup.object().shape({
     .min(8, "Password must be 8 character"),
 });
 const SignUpPage = () => {
-  const [showPassword,setShowPassword] =useState(false);
+  const { value: acceptTerm, handleToggleValue: handleToggleTerm } =
+    useToggleValue();
+  const { value: showPassword, handleToggleValue: handleTogglePassword } =
+    useToggleValue();
   const {
     handleSubmit,
     control,
@@ -32,29 +37,20 @@ const SignUpPage = () => {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  const [acceptTerm, setAcceptTerm] = useState(false);
+
   const handleSignUp = (values) => {
     console.log(values);
   };
-  const handleToggleTerm = () => {
-    setAcceptTerm(!acceptTerm);
-  };
-  const handleTogglePassword = ()=>{
-    setShowPassword(!showPassword);
-  }
   return (
     <LayoutAuthentication heading="SignUp">
-      <p className="mb-6 text-xs font-normal text-center lg:mb-8 text-text-3 lg:text-sm">
+      <p className={ClassName("mb-6 text-center text-xs font-normal text-text-3 lg:mb-8 lg:text-sm")}>
         Already have an account?{" "}
-        <Link to="/sign-in" className="font-medium underline text-primary">
+        <Link to="/sign-in" className="font-medium text-primary underline">
           Sign in
         </Link>
       </p>
-      <button className="flex items-center justify-center w-full py-4 mb-5 font-semibold border rounded-lg lg:mb-5 text-text-2 gap-x-3 border-strock">
-        <img srcSet="/icon-google.png 2x" alt="" />
-        <span className="">Sign up with Google</span>
-      </button>
-      <p className="mb-4 text-center lg:mb-8 text-text-2 lg:text-sm">
+      <ButtonGoogle></ButtonGoogle>
+      <p className="mb-4 text-center text-text-2 dark:text-white lg:mb-8 lg:text-sm">
         Or sign up with email
       </p>
       <form onSubmit={handleSubmit(handleSignUp)}>
@@ -81,25 +77,23 @@ const SignUpPage = () => {
           <Input
             control={control}
             name="password"
-            type="password"
+            type={`${showPassword ? "text" : "password"}`}
             placeholder="Create a password"
             error={errors.password?.message}
           >
-            {" "}
-            <IconEyeToggle open={showPassword} onClick={handleTogglePassword}></IconEyeToggle>
+            <IconEyeToggle
+              open={showPassword}
+              onClick={handleTogglePassword}
+            ></IconEyeToggle>
           </Input>
         </FormGroup>
-        <div className="flex items-start mb-6 lg:mb-5 gap-x-5">
+        <div className="mb-6 flex items-start gap-x-5 lg:mb-5">
           <CheckBox onClick={handleToggleTerm} checked={acceptTerm}>
-            {" "}
-            <p className="flex-1 text-sm text-text-2">
-              I agree to the
-              <span className="underline text-secondary">
-                {" "}
-                Terms of Use{" "}
-              </span>{" "}
-              and have read and understand the
-              <span className="underline text-secondary"> Privacy policy</span>.
+            <p className="flex-1 text-xs text-text-2 dark:text-text-3 lg:text-sm">
+              <span>I agree to the </span>
+              <span className="text-secondary underline">Terms of Use</span>
+              <span> and have read and understand the </span>
+              <span className="text-secondary underline"> Privacy policy</span>.
             </p>
           </CheckBox>
         </div>

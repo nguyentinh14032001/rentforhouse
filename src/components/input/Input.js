@@ -1,7 +1,9 @@
 import React from "react";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
-
+import { withErrorBoundary } from "react-error-boundary";
+import ErrorComponent from "components/common/ErrorComponent";
+import ClassName, { ClassName1 } from "hooks/ClassName";
 const Input = (props) => {
   const {
     control,
@@ -17,6 +19,7 @@ const Input = (props) => {
     name,
     defaultValue: "",
   });
+
   return (
     <div className="relative">
       <input
@@ -24,22 +27,27 @@ const Input = (props) => {
         {...field}
         type={type}
         autoComplete="off"
-        placeholder={error.length < 0 ? placeholder : ""}
+        placeholder={error.length <= 0 ? placeholder : ""}
         {...rest}
-        className={`w-full ${
-          error.length > 0 ? "border-[2px] border-error" : "border-strock"
-        } px-6 py-4 ${
-          children ? "pr-16" : ""
-        } text-sm font-medium border placeholder:text-text-4 text-text-1 rounded-xl`}
+        className={ClassName(
+          "w-full rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-2",
+          error.length > 0
+            ? "border-[2px] border-error text-error"
+             : "border-strock text-text-1 dark:border-darkStroke",
+             children ? "pr-16" : ""
+        )}
+       
       />
       {error.length > 0 && (
-        <span className="absolute text-sm font-medium pointer-events-none input-error left-6 top-2/4 -translate-y-2/4 text-error">
+        <span className="input-error pointer-events-none absolute left-6 top-2/4 -translate-y-2/4 text-sm font-medium text-error">
           {error}
         </span>
       )}
-      <span className="absolute pl-4 cursor-pointer top-2/4 right-6 -translate-y-2/4">
-        {children}
-      </span>
+      {children && (
+        <span className="absolute top-2/4 right-6 -translate-y-2/4 cursor-pointer select-none pl-4 ">
+          {children}
+        </span>
+      )}
     </div>
   );
 };
@@ -49,4 +57,6 @@ Input.propTypes = {
   error: PropTypes.string,
   control: PropTypes.any.isRequired,
 };
-export default Input;
+export default withErrorBoundary(Input, {
+  fallbackComponent: <ErrorComponent></ErrorComponent>,
+});
