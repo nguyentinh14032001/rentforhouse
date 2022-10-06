@@ -4,7 +4,7 @@ import "../../assets/detailpage/DetailInfo.scss";
 const DetailInfo = () => {
   return (
     <>
-      <div className="info container my-[7vh] flex items-baseline justify-between">
+      <div className="info my-[7vh] flex items-baseline justify-between">
         <div className="left flex w-[70%] flex-col">
           <h1>Mô tả</h1>
           <p>

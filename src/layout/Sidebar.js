@@ -40,11 +40,11 @@ const sidebarLink = [
 ];
 const Sidebar = () => {
   const navlinkClass =
-    "flex items-center gap-x-5 w-12 h-12 justify-center md:rounded-lg md:mb-8  last:mt-auto last:bg-white last:shadow-sdprimary";
+    "flex  items-center gap-x-5 w-12 h-12 justify-center md:rounded-lg md:mb-8   last:bg-white last:shadow-sdprimary";
   return (
     <div
-      className="flex flex-col justify-center w-full 
-    rounded-[20px] bg-white px-[14px] py-10 shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)] 
+      className="fixed top-[15vh] flex w-full flex-col justify-center 
+    lg:pl-6 py-10 
     lg:w-[76px]"
     >
       {sidebarLink.map((item) => (

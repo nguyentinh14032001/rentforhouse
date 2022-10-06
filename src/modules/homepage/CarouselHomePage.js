@@ -1,21 +1,24 @@
 import React from "react";
 import Slider from "react-slick";
 import "CarouselHomePage.scss";
+import house from "../../assets/images/house.jpg"
+import house2 from "../../assets/images/house2.jpg"
+
 const CarouselHomePage = () => {
   var settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 2,
-    adaptiveWidth: true,
+ 
   };
 
   return (
     <div>
       <Slider {...settings}>
         <img
-          src="https://images.unsplash.com/photo-1598228723793-52759bba239c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+          src={house}
           alt=""
          
         />
@@ -32,7 +35,7 @@ const CarouselHomePage = () => {
           </p>
         </div>
 
-   <img src="" alt="" />
+   <img src={house2} alt="" />
 
         <div className="content-carousel">
           <p>

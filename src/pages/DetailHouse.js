@@ -1,4 +1,4 @@
-import LayoutDashboard from 'layout/LayoutHomePage';
+import LayoutDashboard from 'layout/LayoutPage';
 import React from 'react';
 
 const DetailHouse = () => {
