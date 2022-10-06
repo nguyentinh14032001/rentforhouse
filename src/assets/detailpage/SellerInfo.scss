@@ -1,0 +1,16 @@
+.seller{
+    h1{
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .right{
+        & > div{
+            margin-bottom: 16px;
+            
+            p{
+                margin-left: 10px;
+            }
+        }
+    }
+}
