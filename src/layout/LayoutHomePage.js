@@ -6,8 +6,9 @@ const LayoutHomePage = ({ children }) => {
     <div className="min-h-screen bg-lite py-10 px-[52px]">
       {/* <div className="overlay fixed inset-0 z-30 bg-black bg-opacity-10"> </div> */}
         <Navbar></Navbar>
-        <div className="flex items-start gap-x-10">
+        <div className="lg:flex block items-start gap-x-10">
           <Sidebar></Sidebar>
+          
           <div className="flex-1">{children}</div>
         </div>
     </div>
