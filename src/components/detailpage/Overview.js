@@ -6,7 +6,7 @@ import image1 from "../../assets/images/6.png";
 const Overview = () => {
   return (
     <>
-      <div className="overview container mt-[5vh] flex justify-between">
+      <div className="overview flex justify-between">
         <div className="flex w-[35%] flex-col justify-between">
           <div className="flex flex-col p-4">
             <h1 className="mb-4 text-[36px] font-[600]">Tính villas</h1>
@@ -24,7 +24,7 @@ const Overview = () => {
             <img
               src={image1}
               alt=""
-              className="h-full w-full rounded-lg object-fill"
+              className="h-full w-full rounded-lg object-cover"
             />
           </div>
           <div className="flex h-[20%] justify-between">

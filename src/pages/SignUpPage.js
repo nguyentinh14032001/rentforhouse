@@ -22,7 +22,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("This field is required")
-    .min(8, "Password must be 8 character"),
+    .min(6, "Password must be 6 character"),
 });
 const SignUpPage = () => {
   const { value: acceptTerm, handleToggleValue: handleToggleTerm } =
@@ -77,6 +77,15 @@ const SignUpPage = () => {
           ></Input>
         </FormGroup>
         <FormGroup>
+          <Label htmlFor="email">Username</Label>
+          <Input
+            control={control}
+            name="username"
+            placeholder="tinhqn1998"
+            error={errors.username?.message}
+          ></Input>
+        </FormGroup>
+        <FormGroup>
           <Label htmlFor="password">Password *</Label>
           <Input
             control={control}
@@ -101,7 +110,7 @@ const SignUpPage = () => {
             </p>
           </CheckBox>
         </div>
-        <Button type="submit" className="w-full bg-primary">
+        <Button type="submit"  className="w-full bg-primary">
           Create my account
         </Button>
       </form>

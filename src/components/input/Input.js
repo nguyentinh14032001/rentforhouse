@@ -58,5 +58,5 @@ Input.propTypes = {
   control: PropTypes.any.isRequired,
 };
 export default withErrorBoundary(Input, {
-  fallbackComponent: <ErrorComponent></ErrorComponent>,
+  fallbackComponent: ErrorComponent,
 });
