@@ -1,0 +1,17 @@
+.triangle {
+    height: 0;
+    width: 0;
+    border-bottom: 10px solid #000;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+.custom-checkbox-input:checked ~ .custom-checkbox-text {
+    background-color: red;
+    color: #fff;
+}
+
+.abc {
+    color: #000;
+    background-color: #fff;
+}

@@ -43,7 +43,11 @@ const SignUpPage = () => {
   };
   return (
     <LayoutAuthentication heading="SignUp">
-      <p className={ClassName("mb-6 text-center text-xs font-normal text-text-3 lg:mb-8 lg:text-sm")}>
+      <p
+        className={ClassName(
+          "mb-6 text-center text-xs font-normal text-text-3 lg:mb-8 lg:text-sm"
+        )}
+      >
         Already have an account?{" "}
         <Link to="/sign-in" className="font-medium text-primary underline">
           Sign in

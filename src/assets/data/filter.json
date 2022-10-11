@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "name": "Số phòng",
+        "choose" : [
+            {
+                "id": "single",
+                "name": "1"
+            },
+            {
+                "id": "double",
+                "name": "2"
+            },
+            {
+                "id": "fourth",
+                "name": "4"
+            },
+            {
+                "id": "multi",
+                "name": "Lớn hơn 4"
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "name": "Số phòng",
+        "choose" : [
+            {
+                "id": "single",
+                "name": "1"
+            },
+            {
+                "id": "double",
+                "name": "2"
+            },
+            {
+                "id": "fourth",
+                "name": "4"
+            },
+            {
+                "id": "multi",
+                "name": "Lớn hơn 4"
+            }
+        ]
+    }
+]

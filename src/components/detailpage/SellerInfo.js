@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/detailpage/SellerInfo.scss";
+import "../../assets/sass/detailpage/SellerInfo.scss";
 
 import sellerAva from "../../assets/images/demoAva.jpg";
 

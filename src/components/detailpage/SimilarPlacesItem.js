@@ -1,5 +1,4 @@
 import React from "react";
-import "../../assets/detailpage/SimilarPlacesItem.scss";
 
 import sellerAva from "../../assets/images/demoAva.jpg";
 import image1 from "../../assets/images/6.png";

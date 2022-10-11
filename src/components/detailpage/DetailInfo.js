@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/detailpage/DetailInfo.scss";
+import "../../assets/sass/detailpage/DetailInfo.scss";
 
 const DetailInfo = () => {
   return (
