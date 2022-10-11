@@ -8,13 +8,15 @@ const Button = ({
   isLoading = false,
 }) => {
   const child = !!isLoading ? (
-    <div className="w-10 h-10 border-4 border-white rounded-full animate-spin border-b-transparent border-t-transparent"></div>
+    <div className="h-10 w-10 animate-spin rounded-full border-4 border-white border-b-transparent border-t-transparent"></div>
   ) : (
     children
   );
   return (
     <button
-      className={`items-center flex ${!!isLoading ? "opacity-50 pointer-events-none": ""}  text-white ${className} justify-center p-4 text-base font-semibold rounded-xl`}
+      className={`flex min-h-[56px] items-center   ${
+        !!isLoading ? "pointer-events-none opacity-50" : ""
+      }  text-white ${className} justify-center rounded-full p-4 text-base font-semibold`}
       type={type}
     >
       {child}
