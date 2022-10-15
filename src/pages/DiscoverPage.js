@@ -1,17 +1,21 @@
 import React from "react";
 import Navbar from "layout/Navbar";
-import Search from "components/discoverpage/Search";
-import Filter from "components/discoverpage/Filter";
+import Sidebar from "layout/Sidebar";
+import LayoutHomePage from "layout/LayoutPage";
+import Sort from "components/discoverpage/Sort";
+import HousesList from "components/discoverpage/HousesList";
 import Footer from "layout/Footer";
 
 const DiscoverPage = () => {
   return (
     <>
-      <div className="">
-        <Navbar />
-        <Search />
-        <Filter />
-        {/* <Footer /> */}
+      <Navbar></Navbar>
+      <div className="flex items-start">
+        <Sidebar></Sidebar>
+        <LayoutHomePage>
+          <Sort />
+          <HousesList />
+        </LayoutHomePage>
       </div>
     </>
   );
