@@ -18,7 +18,7 @@ const sidebarLink = [
   {
     icon: <IconHouse className="h-6 w-6"></IconHouse>,
     title: "House",
-    url: "/slug",
+    url: "/your-house",
   },
   {
     icon: <IconUser></IconUser>,
@@ -43,9 +43,9 @@ const Sidebar = () => {
     "flex  items-center gap-x-5 w-12 h-12 justify-center md:rounded-lg md:mb-8   last:bg-white last:shadow-sdprimary";
   return (
     <div
-      className="fixed top-[15vh] flex w-full flex-col justify-center 
-    lg:pl-6 py-10 
-    lg:w-[76px]"
+      className="fixed top-[15vh] z-10 overflow-hidden flex w-full flex-col justify-center 
+    py-10 lg:w-[76px] 
+    lg:pl-6"
     >
       {sidebarLink.map((item) => (
         <NavLink

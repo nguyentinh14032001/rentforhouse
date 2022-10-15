@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "../layout/LayoutAuthentication";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,15 +11,20 @@ import { Label } from "components/label";
 import { Button, ButtonGoogle } from "components/button";
 import useToggleValue from "hooks/UseToggleValue";
 import { Input } from "components/input";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
-  email: yup.string().required("").email(""),
+  username: yup.string().required(""),
   password: yup
     .string()
     .required("This field is required")
-    .min(8, "Password must be 8 character"),
+    .min(6, "Password must be 6 character"),
 });
 const SignInPage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -28,9 +33,32 @@ const SignInPage = () => {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  const handleSignIn = (values) => {
-    console.log(values);
+  const handleSignIn = async (values) => {
+    setLoading(true);
+    try {
+      await axios({
+        method: "post",
+        url: "http://localhost:8086/api/auth/signin",
+        data: {
+          ...values,
+        },
+      })
+        .then(function (response) {
+          console.log(response);
+          console.log("đăng nhập thành công");
+          navigate("/");
+          setLoading(false);
+        })
+        .catch(function (response) {
+          toast.error("a");
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
+
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
   return (
@@ -44,12 +72,12 @@ const SignInPage = () => {
       <ButtonGoogle text="Sign in with Google"></ButtonGoogle>
       <form onSubmit={handleSubmit(handleSignIn)}>
         <FormGroup>
-          <Label htmlFor="email">Email *</Label>
+          <Label htmlFor="username">Username *</Label>
           <Input
             control={control}
-            name="email"
-            placeholder="example@gmail.com"
-            error={errors.email?.message}
+            name="username"
+            placeholder="tinhqn1998"
+            error={errors.username?.message}
           ></Input>
         </FormGroup>
         <FormGroup>
@@ -74,7 +102,12 @@ const SignInPage = () => {
             </span>
           </div>
         </FormGroup>
-        <Button type="submit" className="w-full bg-primary">
+        <Button
+          type="submit"
+          isLoading={loading}
+          kind="primary"
+          className="w-full"
+        >
           Sign In
         </Button>
       </form>

@@ -12,9 +12,15 @@ import * as yup from "yup";
 import { IconEyeToggle } from "components/icons";
 import useToggleValue from "hooks/UseToggleValue";
 import ClassName from "hooks/ClassName";
+import { requestAuthRegister } from "store/auth/auth-request";
+import axios from "axios";
+import FormRow from "components/common/FormRow";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
-  fullname: yup.string().required("This field is required"),
+  lastName: yup.string().required("This field is required"),
+  firstName: yup.string().required("This field is required"),
+  userName: yup.string().required("This field is required"),
   email: yup
     .string()
     .required("This field is required")
@@ -32,18 +38,43 @@ const SignUpPage = () => {
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-
-  const handleSignUp = (values) => {
-    console.log(values);
+  const [loading, setLoading] = useState(false);
+  const handleSignUp = async (values) => {
+    setLoading(true);
+    try {
+      const response = await axios({
+        method: "post",
+        url: "http://localhost:8086/api/auth/signup",
+        data: {
+          ...values,
+        },
+      });
+      reset({
+        firstName: "",
+        lastName: "",
+        userName: "",
+        password: "",
+        email: "",
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Register Failed");
+    }
   };
   return (
     <LayoutAuthentication heading="SignUp">
-      <p className={ClassName("mb-6 text-center text-xs font-normal text-text-3 lg:mb-8 lg:text-sm")}>
+      <p
+        className={ClassName(
+          "mb-6 text-center text-xs font-normal text-text-3 lg:mb-8 lg:text-sm"
+        )}
+      >
         Already have an account?{" "}
         <Link to="/sign-in" className="font-medium text-primary underline">
           Sign in
@@ -54,15 +85,26 @@ const SignUpPage = () => {
         Or sign up with email
       </p>
       <form onSubmit={handleSubmit(handleSignUp)}>
-        <FormGroup>
-          <Label htmlFor="fullname">Full Name *</Label>
-          <Input
-            control={control}
-            name="fullname"
-            placeholder="Nguyen Tinh"
-            error={errors.fullname?.message}
-          ></Input>
-        </FormGroup>
+        <FormRow>
+          <FormGroup>
+            <Label htmlFor="firstName">First Name *</Label>
+            <Input
+              control={control}
+              name="firstName"
+              placeholder="Tinh"
+              error={errors.firstName?.message}
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="lastName">Last Name *</Label>
+            <Input
+              control={control}
+              name="lastName"
+              placeholder="Nguyen"
+              error={errors.lastName?.message}
+            ></Input>
+          </FormGroup>
+        </FormRow>
         <FormGroup>
           <Label htmlFor="email">Email *</Label>
           <Input
@@ -73,12 +115,12 @@ const SignUpPage = () => {
           ></Input>
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="email">Username</Label>
+          <Label htmlFor="userName">Username</Label>
           <Input
             control={control}
-            name="username"
+            name="userName"
             placeholder="tinhqn1998"
-            error={errors.username?.message}
+            error={errors.userName?.message}
           ></Input>
         </FormGroup>
         <FormGroup>
@@ -106,7 +148,12 @@ const SignUpPage = () => {
             </p>
           </CheckBox>
         </div>
-        <Button type="submit"  className="w-full bg-primary">
+        <Button
+          type="submit"
+          isLoading={loading}
+          className="w-full"
+          kind="primary"
+        >
           Create my account
         </Button>
       </form>
