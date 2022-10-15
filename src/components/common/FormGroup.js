@@ -1,8 +1,10 @@
-import React from "react";
+import React from 'react';
 
 const FormGroup = (props) => {
   return (
-    <div className="mb-6 flex flex-col gap-y-3 lg:mb-6">{props.children}</div>
+    <div className="flex flex-col mb-4 lg:mb-5 gap-y-3">
+      {props.children}
+    </div>
   );
 };
 

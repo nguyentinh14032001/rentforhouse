@@ -2,32 +2,24 @@ import { Button } from "components/button";
 import SearchHomePage from "modules/homepage/SearchHomePage";
 
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 z-10 mb-8 flex w-full items-center justify-between border-b bg-white py-8 px-6">
+    <div className="mb-8 sticky top-0 w-full bg-white z-10 py-8 border-b px-6 flex items-center justify-between">
       <div className="flex flex-1 items-center gap-x-10">
-        <Link to="/" className="inline-block">
-          <img
-            srcSet="logo.png 2x"
-            className="h-[50px] w-[50px] object-cover"
-            alt="logo"
-          />
-        </Link>
+        <img
+          srcSet="logo.png 2x"
+          className="h-[50px] w-[50px] object-cover"
+          alt="logo"
+        />
         <div className="w-full max-w-[458px]">
           <SearchHomePage></SearchHomePage>
         </div>
       </div>
       <div className="flex flex-1 items-center justify-end gap-x-10">
-        {/* <Button
-          className="w-full max-w-[140px] px-7"
-          href="/sign-in"
-          kind="primary"
-          type="button"
-        >
+        <Button className="bg-slate-500 px-7" type="button">
           Login
-        </Button> */}
+        </Button>
         <img
           className="h-[40px] w-[40px] rounded-full object-cover lg:h-[52px] lg:w-[52px]"
           alt=""
