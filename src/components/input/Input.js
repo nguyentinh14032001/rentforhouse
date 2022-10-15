@@ -30,13 +30,12 @@ const Input = (props) => {
         placeholder={error.length <= 0 ? placeholder : ""}
         {...rest}
         className={ClassName(
-          "w-full rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-2",
+          " w-full rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-1",
           error.length > 0
             ? "border-[2px] border-error text-error"
-             : "border-strock text-text-1 dark:border-darkStroke",
-             children ? "pr-16" : ""
+            : "border-strock text-text-1 dark:border-darkStroke",
+          children ? "pr-16" : ""
         )}
-       
       />
       {error.length > 0 && (
         <span className="input-error pointer-events-none absolute left-6 top-2/4 -translate-y-2/4 text-sm font-medium text-error">

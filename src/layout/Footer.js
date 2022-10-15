@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/images/6.png";
 const Footer = () => {
   return (
-    <>
+    <div className="footer z-20 relative">
       <div className="bg-black p-[30px] text-white">
         <div className="grid grid-cols-4">
           <div className="flex flex-col justify-center">
@@ -40,7 +40,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
