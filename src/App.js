@@ -1,4 +1,3 @@
-
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -7,11 +6,8 @@ const SignInPage = lazy(() => import("./pages/SignInPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));
-<<<<<<< HEAD
 const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
-=======
 const YourHouse = lazy(() => import("./pages/YourHousePage"));
->>>>>>> homepage2
 function App() {
   return (
     <Suspense>
@@ -23,8 +19,10 @@ function App() {
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
-        <Route path="/sell-house" element={<PostSellHouse></PostSellHouse>}></Route>
-
+        <Route
+          path="/sell-house"
+          element={<PostSellHouse></PostSellHouse>}
+        ></Route>
       </Routes>
     </Suspense>
   );

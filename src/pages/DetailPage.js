@@ -13,19 +13,19 @@ import Navbar from "layout/Navbar";
 const DetailPage = () => {
   return (
     <div>
-    <Navbar></Navbar>
-    <div className="flex gap-x-6 items-start">
-    <Sidebar></Sidebar>
-   <LayoutPage>
-      <Overview />
-      <DetailInfo />
-      <SellerInfo />
-      <Comments />
-      <SimilarPlaces />
-   </LayoutPage> 
-    </div>
-   
-   <Footer />
+      <Navbar></Navbar>
+      <div className="flex items-start gap-x-6">
+        <Sidebar></Sidebar>
+        <LayoutPage>
+          <Overview />
+          <DetailInfo />
+          <SellerInfo />
+          {/* <Comments /> */}
+          {/* <SimilarPlaces /> */}
+        </LayoutPage>
+      </div>
+
+      <Footer />
     </div>
   );
 };

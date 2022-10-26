@@ -8,7 +8,7 @@ const Sort = () => {
       <div className="flex flex-col">
         <h1>Chọn theo tiêu chí</h1>
         <div className="select-group my-4 flex">
-          {data && data.map((item) => <SortItem data={item} />)}
+          {data && data.map((item) => <SortItem data={item} key={item.id} />)}
         </div>
       </div>
     </>

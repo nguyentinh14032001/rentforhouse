@@ -1,12 +1,11 @@
 import React from "react";
-import house from "../../assets/images/house.jpg";
+import HouseListItem from "./HouseListItem";
 
-const HousesList = () => {
+const HousesList = ({ products }) => {
   return (
     <div>
-      <div className="flex">
-        <img src={house} alt="" />
-      </div>
+      {products &&
+        products.map((item) => <HouseListItem key={item.id} products={item} />)}
     </div>
   );
 };

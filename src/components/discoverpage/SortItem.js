@@ -14,7 +14,7 @@ const SortItem = ({ data }) => {
             Chọn {data.name} -
           </option>
           {data.choose.map((choose) => (
-            <option value={choose.id} className="pl-2">
+            <option value={choose.id} className="pl-2" key={choose.id}>
               {choose.name}
             </option>
           ))}
