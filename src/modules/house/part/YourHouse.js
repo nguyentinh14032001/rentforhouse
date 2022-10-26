@@ -12,7 +12,7 @@ const YourHouse = () => {
       <div className="max-w-[435px] flex-1">
         <CategoryHouse text="Căn hộ cao cấp" className="mb-4"></CategoryHouse>
         <HouseTitle className="font-bold"></HouseTitle>
-        <HouseDesc className="text-sm mb-6">
+        <HouseDesc className="mb-6 text-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
           commodi aperiam alias magnam eos molestiae quam enim corporis voluptas
           similique. Nihil beatae alias maiores blanditiis tempore veritatis

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/detailpage/Overview.scss";
+import "../../assets/sass/detailpage/Overview.scss";
 
 import image1 from "../../assets/images/6.png";
 
