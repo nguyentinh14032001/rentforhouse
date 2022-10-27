@@ -14,9 +14,9 @@ const YourHousePage = ({ children }) => {
       <div className="flex items-start">
         <Sidebar></Sidebar>
         <LayoutPage>
-          <div className="mb-10 flex items-center justify-between py-8 px-10 rounded-3xl bg-lite ">
+          <div className="mb-10 flex items-center justify-between rounded-3xl bg-lite py-8 px-10 ">
             <div className="flex items-start gap-x-6">
-              <div className="bg-secondary opacity-60 text-white flex h-14 w-14 items-center justify-center rounded-full">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-white opacity-60">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -31,20 +31,26 @@ const YourHousePage = ({ children }) => {
                 </svg>
               </div>
               <div className="flex-1">
-                <h1 className="text-[22px] font-semibold mb-2">New house</h1>
-                <p className="text-sm text-text-3 mb-2">Bạn muốn bán nhà? Chúng tôi sẽ giúp bạn</p>
-                <a href="/" className="text-primary text-sm">
-                    Need any more? Learn more...
+                <h1 className="mb-2 text-[22px] font-semibold">New house</h1>
+                <p className="mb-2 text-sm text-text-3">
+                  Bạn muốn bán nhà? Chúng tôi sẽ giúp bạn
+                </p>
+                <a href="/" className="text-sm text-primary">
+                  Need any more? Learn more...
                 </a>
               </div>
             </div>
-            <Button type="button" kind="ghost" className="px-8" href="/sell-house" >Đăng bài</Button>
+            <Button
+              type="button"
+              kind="ghost"
+              className="px-8"
+              href="/sell-house"
+            >
+              Đăng bài
+            </Button>
           </div>
           <Heading number={4}>Your House</Heading>
           <HouseGrid type="secondary">
-            <YourHouse></YourHouse>
-            <YourHouse></YourHouse>
-            <YourHouse></YourHouse>
             <YourHouse></YourHouse>
           </HouseGrid>
         </LayoutPage>

@@ -7,13 +7,15 @@ import { IconEyeToggle } from "components/icons";
 import { useForm } from "react-hook-form";
 import FormGroup from "components/common/FormGroup";
 import { Label } from "components/label";
-
 import { Button, ButtonGoogle } from "components/button";
 import useToggleValue from "hooks/UseToggleValue";
 import { Input } from "components/input";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseURL } from "api/axios";
+import { useDispatch } from "react-redux";
+import { authLogin } from "store/auth/auth-slice";
 
 const schema = yup.object().shape({
   username: yup.string().required(""),
@@ -25,6 +27,7 @@ const schema = yup.object().shape({
 const SignInPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
@@ -34,29 +37,30 @@ const SignInPage = () => {
     mode: "onSubmit",
   });
   const handleSignIn = async (values) => {
-    setLoading(true);
-    try {
-      await axios({
-        method: "post",
-        url: "http://localhost:8086/api/auth/signin",
-        data: {
-          ...values,
-        },
-      })
-        .then(function (response) {
-          console.log(response);
-          console.log("đăng nhập thành công");
-          navigate("/");
-          setLoading(false);
-        })
-        .catch(function (response) {
-          toast.error("a");
-          setLoading(false);
-        });
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
+    // try {
+    //   await axios({
+    //     method: "post",
+    //     url: `${baseURL}/api/auth/signin`,
+    //     data: {
+    //       ...values,
+    //     },
+    //   })
+    //     .then(function (response) {
+    //       console.log(response.data.data);
+    //       localStorage.setItem("name", JSON.stringify(response.data.data));
+    //       console.log("đăng nhập thành công");
+
+    //       setLoading(false);
+    //     })
+    //     .catch(function (response) {
+    //       toast.error("a");
+    //       setLoading(false);
+    //     });
+    // } catch (error) {
+    //   console.log(error);
+    //   setLoading(false);
+    // }
+    dispatch(authLogin(values));
   };
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
@@ -76,7 +80,7 @@ const SignInPage = () => {
           <Input
             control={control}
             name="username"
-            placeholder="tinhqn1998"
+            placeholder="admin"
             error={errors.username?.message}
           ></Input>
         </FormGroup>

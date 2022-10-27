@@ -15,23 +15,31 @@ import ImageUpload from "components/Image/ImageUpload";
 import useOnChange from "hooks/UseOnChange";
 import { toast } from "react-toastify";
 import FormThreeCol from "components/common/FormThreeCol";
+import { imgbbAPI } from "config/config";
+import { baseURL } from "api/axios";
+import { getToken } from "utils/auth";
 Quill.register("modules/imageUploader", ImageUploader);
 
 const categoriesData = ["Chung cư", "Căn hộ cao cấp", "Căn hộ Sky Villa"];
 const HouseAddNew = () => {
-  const { handleSubmit, control, setValue, reset, watch } = useForm();
+  const { handleSubmit, control, setValue, reset, watch, getValues } =
+    useForm();
   const getDropdownLabel = (name) => {
     const value = watch(name);
     return value;
   };
   const [description, setDescription] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
 
-  const handleSelectCategories = (name, value) => {
+  const handleSelectCategories = (value) => {
     setValue("category", value);
   };
-  const handleSelectProvince = (name, value) => {
-    setValue("address", value);
+  const handleSelectAddress = (name1, name2, value1, value2) => {
+    setValue(name1, value1);
+    setValue(name2, value2);
   };
 
   const resetValue = () => {
@@ -49,45 +57,109 @@ const HouseAddNew = () => {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ["link", "image"],
       ],
-      //   imageUploader: {
-      //     upload: async (file) => {
-      //       const bodyFormData = new FormData();
-      //       bodyFormData.append("file", file);
-      //       bodyFormData.append("upload_preset", "cck4hgk7");
-      //       console.log(file);
-      //       //await handleUploadImageContent(file)
-      //       const response = await axios({
-      //         method: "post",
-      //         url: "",
-      //         data: bodyFormData,
-      //         headers: {
-      //           "content-Type": "multipart/form-data",
-      //         },
-      //       });
-      //       return response.data.url;
-      //     },
-      //   },
+      imageUploader: {
+        upload: async (file) => {
+          const bodyFormData = new FormData();
+          bodyFormData.append("image", file);
+          const response = await axios({
+            method: "post",
+            url: imgbbAPI,
+            data: bodyFormData,
+            headers: {
+              "content-Type": "multipart/form-data",
+            },
+          });
+          return response.data.data.url;
+        },
+      },
     }),
     []
   );
-  const [addressFilter, handleOnChangeValue] = useOnChange();
-  const [address, setAddress] = useState([]);
+  //const [addressFilter, handleOnChangeValue] = useOnChange();
 
+  const HOST = "https://provinces.open-api.vn/api/";
+
+  const getProvince = getValues("provinceCode");
+  const getDistrict = getValues("districtCode");
+
+  //get province
   useEffect(() => {
-    async function fetchCity() {
+    async function fetchProvinces() {
       try {
-        const response = await axios.get(`https://provinces.open-api.vn/api/`);
-        setAddress(response.data);
+        const response = await axios.get(`${HOST}`);
+        setProvinces(response.data);
       } catch (error) {
         toast.error(error.message);
       }
     }
-    fetchCity();
+    fetchProvinces();
   }, []);
-  console.log("a", address);
-  const handleAddNewHouse = (values) => {
-    console.log(values);
+
+  //get districts
+  useEffect(() => {
+    async function fetchDistricts() {
+      try {
+        if (getProvince) {
+          const response = await axios.get(`${HOST}p/${getProvince}?depth=2`);
+          setDistricts(response.data.districts);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+    fetchDistricts();
+  }, [getProvince]);
+  useEffect(() => {
+    async function fetchWards() {
+      try {
+        if (getDistrict) {
+          const response = await axios.get(`${HOST}d/${getDistrict}?depth=2`);
+          setWards(response.data.wards);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+    fetchWards();
+  }, [getDistrict]);
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+
+  console.log(userData.userName);
+  const handleAddNewHouse = async (values) => {
+    const cloneValues = { ...values };
+    const address = `${cloneValues.province}, ${cloneValues.district}, ${cloneValues.ward}`;
+    try {
+      await axios({
+        method: "post",
+        url: `${baseURL}/api/house`,
+        data: {
+          address,
+          area: "400",
+          userId: userData.id,
+          typeId: 1,
+          price: 4000000000,
+          name: cloneValues.name,
+          image: cloneValues.image,
+          createdDate: startDate,
+          detailSumary: cloneValues.detailSumary,
+          description: "",
+        },
+        headers: {
+          Authorization: userData.access_token,
+        },
+      })
+        .then(function (response) {
+          console.log(response.data.data);
+        })
+        .catch(function (response) {
+          toast.error("a");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -113,14 +185,12 @@ const HouseAddNew = () => {
                   }
                 ></Dropdown.Select>
                 <Dropdown.List>
-                  {categoriesData.map((category) => (
+                  {categoriesData?.map((category) => (
                     <Dropdown.Option
                       key={category}
-                      onClick={() =>
-                        handleSelectCategories("category", category)
-                      }
+                      onClick={() => handleSelectCategories(category)}
                     >
-                      <span className=" capitalize ">{category}</span>
+                      <span className="capitalize">{category}</span>
                     </Dropdown.Option>
                   ))}
                 </Dropdown.List>
@@ -131,14 +201,14 @@ const HouseAddNew = () => {
             <Label>Mô tả ngắn* </Label>
             <Textarea
               control={control}
-              name="detailsumary"
+              name="detailSumary"
               placeholder="Mô tả ngắn"
             ></Textarea>
           </FormGroup>
           <FormRow>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <ImageUpload onChange={setValue}></ImageUpload>
+              <ImageUpload onChange={setValue} name="image"></ImageUpload>
             </FormGroup>
           </FormRow>
           <FormGroup>
@@ -175,15 +245,49 @@ const HouseAddNew = () => {
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select
-                    placeholder={getDropdownLabel("address") || "Tỉnh"}
-                  >
-                    {" "}
-                  </Dropdown.Select>
+                    placeholder={getDropdownLabel("province") || "Tỉnh"}
+                  ></Dropdown.Select>
                   <Dropdown.List>
-                    {address &&
-                      address.map((item) => (
-                        <Dropdown.Option>
-                          <span className=" capitalize ">{item.name}</span>
+                    {provinces &&
+                      provinces.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "province",
+                              "provinceCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
+                        </Dropdown.Option>
+                      ))}
+                  </Dropdown.List>
+                </Dropdown>
+              </FormGroup>
+
+              <FormGroup>
+                <Dropdown>
+                  <Dropdown.Select
+                    placeholder={getDropdownLabel("district") || "Thành phố"}
+                  ></Dropdown.Select>
+                  <Dropdown.List>
+                    {districts &&
+                      districts.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "district",
+                              "districtCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
                         </Dropdown.Option>
                       ))}
                   </Dropdown.List>
@@ -191,12 +295,27 @@ const HouseAddNew = () => {
               </FormGroup>
               <FormGroup>
                 <Dropdown>
-                  <Dropdown.Select></Dropdown.Select>
-                </Dropdown>
-              </FormGroup>
-              <FormGroup>
-                <Dropdown>
-                  <Dropdown.Select></Dropdown.Select>
+                  <Dropdown.Select
+                    placeholder={getDropdownLabel("ward") || "Phường/Xã"}
+                  ></Dropdown.Select>
+                  <Dropdown.List>
+                    {wards &&
+                      wards.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "ward",
+                              "wardCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
+                        </Dropdown.Option>
+                      ))}
+                  </Dropdown.List>
                 </Dropdown>
               </FormGroup>
             </FormThreeCol>
