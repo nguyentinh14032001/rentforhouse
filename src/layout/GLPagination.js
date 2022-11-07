@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
-import service from "./Service";
+import service from "components/discoverpage/Service";
 
 const pageSize = 3;
 
-const DiscoverPagination = ({ setProducts }) => {
+const GLPagination = ({ setProducts }) => {
   const [pagination, setPagination] = useState({
     count: 0,
     from: 0,
     to: pageSize,
   });
-
   useEffect(() => {
     service
       .getData({ from: pagination.from, to: pagination.to })
@@ -36,4 +35,4 @@ const DiscoverPagination = ({ setProducts }) => {
   );
 };
 
-export default DiscoverPagination;
+export default GLPagination;

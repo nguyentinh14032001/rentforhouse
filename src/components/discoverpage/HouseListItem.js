@@ -1,34 +1,39 @@
 import React from "react";
-import house from "../../assets/images/house.jpg";
 import { IconHouse } from "components/icons";
 import { Link } from "react-router-dom";
 
-const HouseListItem = ({ products }) => {
+const HouseListItem = ({ product }) => {
   return (
     <div className="mt-4 flex w-full">
-      <img src={house} alt="" className="h-[32vh] w-[36vw] rounded-lg" />
+      <Link to={`/detail/:${product?.id}`}>
+        <img
+          src={product?.image[0]}
+          alt=""
+          className="h-[32vh] w-[36vw] rounded-lg"
+        />
+      </Link>
       <div className="ml-6 mt-2 flex w-[30vw] flex-col">
-        <Link to="/detail" className="flex font-bold text-text-3">
+        <div className="flex font-bold text-text-3">
           <IconHouse className="h-5 w-5"></IconHouse>
-          <small className="ml-2 text-[16px]">Căn hộ cao cấp</small>
+          <small className="ml-2 text-[16px]">{product?.type}</small>
+        </div>
+        <Link
+          to={`/detail/:${product?.id}`}
+          className="my-2 text-[20px] font-bold"
+        >
+          {product?.name}
         </Link>
-        <p className="my-2 text-[20px] font-bold">Nguyên Tính Villa</p>
-        <small className="word-break text-text-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-          commodi aperiam alias magnam eos molestiae quam enim corporis voluptas
-          similique. Nihil beatae alias maiores blanditiis tempore veritatis
-          iste ullam repellat?
-        </small>
+        <small className="word-break text-text-3">{product?.description}</small>
         <div className="mt-2 flex flex-col">
-          <p className="text-text-3">Quy Nhơn</p>
+          <p className="text-text-3">{product?.address}</p>
           <div className="mt-2 flex justify-between font-[550]">
             <p>
-              5.000.000 <span>đ</span>
+              {product?.price}
+              <span>đ</span>
             </p>
             <p className="text-text-3">
-              1000 <span>view</span>
+              {product?.view} <span>view</span>
             </p>
-            <p>{products.name}</p>
           </div>
         </div>
       </div>
