@@ -1,4 +1,4 @@
-import products from "../../assets/data/pagination.json";
+import products from "../../assets/data/houses.json";
 
 const service = {
   getData: ({ from, to }) => {

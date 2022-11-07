@@ -4,8 +4,8 @@ import Sidebar from "layout/Sidebar";
 import LayoutHomePage from "layout/LayoutPage";
 import Sort from "components/discoverpage/Sort";
 import HousesList from "components/discoverpage/HousesList";
-import DiscoverPagination from "components/discoverpage/DiscoverPagination";
 import Footer from "layout/Footer";
+import GLPagination from "layout/GLPagination";
 
 const DiscoverPage = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const DiscoverPage = () => {
         <LayoutHomePage>
           <Sort />
           <HousesList products={products} />
-          <DiscoverPagination setProducts={(p) => setProducts(p)} />
+          <GLPagination setProducts={(p) => setProducts(p)} />
         </LayoutHomePage>
       </div>
     </>

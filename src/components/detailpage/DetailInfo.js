@@ -1,19 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DetailContext } from "pages/DetailPage";
 import "../../assets/sass/detailpage/DetailInfo.scss";
 
 const DetailInfo = () => {
+  const value = useContext(DetailContext);
   return (
     <>
       <div className="info my-[7vh] flex items-baseline justify-between">
         <div className="left flex w-[70%] flex-col">
           <h1>Mô tả</h1>
-          <p>
-            is simply dummy text of the printing and typesetting industry. Lorem
-            Ipsum has been the industry's standard dummy text ever since the
-            1500s, whva vav ava vcạc bajbc jabc jabc jabc jabc jabc avkav bavbaa
-            vknak jvbakv nkab vkavbkab vka bvakv bakvbavka kvavnka nvkakvan
-            bkvab kvnakvn aklvn avkan vka nvav kav.
-          </p>
+          <p>{value?.description}</p>
           <div className="facilities flex flex-col">
             <h1>Tiện ích</h1>
             <div className=" flex">
@@ -26,15 +22,15 @@ const DetailInfo = () => {
         <div className="right flex flex-col">
           <div className="flex">
             <h1>Diện tích</h1>
-            <p>50m2</p>
+            <p>{value?.area} m2</p>
           </div>
           <div className="flex">
             <h1>Giá</h1>
-            <p>5.000.000 / tháng</p>
+            <p>{value?.price} / tháng</p>
           </div>
           <div className="flex">
             <h1>Loại</h1>
-            <p>Nhà trọ</p>
+            <p>{value?.type}</p>
           </div>
           <div className="flex">
             <h1>Số phòng</h1>

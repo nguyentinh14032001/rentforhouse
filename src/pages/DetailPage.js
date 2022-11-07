@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { createContext } from "react";
 import Overview from "components/detailpage/Overview";
 import DetailInfo from "components/detailpage/DetailInfo";
 import SellerInfo from "components/detailpage/SellerInfo";
@@ -9,10 +8,17 @@ import Footer from "layout/Footer";
 import LayoutPage from "layout/LayoutPage";
 import Sidebar from "layout/Sidebar";
 import Navbar from "layout/Navbar";
+import { useParams } from "react-router-dom";
+import housesData from "../assets/data/houses.json";
+export const DetailContext = createContext();
 
 const DetailPage = () => {
+  const { id } = useParams();
+  const newId = id.replace(":", "");
+  const newData = housesData.find((item) => item.id == newId);
+  const value = { newData, newId };
   return (
-    <div>
+    <DetailContext.Provider value={value}>
       <Navbar></Navbar>
       <div className="flex items-start gap-x-6">
         <Sidebar></Sidebar>
@@ -20,13 +26,12 @@ const DetailPage = () => {
           <Overview />
           <DetailInfo />
           <SellerInfo />
-          {/* <Comments /> */}
+          <Comments />
           {/* <SimilarPlaces /> */}
         </LayoutPage>
       </div>
-
       <Footer />
-    </div>
+    </DetailContext.Provider>
   );
 };
 
