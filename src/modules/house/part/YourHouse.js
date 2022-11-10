@@ -93,11 +93,11 @@ const YourHouse = () => {
             </div>
             <button
               onClick={() => deleteHouse(item.id)}
-              className="transform rounded-lg bg-[red] py-2 px-4 text-white active:scale-90"
+              className="transform rounded-lg bg-[#c11313] py-2 px-4 text-white active:scale-90"
             >
               Xoá
             </button>
-            <button className="transform rounded-lg bg-[yellow] py-2 px-4 text-white active:scale-90">
+            <button className="transform rounded-lg bg-[#2b9b11] py-2 px-4 text-white active:scale-90">
               Sửa
             </button>
           </div>
