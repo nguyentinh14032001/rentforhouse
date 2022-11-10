@@ -1,21 +1,23 @@
 import React from "react";
-import "../../assets/detailpage/SellerInfo.scss";
+import "../../assets/sass/detailpage/SellerInfo.scss";
 
 import sellerAva from "../../assets/images/demoAva.jpg";
 
-const SellerInfo = () => {
+const SellerInfo = ({ data }) => {
   return (
     <>
       <div className="seller container my-[7vh] flex justify-between">
         <div className="flex w-[60%]">
           <img src={sellerAva} alt="" className="mr-4 rounded-lg" />
           <div className="flex flex-col">
-            <h1 className="my-[5px] text-xl font-bold">Nguyễn Nguyên Tính</h1>
+            <h1 className="my-[5px] text-xl font-bold">{data?.user?.email}</h1>
             <p className="my-[10px]">
               ca is simply dummy text of the printing and typesetting industry.
               Lorem Ipsum has been
             </p>
-            <small className="my-[10px] text-lg font-bold">0322651878</small>
+            <small className="my-[10px] text-lg font-bold">
+              {data?.user?.phone}
+            </small>
             <a
               href="/detail"
               className="w-fit rounded-xl bg-[#0828d2] py-3 px-10 font-bold text-white hover:bg-[#1359C1] "

@@ -12,15 +12,13 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Button } from "components/button";
 import ImageUpload from "components/Image/ImageUpload";
-import useOnChange from "hooks/UseOnChange";
 import { toast } from "react-toastify";
 import FormThreeCol from "components/common/FormThreeCol";
 import { imgbbAPI } from "config/config";
 import { baseURL } from "api/axios";
-import { getToken } from "utils/auth";
+
 Quill.register("modules/imageUploader", ImageUploader);
 
-const categoriesData = ["Chung cư", "Căn hộ cao cấp", "Căn hộ Sky Villa"];
 const HouseAddNew = () => {
   const { handleSubmit, control, setValue, reset, watch, getValues } =
     useForm();
@@ -28,6 +26,7 @@ const HouseAddNew = () => {
     const value = watch(name);
     return value;
   };
+  const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [provinces, setProvinces] = useState([]);
@@ -125,7 +124,7 @@ const HouseAddNew = () => {
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
 
-  console.log(userData.userName);
+  console.log(userData?.userName);
   const handleAddNewHouse = async (values) => {
     const cloneValues = { ...values };
     const address = `${cloneValues.province}, ${cloneValues.district}, ${cloneValues.ward}`;
@@ -160,6 +159,26 @@ const HouseAddNew = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/houseTypes`,
+        })
+          .then(function (response) {
+            console.log(response);
+            setCategoriesData(response?.data?.data);
+          })
+          .catch(function (response) {
+            toast.error("a");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -187,28 +206,32 @@ const HouseAddNew = () => {
                 <Dropdown.List>
                   {categoriesData?.map((category) => (
                     <Dropdown.Option
-                      key={category}
-                      onClick={() => handleSelectCategories(category)}
+                      key={category.id}
+                      onClick={() => handleSelectCategories(category?.id)}
                     >
-                      <span className="capitalize">{category}</span>
+                      <span className="capitalize">{category?.name}</span>
                     </Dropdown.Option>
                   ))}
                 </Dropdown.List>
               </Dropdown>
             </FormGroup>
           </FormRow>
-          <FormGroup>
+          {/* <FormGroup>
             <Label>Mô tả ngắn* </Label>
             <Textarea
               control={control}
               name="detailSumary"
               placeholder="Mô tả ngắn"
             ></Textarea>
-          </FormGroup>
+          </FormGroup> */}
           <FormRow>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <ImageUpload onChange={setValue} name="image"></ImageUpload>
+              <ImageUpload
+                image={getValues("image")}
+                onChange={setValue}
+                name="image"
+              ></ImageUpload>
             </FormGroup>
           </FormRow>
           <FormGroup>
@@ -230,14 +253,14 @@ const HouseAddNew = () => {
                 placeholder="Price...."
               ></Input>
             </FormGroup>
-            <FormGroup>
+            {/* <FormGroup>
               <Label>Date*</Label>
               <DatePicker
                 onChange={setStartDate}
                 value={startDate}
-                format="dd-MM-yyyy"
+                format="yyyy-MM-dd"
               />
-            </FormGroup>
+            </FormGroup> */}
           </FormRow>
           <FormGroup>
             <Label>Địa chỉ</Label>

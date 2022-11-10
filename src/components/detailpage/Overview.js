@@ -1,18 +1,18 @@
 import React from "react";
-import "../../assets/detailpage/Overview.scss";
+import "../../assets/sass/detailpage/Overview.scss";
 
 import image1 from "../../assets/images/6.png";
 
-const Overview = () => {
+const Overview = ({ data }) => {
   return (
     <>
       <div className="overview flex justify-between">
         <div className="flex w-[35%] flex-col justify-between">
           <div className="flex flex-col p-4">
-            <h1 className="mb-4 text-[36px] font-[600]">Tính villas</h1>
+            <h1 className="mb-4  text-lg font-[600]">{data?.name}</h1>
             <div className="flex">
               <i className="fa-solid fa-location-dot mr-2"></i>
-              <p>57 Nguyễn Tư</p>
+              <p>{data?.address}</p>
             </div>
           </div>
           <div className="h-[70%] w-full bg-black"></div>

@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "số phòng",
+        "value": "room",
+        "choose" : [
+            {
+                "id": "single",
+                "name": "1"
+            },
+            {
+                "id": "double",
+                "name": "2"
+            },
+            {
+                "id": "fourth",
+                "name": "4"
+            },
+            {
+                "id": "multi",
+                "name": "Lớn hơn 4"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "giá",
+        "value": "price",
+        "choose" : [
+            {
+                "id": "low-price",
+                "name": "Dưới 2 triệu"
+            },
+            {
+                "id": "medium-price",
+                "name": "2 triệu - 4 triệu"
+            },
+            {
+                "id": "high-price",
+                "name": "trên 4 triệu"
+            }
+        ]
+    }
+]

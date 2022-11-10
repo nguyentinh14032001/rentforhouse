@@ -1,5 +1,6 @@
 import { Button } from "components/button";
 import Heading from "components/common/Heading";
+import DiscoverPagination from "components/discoverpage/DiscoverPagination";
 import LayoutPage from "layout/LayoutPage";
 import Navbar from "layout/Navbar";
 import Sidebar from "layout/Sidebar";
