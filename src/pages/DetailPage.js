@@ -40,7 +40,8 @@ const DetailPage = () => {
   console.log(house);
 
   return (
-    <DetailContext.Provider value={value}>
+    <>
+      {/* <DetailContext.Provider value={value}> */}
       <Navbar></Navbar>
       <div className="flex items-start gap-x-6">
         <Sidebar></Sidebar>
@@ -53,7 +54,8 @@ const DetailPage = () => {
         </LayoutPage>
       </div>
       <Footer />
-    </DetailContext.Provider>
+      {/* </DetailContext.Provider> */}
+    </>
   );
 };
 

@@ -68,6 +68,12 @@ const YourHouse = () => {
               </HouseDesc>
               <HouseMeta address={item.address} price={item.price}></HouseMeta>
             </div>
+            <button className="transform rounded-lg bg-[red] py-2 px-4 text-white active:scale-90">
+              Xoá
+            </button>
+            <button className="transform rounded-lg bg-[yellow] py-2 px-4 text-white active:scale-90">
+              Sửa
+            </button>
           </div>
         ))}
       <div className="my-4 flex items-center justify-center">

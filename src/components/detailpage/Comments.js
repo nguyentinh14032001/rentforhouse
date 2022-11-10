@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 
 const Comments = () => {
   const uuid = uuidv4();
-  const value = useContext(DetailContext);
-  const { newId } = value;
+  // const value = useContext(DetailContext);
+  // const { newId } = value;
   const [comment, setComment] = useState([]);
   const schema = yup
     .object({
@@ -35,7 +35,7 @@ const Comments = () => {
       ...prev,
       {
         id: uuid,
-        houseId: newId,
+        // houseId: newId,
         comment: data.comment,
         userName: "Người Demo",
       },
@@ -54,7 +54,7 @@ const Comments = () => {
   //   keys.map((item) => setComment((prev) => [...prev, { item }]));
   //   console.log(keys, comment);
   // }, []);
-  const newData = comments.filter((item) => item.houseId == +newId);
+  // const newData = comments.filter((item) => item.houseId == +newId);
   return (
     <>
       <div className="container flex flex-col">
@@ -62,10 +62,10 @@ const Comments = () => {
           <h1 className="font-bold text-white">Comments</h1>
         </div>
         <div className="flex flex-col bg-[#D9D9D9] p-8">
-          {newData &&
+          {/* {newData &&
             newData.map((item) => <Comment key={item.id} item={item} />)}
           {comment &&
-            comment.map((item) => <Comment key={item.id} item={item} />)}
+            comment.map((item) => <Comment key={item.id} item={item} />)} */}
           <form
             className="flex w-full flex-col items-end"
             onSubmit={handleSubmit(onSubmit)}
