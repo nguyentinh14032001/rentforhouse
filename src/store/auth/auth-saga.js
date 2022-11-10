@@ -1,20 +1,7 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { takeLatest } from "redux-saga/effects";
+import handleAuthLogin from "./auth-handler";
+import { authLogin } from "./auth-slice";
 
-const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    user: undefined,
-  },
-  reducers: {
-    login: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-    register: (state, action) => ({
-      ...state,
-      ...action.payload,
-    }),
-  },
-});
-export const { login, register } = authSlice.actions;
-export default authSlice.reducer;
+export default function* authSaga() {
+  yield takeLatest(authLogin.type, handleAuthLogin);
+}

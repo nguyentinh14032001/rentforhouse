@@ -2,35 +2,41 @@ import React, { useContext } from "react";
 import { DetailContext } from "pages/DetailPage";
 import "../../assets/sass/detailpage/DetailInfo.scss";
 
-const DetailInfo = () => {
-  const value = useContext(DetailContext);
+
+const DetailInfo = ({ data }) => {
+  console.log(data);
+
   return (
     <>
       <div className="info my-[7vh] flex items-baseline justify-between">
         <div className="left flex w-[70%] flex-col">
           <h1>Mô tả</h1>
-          <p>{value?.description}</p>
-          <div className="facilities flex flex-col">
+
+          <p>{data?.description}</p>
+          {/* <div className="facilities flex flex-col">
+
             <h1>Tiện ích</h1>
             <div className=" flex">
               <small>Có Wi-fi</small>
               <small>Có tủ lạnh</small>
               <small>Có máy giặt</small>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="right flex flex-col">
           <div className="flex">
             <h1>Diện tích</h1>
-            <p>{value?.area} m2</p>
+
+            <p>{data?.area}</p>
           </div>
           <div className="flex">
             <h1>Giá</h1>
-            <p>{value?.price} / tháng</p>
+            <p>{`${data?.price}`}</p>
           </div>
           <div className="flex">
             <h1>Loại</h1>
-            <p>{value?.type}</p>
+            <p>{data?.typeNames}</p>
+
           </div>
           <div className="flex">
             <h1>Số phòng</h1>

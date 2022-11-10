@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { useEffect, useState } from "react";
 import Overview from "components/detailpage/Overview";
 import DetailInfo from "components/detailpage/DetailInfo";
 import SellerInfo from "components/detailpage/SellerInfo";
@@ -9,24 +9,46 @@ import LayoutPage from "layout/LayoutPage";
 import Sidebar from "layout/Sidebar";
 import Navbar from "layout/Navbar";
 import { useParams } from "react-router-dom";
-import housesData from "../assets/data/houses.json";
-export const DetailContext = createContext();
+
+import axios from "axios";
+import { baseURL } from "api/axios";
 
 const DetailPage = () => {
+  const [house, setHouse] = useState({});
+
   const { id } = useParams();
-  const newId = id.replace(":", "");
-  const newData = housesData.find((item) => item.id == newId);
-  const value = { newData, newId };
+  const idHouse = Number(id);
+  console.log(idHouse);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/houses/${idHouse}`,
+        })
+          .then(function (response) {
+            setHouse(response?.data);
+            console.log(response.data.data);
+          })
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [idHouse]);
+  console.log(house);
+
   return (
     <DetailContext.Provider value={value}>
       <Navbar></Navbar>
       <div className="flex items-start gap-x-6">
         <Sidebar></Sidebar>
         <LayoutPage>
-          <Overview />
-          <DetailInfo />
-          <SellerInfo />
-          <Comments />
+          <Overview data={house?.data} />
+          <DetailInfo data={house?.data} />
+          <SellerInfo data={house?.data} />
+          {/* <Comments /> */}
           {/* <SimilarPlaces /> */}
         </LayoutPage>
       </div>
