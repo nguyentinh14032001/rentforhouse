@@ -1,0 +1,58 @@
+[
+  {
+    "id": "a",
+    "houseId": "1",
+    "userId": "abc-xyz",
+    "userName": "Nguyên Tính",
+    "comment": "Nhà đẹp quá",
+    "date": "02-05-2022"
+  },
+  {
+    "id": "b",
+    "houseId": "1",
+    "userId": "avc-xoz",
+    "userName": "Đình Thơ",
+    "comment": "Nhà xấu quá",
+    "date": "05-07-2022"
+  },
+  {
+    "id": "c",
+    "houseId": "1",
+    "userId": "uai-zpv",
+    "userName": "Trí An",
+    "comment": "Nhà còn quá thô sơ. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.",
+    "date": "05-07-2022"
+  },
+  {
+    "id": "d",
+    "houseId": "2",
+    "userId": "umn-shf",
+    "userName": "Songoku",
+    "comment": "Nhà còn quá thô sơ. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.",
+    "date": "12-01-2022"
+  },
+  {
+    "id": "e",
+    "houseId": "2",
+    "userId": "ula-cbn",
+    "userName": "Christopher Helena",
+    "comment": "Nhà còn quá thô sơ. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.",
+    "date": "25-02-2022"
+  },
+  {
+    "id": "f",
+    "houseId": "3",
+    "userId": "nai-oiv",
+    "userName": "Henry Andison",
+    "comment": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.",
+    "date": "05-12-2021"
+  },
+  {
+    "id": "g",
+    "houseId": "4",
+    "userId": "nai-oiv",
+    "userName": "Tom And Jerry",
+    "comment": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis, placeat.",
+    "date": "08-04-2021"
+  }
+]

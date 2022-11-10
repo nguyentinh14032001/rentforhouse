@@ -13,7 +13,9 @@ function App() {
     <Suspense>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
+
         <Route path="/:id" element={<DetailPage></DetailPage>}></Route>
+
         <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/home" element={<HomePage></HomePage>}></Route>

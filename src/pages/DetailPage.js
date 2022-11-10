@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import Overview from "components/detailpage/Overview";
 import DetailInfo from "components/detailpage/DetailInfo";
 import SellerInfo from "components/detailpage/SellerInfo";
@@ -10,6 +9,7 @@ import LayoutPage from "layout/LayoutPage";
 import Sidebar from "layout/Sidebar";
 import Navbar from "layout/Navbar";
 import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import { baseURL } from "api/axios";
 
@@ -38,8 +38,9 @@ const DetailPage = () => {
     fetchData();
   }, [idHouse]);
   console.log(house);
+
   return (
-    <div>
+    <DetailContext.Provider value={value}>
       <Navbar></Navbar>
       <div className="flex items-start gap-x-6">
         <Sidebar></Sidebar>
@@ -51,9 +52,8 @@ const DetailPage = () => {
           {/* <SimilarPlaces /> */}
         </LayoutPage>
       </div>
-
       <Footer />
-    </div>
+    </DetailContext.Provider>
   );
 };
 
