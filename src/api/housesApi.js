@@ -1,16 +1,11 @@
 import axiosClient from "./axiosClient";
 
-const HousesApi = {
+// api/productApi.js
+const productApi = {
   getAll: (params) => {
-    const url = "/api/houses/1";
+    const url = "/api/houses/all";
     return axiosClient.get(url, { params });
-  },
-  delete: (id) => {
-    const url = `/api/houses/${id}`;
-    return axiosClient.get(url);
   },
 };
 
-const housesApi = new HousesApi();
-
-export default housesApi;
+export default productApi;
