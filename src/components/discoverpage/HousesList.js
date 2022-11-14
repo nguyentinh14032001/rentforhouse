@@ -1,11 +1,11 @@
 import React from "react";
 import HouseListItem from "./HouseListItem";
 
-const HousesList = ({ products }) => {
+const HousesList = ({ houses }) => {
   return (
     <div>
-      {products &&
-        products.map((item) => <HouseListItem key={item.id} product={item} />)}
+      {houses &&
+        houses.map((item) => <HouseListItem key={item.id} houses={item} />)}
     </div>
   );
 };
