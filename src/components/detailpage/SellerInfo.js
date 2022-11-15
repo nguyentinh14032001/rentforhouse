@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../assets/sass/detailpage/SellerInfo.scss";
+import { DetailContext } from "pages/DetailPage";
 
 import sellerAva from "../../assets/images/demoAva.jpg";
 
-const SellerInfo = ({ data }) => {
+const SellerInfo = () => {
+  const value = useContext(DetailContext);
+  const { houses } = value;
   return (
     <>
       <div className="seller container my-[7vh] flex justify-between">
         <div className="flex w-[60%]">
           <img src={sellerAva} alt="" className="mr-4 rounded-lg" />
           <div className="flex flex-col">
-            <h1 className="my-[5px] text-xl font-bold">{data?.user?.email}</h1>
+            <h1 className="my-[5px] text-xl font-bold">
+              {houses?.user?.email}
+            </h1>
             <p className="my-[10px]">
               ca is simply dummy text of the printing and typesetting industry.
               Lorem Ipsum has been
             </p>
             <small className="my-[10px] text-lg font-bold">
-              {data?.user?.phone}
+              {houses?.user?.phone}
             </small>
             <a
               href="/detail"

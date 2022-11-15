@@ -11,9 +11,11 @@ const SearchHomePage = () => {
   const nodeRef = useRef(null);
   const [filter, setFilter] = useState(null);
   const navigate = useNavigate();
+
   const handleOnChange = debounce((e) => {
     setFilter(e.target.value);
   }, 250);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,7 +25,7 @@ const SearchHomePage = () => {
         })
           .then(function (response) {
             setHouseList(response.data.data);
-            console.log(response.data.data);
+            // console.log(response.data.data);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -32,10 +34,12 @@ const SearchHomePage = () => {
     }
     fetchData();
   }, [filter]);
+
   const handleClickHouse = (item) => {
-    console.log(item);
-    navigate(`/${item.id}`);
+    // console.log(item);
+    navigate(`/detail/${item.id}`);
   };
+
   return (
     <div className="relative z-50">
       <div className="flex items-center rounded-full bg-white p-2 shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)]">
@@ -118,8 +122,9 @@ const SearchHomePage = () => {
     </div>
   );
 };
+
 function SearchItem({ data, onClick = () => {} }) {
-  console.log(data);
+  // console.log(data);
   return (
     <div
       onClick={onClick}

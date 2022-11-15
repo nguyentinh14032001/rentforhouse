@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const HouseListItem = ({ houses }) => {
   return (
     <div className="mt-4 flex w-full">
-      <Link to={`/detail/:${houses?.id}`}>
+      <Link to={`/detail/${houses?.id}`}>
         <img
           src="https://thietkenoithatblog.com/wp-content/uploads/2020/03/thiet-ke-cai-tao-noi-that-chung-cu-55m2-3.jpg"
           alt=""
@@ -18,7 +18,7 @@ const HouseListItem = ({ houses }) => {
           <small className="ml-2 text-[16px]">{houses?.typeNames}</small>
         </div>
         <Link
-          to={`/detail/:${houses?.id}`}
+          to={`/detail/${houses?.id}`}
           className="my-2 text-[20px] font-bold"
         >
           {houses?.name}
