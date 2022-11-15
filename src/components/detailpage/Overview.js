@@ -6,7 +6,7 @@ import "../../assets/sass/detailpage/Overview.scss";
 const Overview = () => {
   const value = useContext(DetailContext);
   const { houses } = value;
-  console.log(houses);
+
   return (
     <>
       <div className="overview flex justify-between">
