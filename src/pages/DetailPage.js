@@ -49,7 +49,7 @@ const DetailPage = () => {
             <Overview />
             <DetailInfo />
             <SellerInfo />
-            <Comments />
+            <Comments idHouse={idHouse} />
             {/* <SimilarPlaces /> */}
           </LayoutPage>
         </div>
