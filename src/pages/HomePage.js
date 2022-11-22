@@ -6,10 +6,21 @@ import Sidebar from "layout/Sidebar";
 import CarouselHomePage from "modules/homepage/CarouselHomePage";
 import HouseGrid from "modules/house/HouseGrid";
 import HouseItem from "modules/house/HouseItem";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { v4 } from "uuid";
 
 const HomePage = () => {
+  const [divHeight, setDivHeight] = useState(0);
+  const [isFixed, setIsFixed] = useState();
+
+  const homePageref = useRef(null);
+  useEffect(() => {
+    console.log(divHeight);
+  }, []);
+
+  useEffect(() => {
+    console.log(window.height);
+  }, []);
   const [heightSidebar, setHeightSidebar] = useState(false);
   // useEffect(() => {
   //   const footer = document.querySelector(".footer");
@@ -25,7 +36,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="flex items-start">
+      <div className="flex items-start pr-4">
         <Sidebar></Sidebar>
         <LayoutHomePage>
           <div className="w-full rounded-3xl bg-slate-100">
@@ -41,7 +52,7 @@ const HomePage = () => {
           </HouseGrid>
         </LayoutHomePage>
       </div>
-      {/* <Footer></Footer> */}
+      <Footer></Footer>
     </div>
   );
 };

@@ -35,9 +35,10 @@ const DetailPage = () => {
       }
     }
     fetchData();
-  }, [idHouse]);
+  }, []);
+
   const houses = house.data;
-  const value = { houses };
+  const value = { houses, idHouse };
 
   return (
     <>

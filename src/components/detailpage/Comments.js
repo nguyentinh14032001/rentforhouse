@@ -4,7 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
-import { DetailContext } from "pages/DetailPage";
 import Comment from "./Comment";
 
 const Comments = ({ idHouse }) => {
@@ -12,6 +11,7 @@ const Comments = ({ idHouse }) => {
   // const { houses } = value;
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
+  console.log(userData);
   const [comment, setComment] = useState([]);
   const [data, setData] = useState();
   // const [user, setUser] = useState();
@@ -39,39 +39,18 @@ const Comments = ({ idHouse }) => {
     reset({ comment: "" });
   };
 
-  // {
-  //   params: {
-  //     houseId: idHouse,
-  //     userId: userData?.id,
-  //     content: data.comment,
-  //   },
-  // },
-
-  // useEffect(() => {
-  //   const user = localStorage.getItem("user");
-  //   const userData = JSON.parse(user);
-  //   setUser(userData);
-  // }, []);
-
-  // useEffect(() => {
-  //   const postApi = async () => {
-  //     try {
-  //       await axios
-  //         .post(
-  //           `http://localhost:8086/api/comments?content=${data.comment}&houseId=${idHouse}&userId=${user?.id}`,
-  //           {
-  //             headers: {
-  //               Authorization: user.access_token,
-  //             },
-  //           }
-  //         )
-  //         .then((res) => {
-  //           console.log(res);
-  //         });
-  //     } catch (error) {}
-  //   };
-  //   postApi();
-  // }, [data]);
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        await axios
+          .get(`http://localhost:8086/api/comments/house/${idHouse}`)
+          .then((res) => {
+            setComment(res.data.data.comment);
+          });
+      } catch (error) {}
+    };
+    fetchApi();
+  }, [data]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +63,14 @@ const Comments = ({ idHouse }) => {
           },
         })
           .then(function (response) {
-            setComment((prev) => [...prev, response.data.data]);
+            setComment((prev) => [
+              ...prev,
+              {
+                content: response?.data?.data?.content,
+              },
+            ]);
+            console.log(response?.data?.data);
+            console.log(comment);
           })
           .catch(function (response) {
             console.log(response);
@@ -95,19 +81,6 @@ const Comments = ({ idHouse }) => {
     };
     fetchData();
   }, [data]);
-
-  useEffect(() => {
-    const fetchApi = async () => {
-      try {
-        await axios
-          .get(`http://localhost:8086/api/comments/house/${idHouse}`)
-          .then((res) => {
-            setComment(res.data.data.comment);
-          });
-      } catch (error) {}
-    };
-    fetchApi();
-  }, []);
 
   return (
     <>

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import cmtAva1 from "../../assets/images/demoAva.jpg";
 
 const Comment = ({ comment }) => {
+  console.log(comment);
   return (
     <>
       <div className=" m-8 flex w-full">
@@ -24,4 +25,4 @@ const Comment = ({ comment }) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);
