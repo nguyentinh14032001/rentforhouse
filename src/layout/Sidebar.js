@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 
 const sidebarLink = [
   {
-    icon: <i class="fa-solid fa-shop"></i>,
+    icon: <i className="fa-solid fa-shop"></i>,
     text: "Trang chủ",
     title: "Home",
     url: "/home",

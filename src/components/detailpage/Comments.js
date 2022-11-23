@@ -1,20 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
 import Comment from "./Comment";
+import { check } from "prettier";
 
 const Comments = ({ idHouse }) => {
   // const value = useContext(DetailContext);
   // const { houses } = value;
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
-  console.log(userData);
+
   const [comment, setComment] = useState([]);
-  const [data, setData] = useState();
-  // const [user, setUser] = useState();
+  const [isChange, setIsChange] = useState(false);
+  const [isEdit, setIsEdit] = useState({ check: false, comment: null });
+  const [postData, setPostData] = useState();
+  const [editData, setEditData] = useState();
   const schema = yup
     .object({
       comment: yup
@@ -28,13 +31,17 @@ const Comments = ({ idHouse }) => {
     register,
     reset,
     setFocus,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
   const onSubmit = (data) => {
-    setData(data);
+    if (isEdit.check == true) {
+      setEditData(data);
+    } else {
+      setPostData(data);
+    }
     setFocus("comment");
     reset({ comment: "" });
   };
@@ -46,31 +53,26 @@ const Comments = ({ idHouse }) => {
           .get(`http://localhost:8086/api/comments/house/${idHouse}`)
           .then((res) => {
             setComment(res.data.data.comment);
+            setIsChange(false);
           });
       } catch (error) {}
     };
     fetchApi();
-  }, [data]);
+  }, [isChange == true]);
 
+  console.log(isEdit);
   useEffect(() => {
     const fetchData = async () => {
       try {
         await axios({
           method: "post",
-          url: `http://localhost:8086/api/comments?content=${data.comment}&houseId=${idHouse}&userId=${userData?.id}`,
+          url: `http://localhost:8086/api/comments?content=${postData.comment}&houseId=${idHouse}&userId=${userData?.id}`,
           headers: {
             Authorization: userData.access_token,
           },
         })
           .then(function (response) {
-            setComment((prev) => [
-              ...prev,
-              {
-                content: response?.data?.data?.content,
-              },
-            ]);
-            console.log(response?.data?.data);
-            console.log(comment);
+            setIsChange(true);
           })
           .catch(function (response) {
             console.log(response);
@@ -80,17 +82,50 @@ const Comments = ({ idHouse }) => {
       }
     };
     fetchData();
-  }, [data]);
+  }, [postData]);
+
+  useEffect(() => {
+    const putData = async () => {
+      try {
+        await axios({
+          method: "put",
+          url: `http://localhost:8086/api/comments?content=${editData.comment}&houseId=${idHouse}&id=${isEdit?.comment?.id}&userId=${isEdit?.comment?.userId}`,
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            setIsChange(true);
+            setIsEdit({ check: false, comment: null });
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    putData();
+  }, [editData]);
 
   return (
     <>
       <div className="container flex flex-col">
+        {isEdit?.check == true && <div>{isEdit.comment.id}</div>}
         <div className="flex w-fit items-center justify-center bg-black py-2 px-3">
           <h1 className="font-bold text-white">Comments</h1>
         </div>
         <div className="flex flex-col bg-[#D9D9D9] p-8">
           {comment &&
-            comment.map((item) => <Comment key={item.id} comment={item} />)}
+            comment.map((item) => (
+              <Comment
+                key={item.id}
+                comment={item}
+                setIsChange={setIsChange}
+                setIsEdit={setIsEdit}
+                setValue={setValue}
+              />
+            ))}
           {user && (
             <form
               className="flex w-full flex-col items-end"

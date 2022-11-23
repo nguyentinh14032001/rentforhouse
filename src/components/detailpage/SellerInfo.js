@@ -13,13 +13,11 @@ const SellerInfo = () => {
         <div className="flex w-[60%]">
           <img src={sellerAva} alt="" className="mr-4 rounded-lg" />
           <div className="flex flex-col">
-            <h1 className="my-[5px] text-xl font-bold">
-              {houses?.user?.email}
+            <h1 className="my-[5px] text-xl font-bold capitalize">
+              {houses?.user?.lastName + " "}
+              {houses?.user?.firstName}
             </h1>
-            <p className="my-[10px]">
-              ca is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been
-            </p>
+            <p className="my-[10px] font-bold">{houses?.user?.email}</p>
             <small className="my-[10px] text-lg font-bold">
               {houses?.user?.phone}
             </small>
@@ -35,7 +33,7 @@ const SellerInfo = () => {
         <div className="right flex flex-col">
           <div className="flex">
             <h1>Lượt xem</h1>
-            <p>1000</p>
+            <p>{houses?.view}</p>
           </div>
           <div className="flex">
             <h1>Bình luận</h1>

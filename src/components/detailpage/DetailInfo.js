@@ -25,11 +25,11 @@ const DetailInfo = () => {
           <div className="flex">
             <h1>Diện tích</h1>
 
-            <p>{houses?.area}</p>
+            <p>{houses?.area} m2</p>
           </div>
           <div className="flex">
             <h1>Giá</h1>
-            <p>{`${houses?.price}`}</p>
+            <p>{houses?.price} vnd</p>
           </div>
           <div className="flex">
             <h1>Loại</h1>
@@ -37,7 +37,7 @@ const DetailInfo = () => {
           </div>
           <div className="flex">
             <h1>Số phòng</h1>
-            <p>2 phòng</p>
+            <p>{houses?.roomNumber}</p>
           </div>
           <div className="flex">
             <h1>Lầu</h1>
