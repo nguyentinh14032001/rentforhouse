@@ -1,24 +1,30 @@
-.slick-slider {
-    max-width: 100vw;
-    min-height: 100%;
-    z-index: 1 !important;
-    display: flex;
-    .slick-list {
-        width: 85vw;
-        .slick-track {
-          
+.carousel-home-page {
+    .slick-slider {
+        max-width: 100vw;
+        min-height: 100%;
+        z-index: 1 !important;
+        display: flex;
 
-            .slick-slide {
-                .content-carousel {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 20px;
-                    align-items: flex-start;
-                }
+        button {
+            &.slick-arrow {
+                position: fixed;
+            }
+        }
 
-                img {
-                    height: 100%;
-                    border-radius: 16px;
+        .slick-list {
+            width: 85vw;
+            .slick-track {
+                .slick-slide {
+                    .content-carousel {
+                        display: flex;
+                        flex-direction: column;
+                        padding: 20px;
+                        align-items: flex-start;
+                    }
+                    img {
+                        height: 100%;
+                        border-radius: 16px;
+                    }
                 }
             }
         }

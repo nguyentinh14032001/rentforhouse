@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import Navbar from "layout/Navbar";
 import Sidebar from "layout/Sidebar";
 import LayoutHomePage from "layout/LayoutPage";
@@ -6,23 +8,30 @@ import Sort from "components/discoverpage/Sort";
 import HousesList from "components/discoverpage/HousesList";
 import Footer from "layout/Footer";
 import GLPagination from "layout/GLPagination";
-import productApi from "api/housesApi";
 
 const DiscoverPage = () => {
-  const [products, setProducts] = useState([]);
+  const [houses, setHouses] = useState([]);
+  const [pages, setPages] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const fetchProductList = async () => {
+    const fetchApi = async () => {
       try {
-        const params = { page: 3, limit: 5 };
-        const response = await productApi.getAll(params);
-        console.log("Fetch products successfully: ", response);
-      } catch (error) {
-        console.log("Failed to fetch product list: ", error);
-      }
+        await axios
+          .get("http://localhost:8086/api/houses/all", {
+            params: {
+              page: page,
+              limit: 3,
+            },
+          })
+          .then((res) => {
+            setPages(res.data.data);
+            setHouses(res.data.data.houses);
+          });
+      } catch (error) {}
     };
-    fetchProductList();
-  }, []);
+    fetchApi();
+  }, [page]);
 
   return (
     <>
@@ -31,8 +40,8 @@ const DiscoverPage = () => {
         <Sidebar></Sidebar>
         <LayoutHomePage>
           <Sort />
-          <HousesList products={products} />
-          <GLPagination setProducts={(p) => setProducts(p)} />
+          <HousesList houses={houses} />
+          <GLPagination pages={pages} setPage={setPage} />
         </LayoutHomePage>
       </div>
     </>

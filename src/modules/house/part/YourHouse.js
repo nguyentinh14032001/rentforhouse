@@ -15,8 +15,8 @@ const YourHouse = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
   const userData = JSON.parse(user);
-  console.log(userData);
-  console.log(userData.access_token);
+  // console.log(userData);
+  // console.log(userData.access_token);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +28,7 @@ const YourHouse = () => {
           },
         })
           .then(function (response) {
-            console.log(response);
+            // console.log(response);
             setPage(response?.data.data);
             setProducts(response?.data?.data?.houses);
           })
@@ -41,7 +41,7 @@ const YourHouse = () => {
     };
     fetchData();
   }, [limit, page, userData.access_token, userData.id]);
-  console.log(page.page);
+  // console.log(page.page);
 
   const handlePageChange = (page) => {
     // const from = (page - 1) * page.total_page;

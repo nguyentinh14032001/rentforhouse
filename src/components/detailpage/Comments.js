@@ -1,17 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import Comment from "./Comment";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import comments from "../../assets/data/comments.json";
 import * as yup from "yup";
-import { DetailContext } from "pages/DetailPage";
-import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-const Comments = () => {
-  const uuid = uuidv4();
+import Comment from "./Comment";
+import { check } from "prettier";
+
+const Comments = ({ idHouse }) => {
   // const value = useContext(DetailContext);
-  // const { newId } = value;
+  // const { houses } = value;
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+
   const [comment, setComment] = useState([]);
+  const [isChange, setIsChange] = useState(false);
+  const [isEdit, setIsEdit] = useState({ check: false, comment: null });
+  const [postData, setPostData] = useState();
+  const [editData, setEditData] = useState();
   const schema = yup
     .object({
       comment: yup
@@ -25,66 +31,122 @@ const Comments = () => {
     register,
     reset,
     setFocus,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const onSubmit = async (data) => {
-    setComment((prev) => [
-      ...prev,
-      {
-        id: uuid,
-        // houseId: newId,
-        comment: data.comment,
-        userName: "Người Demo",
-      },
-    ]);
+  const onSubmit = (data) => {
+    if (isEdit.check == true) {
+      setEditData(data);
+    } else {
+      setPostData(data);
+    }
     setFocus("comment");
     reset({ comment: "" });
-    // localStorage.setItem(
-    //   uuid,
-    //   JSON.stringify({ content: data.comment, houseId: newId })
-    // );
-    // const keys = Object.keys(localStorage);
-    // keys.map((item) => setComment((prev) => [...prev, { item }]));
   };
-  // useEffect(() => {
-  //   const keys = Object.keys(localStorage);
-  //   keys.map((item) => setComment((prev) => [...prev, { item }]));
-  //   console.log(keys, comment);
-  // }, []);
-  // const newData = comments.filter((item) => item.houseId == +newId);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        await axios
+          .get(`http://localhost:8086/api/comments/house/${idHouse}`)
+          .then((res) => {
+            setComment(res.data.data.comment);
+            setIsChange(false);
+          });
+      } catch (error) {}
+    };
+    fetchApi();
+  }, [isChange == true]);
+
+  console.log(isEdit);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:8086/api/comments?content=${postData.comment}&houseId=${idHouse}&userId=${userData?.id}`,
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            setIsChange(true);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [postData]);
+
+  useEffect(() => {
+    const putData = async () => {
+      try {
+        await axios({
+          method: "put",
+          url: `http://localhost:8086/api/comments?content=${editData.comment}&houseId=${idHouse}&id=${isEdit?.comment?.id}&userId=${isEdit?.comment?.userId}`,
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            setIsChange(true);
+            setIsEdit({ check: false, comment: null });
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    putData();
+  }, [editData]);
+
   return (
     <>
       <div className="container flex flex-col">
+        {isEdit?.check == true && <div>{isEdit.comment.id}</div>}
         <div className="flex w-fit items-center justify-center bg-black py-2 px-3">
           <h1 className="font-bold text-white">Comments</h1>
         </div>
         <div className="flex flex-col bg-[#D9D9D9] p-8">
-          {/* {newData &&
-            newData.map((item) => <Comment key={item.id} item={item} />)}
           {comment &&
-            comment.map((item) => <Comment key={item.id} item={item} />)} */}
-          <form
-            className="flex w-full flex-col items-end"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <textarea
-              className="h-[15vh] w-full resize-none p-4"
-              type="text"
-              {...register("comment")}
-              placeholder="Hãy nhập bình luận ..."
-            ></textarea>
-            {errors && <p className="errors">{errors?.comment?.message}</p>}
-
-            <button
-              type="submit"
-              className="mt-4 w-fit rounded-lg bg-[#40CA87] py-2 px-4 font-bold text-white"
+            comment.map((item) => (
+              <Comment
+                key={item.id}
+                comment={item}
+                setIsChange={setIsChange}
+                setIsEdit={setIsEdit}
+                setValue={setValue}
+              />
+            ))}
+          {user && (
+            <form
+              className="flex w-full flex-col items-end"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              Gửi
-            </button>
-          </form>
+              <textarea
+                className="h-[15vh] w-full resize-none p-4"
+                type="text"
+                {...register("comment")}
+                placeholder="Hãy nhập bình luận ..."
+              ></textarea>
+              {errors && <p className="errors">{errors?.comment?.message}</p>}
+              <button
+                type="submit"
+                className="mt-4 w-fit rounded-lg bg-[#40CA87] py-2 px-4 font-bold text-white"
+              >
+                Gửi
+              </button>
+            </form>
+          )}
+
           {/* End form post-reviews*/}
         </div>
       </div>
