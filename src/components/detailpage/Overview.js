@@ -22,7 +22,7 @@ const Overview = ({ data }) => {
         <div className="ml-[5%] flex h-[50vh] w-[60%] flex-col justify-between">
           <div className="h-[75%] w-full">
             <img
-              src={image1}
+              src={data?.image}
               alt=""
               className="h-full w-full rounded-lg object-cover"
             />

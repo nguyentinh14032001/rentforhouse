@@ -1,3 +1,4 @@
+import HouseUpdate from "modules/house/part/HouseUpdate";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -14,6 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
         <Route path="/:id" element={<DetailPage></DetailPage>}></Route>
+        <Route
+          path="/manage/update-house"
+          element={<HouseUpdate></HouseUpdate>}
+        ></Route>
         <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/home" element={<HomePage></HomePage>}></Route>

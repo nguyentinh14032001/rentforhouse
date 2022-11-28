@@ -7,7 +7,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, { Quill } from "react-quill";
 import ImageUploader from "quill-image-uploader";
-import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Button } from "components/button";
@@ -16,22 +15,53 @@ import { toast } from "react-toastify";
 import FormThreeCol from "components/common/FormThreeCol";
 import { imgbbAPI } from "config/config";
 import { baseURL } from "api/axios";
+import { useSearchParams } from "react-router-dom";
 
 Quill.register("modules/imageUploader", ImageUploader);
 
-const HouseAddNew = () => {
-  const { handleSubmit, control, setValue, reset, watch, getValues } =
-    useForm();
+const HouseUpdate = () => {
+  const [params] = useSearchParams();
+  const houseId = params.get("id");
+  const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      detailSumary: "xzxczxc",
+    },
+  });
   const getDropdownLabel = (name) => {
     const value = watch(name);
     return value;
   };
+
+  console.log(houseId);
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
+  const [house, setHouse] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/houses/${houseId}`,
+        })
+          .then(function (response) {
+            setHouse(response?.data?.data);
+            reset({
+              ...response.data.data,
+            });
+          })
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [houseId, reset]);
 
   const handleSelectCategories = (value) => {
     setValue("typeIds", value);
@@ -41,11 +71,7 @@ const HouseAddNew = () => {
     setValue(name2, value2);
   };
 
-  const resetValue = () => {
-    setDescription("");
-    startDate("");
-    reset({});
-  };
+  console.log(house);
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -169,6 +195,9 @@ const HouseAddNew = () => {
         })
           .then(function (response) {
             setCategoriesData(response?.data?.data);
+            reset({
+              ...response?.data?.data,
+            });
           })
           .catch(function (response) {
             toast.error("a");
@@ -365,4 +394,4 @@ const HouseAddNew = () => {
   );
 };
 
-export default HouseAddNew;
+export default HouseUpdate;

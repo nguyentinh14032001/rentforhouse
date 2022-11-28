@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "../layout/LayoutAuthentication";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,7 +14,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseURL } from "api/axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "store/auth/auth-slice";
 
 const schema = yup.object().shape({
@@ -36,6 +36,14 @@ const SignInPage = () => {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
+  const user = localStorage.getItem("user");
+
+  useEffect(() => {
+    const userData = JSON.parse(user);
+    if (userData !== "") {
+      navigate("/");
+    }
+  }, [navigate, user]);
   const handleSignIn = async (values) => {
     // try {
     //   await axios({
@@ -60,6 +68,7 @@ const SignInPage = () => {
     //   console.log(error);
     //   setLoading(false);
     // }
+
     dispatch(authLogin(values));
   };
 
