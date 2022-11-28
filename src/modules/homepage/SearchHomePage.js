@@ -72,7 +72,7 @@ const SearchHomePage = () => {
           </span>
         </button>
       </div>
-      {openMenu && filter !== "" && houseList.length > 0 && (
+      {openMenu && filter !== "" && houseList?.length > 0 && (
         <div className="search-results absolute left-0 z-50 w-full translate-y-5 rounded-3xl bg-white pb-6 lg:w-[743px] ">
           <div className="flex items-center justify-between rounded-3xl bg-graySoft p-3">
             <span className="pl-4 text-sm font-medium text-text-1">
@@ -100,7 +100,7 @@ const SearchHomePage = () => {
           </div>
           <div className="p-6 pb-0">
             <div className="mb-6 flex flex-col gap-y-5 ">
-              {houseList.length > 0 &&
+              {houseList?.length > 0 &&
                 houseList.map((item) => (
                   <SearchItem
                     key={item?.id}

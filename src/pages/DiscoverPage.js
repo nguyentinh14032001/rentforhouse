@@ -8,6 +8,7 @@ import Sort from "components/discoverpage/Sort";
 import HousesList from "components/discoverpage/HousesList";
 import Footer from "layout/Footer";
 import GLPagination from "layout/GLPagination";
+import { baseURL } from "api/axios";
 
 const DiscoverPage = () => {
   const [houses, setHouses] = useState([]);
@@ -18,7 +19,7 @@ const DiscoverPage = () => {
     const fetchApi = async () => {
       try {
         await axios
-          .get("http://localhost:8086/api/houses/all", {
+          .get(`${baseURL}/api/houses/all`, {
             params: {
               page: page,
               limit: 3,

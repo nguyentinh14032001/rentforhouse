@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Pagination } from "@mui/material";
-import service from "components/discoverpage/Service";
 
 const GLPagination = ({ pages, setPage }) => {
   const handlePageChange = (e, page) => {

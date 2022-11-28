@@ -8,10 +8,9 @@ const DetailInfo = () => {
   return (
     <>
       <div className="info my-[7vh] flex items-baseline justify-between">
-        <div className="left flex w-[70%] flex-col">
+        <div className="left mr-[30px] flex w-[70%] flex-col">
           <h1>Mô tả</h1>
-
-          <p>{houses?.description}</p>
+          <p className="word-break w-[50vw]">{houses?.description}</p>
           <div className="facilities flex flex-col">
             <h1>Tiện ích</h1>
             <div className=" flex">

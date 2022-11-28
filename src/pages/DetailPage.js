@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 import { baseURL } from "api/axios";
 import Navbar from "layout/Navbar";
