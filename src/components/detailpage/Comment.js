@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import cmtAva1 from "../../assets/images/demoAva.jpg";
 
@@ -7,6 +7,13 @@ const Comment = ({ comment, setIsChange, setIsEdit, setValue }) => {
   const userData = JSON.parse(user);
 
   const [show, setShow] = useState(false);
+  const [showControl, setShowControl] = useState(false);
+
+  useEffect(() => {
+    if (userData?.id == comment?.user?.id) {
+      setShowControl(true);
+    }
+  }, []);
 
   const handleShow = () => {
     setShow(!show);
@@ -53,34 +60,36 @@ const Comment = ({ comment, setIsChange, setIsEdit, setValue }) => {
             {/* <button className="mr-2">Reply</button> */}
             <button className="mr-2">Like</button>
             <button className="mr-2">Dislike</button>
-            <div className="group-change-btn relative flex flex-col">
-              <div
-                className={
-                  show == true
-                    ? "menu-change absolute -top-10 border-[1px] bg-white px-2 text-[13px]"
-                    : "hidden"
-                }
-              >
-                <button
-                  className="opacity-75 hover:opacity-60"
-                  onClick={deleteCommnet}
+            {showControl && (
+              <div className="group-change-btn relative flex flex-col">
+                <div
+                  className={
+                    show == true
+                      ? "menu-change absolute -top-10 border-[1px] bg-white px-2 text-[13px]"
+                      : "hidden"
+                  }
                 >
-                  Xoá
-                </button>
+                  <button
+                    className="opacity-75 hover:opacity-60"
+                    onClick={deleteCommnet}
+                  >
+                    Xoá
+                  </button>
+                  <button
+                    className="opacity-75 hover:opacity-60"
+                    onClick={editCommnet}
+                  >
+                    Sửa
+                  </button>
+                </div>
                 <button
-                  className="opacity-75 hover:opacity-60"
-                  onClick={editCommnet}
+                  className="mr-2 text-[24px] font-bold"
+                  onClick={handleShow}
                 >
-                  Sửa
+                  ...
                 </button>
               </div>
-              <button
-                className="mr-2 text-[24px] font-bold"
-                onClick={handleShow}
-              >
-                ...
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>

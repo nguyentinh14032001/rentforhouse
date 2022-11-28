@@ -6,7 +6,7 @@ const service = {
       const data = products.slice(from, to);
       products &&
         resolve({
-          count: products.length,
+          count: products?.length,
           data,
         });
     });

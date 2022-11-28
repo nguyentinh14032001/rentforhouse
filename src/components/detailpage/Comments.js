@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
+import { baseURL } from "api/axios";
 import Comment from "./Comment";
-import { check } from "prettier";
 
 const Comments = ({ idHouse }) => {
   // const value = useContext(DetailContext);
@@ -18,6 +18,7 @@ const Comments = ({ idHouse }) => {
   const [isEdit, setIsEdit] = useState({ check: false, comment: null });
   const [postData, setPostData] = useState();
   const [editData, setEditData] = useState();
+
   const schema = yup
     .object({
       comment: yup
@@ -50,7 +51,7 @@ const Comments = ({ idHouse }) => {
     const fetchApi = async () => {
       try {
         await axios
-          .get(`http://localhost:8086/api/comments/house/${idHouse}`)
+          .get(`${baseURL}/api/comments/house/${idHouse}`)
           .then((res) => {
             setComment(res.data.data.comment);
             setIsChange(false);
@@ -66,7 +67,7 @@ const Comments = ({ idHouse }) => {
       try {
         await axios({
           method: "post",
-          url: `http://localhost:8086/api/comments?content=${postData.comment}&houseId=${idHouse}&userId=${userData?.id}`,
+          url: `${baseURL}/api/comments?content=${postData.comment}&houseId=${idHouse}&userId=${userData?.id}`,
           headers: {
             Authorization: userData.access_token,
           },
@@ -89,7 +90,7 @@ const Comments = ({ idHouse }) => {
       try {
         await axios({
           method: "put",
-          url: `http://localhost:8086/api/comments?content=${editData.comment}&houseId=${idHouse}&id=${isEdit?.comment?.id}&userId=${isEdit?.comment?.userId}`,
+          url: `${baseURL}/api/comments?content=${editData.comment}&houseId=${idHouse}&id=${isEdit?.comment?.id}&userId=${isEdit?.comment?.userId}`,
           headers: {
             Authorization: userData.access_token,
           },

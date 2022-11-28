@@ -61,6 +61,7 @@ const SignInPage = () => {
     //   setLoading(false);
     // }
     dispatch(authLogin(values));
+    navigate("/");
   };
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
