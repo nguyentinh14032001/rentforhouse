@@ -1,4 +1,4 @@
-import products from "../../assets/data/pagination.json";
+import products from "../../assets/data/houses.json";
 
 const service = {
   getData: ({ from, to }) => {
@@ -6,7 +6,7 @@ const service = {
       const data = products.slice(from, to);
       products &&
         resolve({
-          count: products.length,
+          count: products?.length,
           data,
         });
     });

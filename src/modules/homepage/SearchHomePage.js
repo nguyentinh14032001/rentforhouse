@@ -11,9 +11,11 @@ const SearchHomePage = () => {
   const nodeRef = useRef(null);
   const [filter, setFilter] = useState(null);
   const navigate = useNavigate();
+
   const handleOnChange = debounce((e) => {
     setFilter(e.target.value);
   }, 250);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,7 +25,7 @@ const SearchHomePage = () => {
         })
           .then(function (response) {
             setHouseList(response.data.data);
-            console.log(response.data.data);
+            // console.log(response.data.data);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -32,10 +34,12 @@ const SearchHomePage = () => {
     }
     fetchData();
   }, [filter]);
+
   const handleClickHouse = (item) => {
-    console.log(item);
-    navigate(`/${item.id}`);
+    // console.log(item);
+    navigate(`/detail/${item.id}`);
   };
+
   return (
     <div className="relative z-50">
       <div className="flex items-center rounded-full bg-white p-2 shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)]">
@@ -68,7 +72,7 @@ const SearchHomePage = () => {
           </span>
         </button>
       </div>
-      {openMenu && filter !== "" && houseList.length > 0 && (
+      {openMenu && filter !== "" && houseList?.length > 0 && (
         <div className="search-results absolute left-0 z-50 w-full translate-y-5 rounded-3xl bg-white pb-6 lg:w-[743px] ">
           <div className="flex items-center justify-between rounded-3xl bg-graySoft p-3">
             <span className="pl-4 text-sm font-medium text-text-1">
@@ -96,7 +100,7 @@ const SearchHomePage = () => {
           </div>
           <div className="p-6 pb-0">
             <div className="mb-6 flex flex-col gap-y-5 ">
-              {houseList.length > 0 &&
+              {houseList?.length > 0 &&
                 houseList.map((item) => (
                   <SearchItem
                     key={item?.id}
@@ -118,8 +122,9 @@ const SearchHomePage = () => {
     </div>
   );
 };
+
 function SearchItem({ data, onClick = () => {} }) {
-  console.log(data);
+  // console.log(data);
   return (
     <div
       onClick={onClick}

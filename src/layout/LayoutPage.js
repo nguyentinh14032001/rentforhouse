@@ -1,10 +1,10 @@
 import React from "react";
 
-const LayoutPage = ({ children }) => {
+const LayoutPage = ({ children, setDivHeight }) => {
   return (
-    <div className="min-h-screen   pl-[7vw] pr-6">
+    <div>
       {/* <div className="overlay fixed inset-0 z-30 bg-black bg-opacity-10"> </div> */}
-       <div className=""> {children}</div>
+      <div className=""> {children}</div>
     </div>
   );
 };

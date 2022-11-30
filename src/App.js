@@ -9,21 +9,28 @@ const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));
 const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
 const YourHouse = lazy(() => import("./pages/YourHousePage"));
+const ManagePage = lazy(() => import("./pages/ManagePage"));
+
 function App() {
   return (
     <Suspense>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
+<<<<<<< HEAD
         <Route path="/:id" element={<DetailPage></DetailPage>}></Route>
         <Route
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
         ></Route>
+=======
+        <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
+>>>>>>> homepage2
         <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
+        <Route path="/manage" element={<ManagePage></ManagePage>}></Route>
         <Route
           path="/sell-house"
           element={<PostSellHouse></PostSellHouse>}

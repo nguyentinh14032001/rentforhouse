@@ -70,6 +70,7 @@ const SignInPage = () => {
     // }
 
     dispatch(authLogin(values));
+    navigate("/");
   };
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =

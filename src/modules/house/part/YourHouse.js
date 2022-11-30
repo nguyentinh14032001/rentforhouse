@@ -29,6 +29,7 @@ const YourHouse = () => {
           },
         })
           .then(function (response) {
+            // console.log(response);
             setPage(response?.data.data);
             setProducts(response?.data?.data?.houses);
           })
@@ -48,6 +49,28 @@ const YourHouse = () => {
     // setPagination({ ...pagination, from: from, to: to });
     setPage(page);
   };
+
+  const deleteHouse = async (id) => {
+    try {
+      await axios({
+        method: "delete",
+        url: `${baseURL}/api/houses/${id}`,
+        headers: {
+          Authorization: userData.access_token,
+        },
+      })
+        .then(function (response) {
+          console.log(response);
+          // Này là xoá được rồi mà nó không tự render cái trang lại mày xem thử chứ t không biết.
+        })
+        .catch(function (response) {
+          toast.error("a");
+        });
+    } catch (error) {
+      console.log("Failed to delete:", error);
+    }
+  };
+
   return (
     <>
       {products &&
@@ -81,6 +104,12 @@ const YourHouse = () => {
             >
               Edit
             </Button>
+            <button
+              onClick={() => deleteHouse(item.id)}
+              className="transform rounded-lg bg-[#c11313] py-2 px-4 text-white active:scale-90"
+            >
+              Xoá
+            </button>
           </div>
         ))}
       <div className="my-4 flex items-center justify-center">

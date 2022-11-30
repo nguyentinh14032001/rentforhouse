@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
+import { baseURL } from "api/axios";
+import Navbar from "layout/Navbar";
+import Sidebar from "layout/Sidebar";
+import LayoutPage from "layout/LayoutPage";
 import Overview from "components/detailpage/Overview";
 import DetailInfo from "components/detailpage/DetailInfo";
 import SellerInfo from "components/detailpage/SellerInfo";
 import Comments from "components/detailpage/Comments";
 import SimilarPlaces from "components/detailpage/SimilarPlaces";
 import Footer from "layout/Footer";
-import LayoutPage from "layout/LayoutPage";
-import Sidebar from "layout/Sidebar";
-import Navbar from "layout/Navbar";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { baseURL } from "api/axios";
 
+export const DetailContext = createContext();
 const DetailPage = () => {
   const [house, setHouse] = useState({});
-
   const { id } = useParams();
   const idHouse = Number(id);
-  console.log(idHouse);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -28,7 +28,6 @@ const DetailPage = () => {
         })
           .then(function (response) {
             setHouse(response?.data);
-            console.log(response.data.data);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -36,24 +35,28 @@ const DetailPage = () => {
       }
     }
     fetchData();
-  }, [idHouse]);
-  console.log(house);
-  return (
-    <div>
-      <Navbar></Navbar>
-      <div className="flex items-start gap-x-6">
-        <Sidebar></Sidebar>
-        <LayoutPage>
-          <Overview data={house?.data} />
-          <DetailInfo data={house?.data} />
-          <SellerInfo data={house?.data} />
-          {/* <Comments /> */}
-          {/* <SimilarPlaces /> */}
-        </LayoutPage>
-      </div>
+  }, []);
 
-      <Footer />
-    </div>
+  const houses = house.data;
+  const value = { houses, idHouse };
+
+  return (
+    <>
+      <DetailContext.Provider value={value}>
+        <Navbar></Navbar>
+        <div className="flex items-start gap-x-6">
+          <Sidebar></Sidebar>
+          <LayoutPage>
+            <Overview />
+            <DetailInfo />
+            <SellerInfo />
+            <Comments idHouse={idHouse} />
+            {/* <SimilarPlaces /> */}
+          </LayoutPage>
+        </div>
+        <Footer />
+      </DetailContext.Provider>
+    </>
   );
 };
 
