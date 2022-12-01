@@ -32,7 +32,7 @@ const ManagePage = () => {
             url: `${baseURL}/api/users`,
             params: {
               page: page,
-              limit: 20,
+              limit: 10,
             },
             headers: {
               Authorization: userData.access_token,

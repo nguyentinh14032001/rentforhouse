@@ -28,10 +28,9 @@ const HouseList = ({ house, setIsChange }) => {
   const putHouseStatus = async () => {
     try {
       await axios
-        .put(`http://localhost:8086/api/houses/${house?.id}/status/false`, {
+        .put(`http://localhost:8086/api/houses/${house?.id}/status/true`, {
           headers: {
-            Authorization:
-              "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY2OTgyNzIyNiwiZXhwIjoxNjcwNjkxMjI2fQ.YclciY_s3u_1FRKvzIisUVJA7HRgyYCT9SZ6l0Yq_K5nRJzIs3VS2vkeubt0RZ5Xt0IK2LkvmrKhnK6Fy2wlkg",
+            Authorization: userData.access_token,
           },
         })
         .then((res) => {

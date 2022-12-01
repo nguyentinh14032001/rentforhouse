@@ -24,9 +24,10 @@ const UserListItem = ({ user, setIsChange }) => {
       console.log(error);
     }
   };
+
   return (
     <>
-      <tr key={user?.id}>
+      <tr>
         <td>{user?.id}</td>
         <td className="capitalize">
           {user?.lastName} {user.firstName}
