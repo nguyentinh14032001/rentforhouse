@@ -29,7 +29,7 @@ const Navbar = () => {
       </div>
       <div className="flex flex-1 items-center justify-end gap-x-10">
         {userData && userData.roles == "ROLE_ADMIN" ? (
-          <Link to="/manage">Dashboard</Link>
+          <Link to="/manage/usersmanage">Dashboard</Link>
         ) : null}
         {userData == null ? (
           <Button

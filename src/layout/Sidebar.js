@@ -7,73 +7,25 @@ import {
 } from "components/icons";
 
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-
-const sidebarLink = [
-  {
-    icon: <i className="fa-solid fa-shop"></i>,
-    text: "Trang chủ",
-    title: "Home",
-    url: "/home",
-    login: "nonLogin",
-  },
-  {
-    icon: <IconSidebar></IconSidebar>,
-    text: "Khám phá",
-    title: "Discover",
-    url: "/discover",
-    login: "nonLogin",
-  },
-  {
-    icon: <IconHouse className="h-6 w-6"></IconHouse>,
-    text: "Nhà của bạn",
-    title: "House",
-    url: "/your-house",
-    login: "needLogin",
-  },
-  {
-    icon: <IconUser></IconUser>,
-    text: "Liên hệ",
-    title: "Contact",
-    url: "/contact",
-    login: "nonLogin",
-  },
-  {
-    icon: <IconLogout></IconLogout>,
-    text: "Đăng xuất",
-    title: "Logout",
-    url: "/xczxc",
-    login: "needLogin",
-    onClick: () => {},
-  },
-  {
-    icon: <IconDarkMode></IconDarkMode>,
-    title: "Light/Dark",
-    url: "/cx",
-    login: "nonLogin",
-    onClick: () => {},
-  },
-];
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 
 const dashboardLink = [
   {
     icon: <i className="fa-regular fa-user"></i>,
+    url: "/manage/usersmanage",
     text: "Người dùng",
     title: "UserManager",
-    login: "nonLogin",
+  },
+  {
+    icon: <i className="fa-solid fa-pen-to-square"></i>,
+    url: "/manage/postmanage",
+    text: "Bài Đăng",
+    title: "PostManager",
   },
 ];
 
 const Sidebar = () => {
-  const user = localStorage.getItem("user");
-  const userData = JSON.parse(user);
-  const navigate = useNavigate();
-  //const [link, setLink] = useState([]);
-  const userLogout = () => {
-    localStorage.setItem("user", JSON.stringify(""));
-    navigate("/sign-in");
-  };
-  const link = [
+  const sidebarLink = [
     {
       icon: <i className="fa-solid fa-shop"></i>,
       text: "Trang chủ",
@@ -119,35 +71,98 @@ const Sidebar = () => {
     },
   ];
 
+  const { id } = useParams();
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+  const navigate = useNavigate();
+  const [link, setLink] = useState([]);
+  const userLogout = () => {
+    localStorage.setItem("user", JSON.stringify(""));
+    navigate("/sign-in");
+  };
+  // const link = [
+  //   {
+  //     icon: <i className="fa-solid fa-shop"></i>,
+  //     text: "Trang chủ",
+  //     title: "Home",
+  //     url: "/home",
+  //     login: "nonLogin",
+  //   },
+  //   {
+  //     icon: <IconSidebar></IconSidebar>,
+  //     text: "Khám phá",
+  //     title: "Discover",
+  //     url: "/discover",
+  //     login: "nonLogin",
+  //   },
+  //   {
+  //     icon: <IconHouse className="h-6 w-6"></IconHouse>,
+  //     text: "Nhà của bạn",
+  //     title: "House",
+  //     url: "/your-house",
+  //     login: "needLogin",
+  //   },
+  //   {
+  //     icon: <IconUser></IconUser>,
+  //     text: "Liên hệ",
+  //     title: "Contact",
+  //     url: "/contact",
+  //     login: "nonLogin",
+  //   },
+  //   {
+  //     icon: <IconLogout></IconLogout>,
+  //     text: "Đăng xuất",
+  //     title: "Logout",
+  //     url: "/sign-in",
+  //     login: "needLogin",
+  //     onClick: () => userLogout(),
+  //   },
+  //   {
+  //     icon: <IconDarkMode></IconDarkMode>,
+  //     title: "Light/Dark",
+  //     url: "/cx",
+  //     login: "nonLogin",
+  //     onClick: () => {},
+  //   },
+  // ];
+
   const [windowURL, setWindowURL] = useState();
   const [isDashboard, setIsDashboard] = useState(false);
 
   useEffect(() => {
     setWindowURL(window.location.href);
-    if (windowURL == "http://localhost:3000/manage") {
+    if (
+      windowURL == `http://localhost:3000/manage/${id}` ||
+      windowURL == `http://localhost:3000/manage/${id}?`
+    ) {
       setIsDashboard(true);
     } else {
       setIsDashboard(false);
     }
   }, [windowURL]);
 
-  // useEffect(() => {
-  //   console.log("go");
-  //   if (userData == null) {
-  //     const newLink = sidebarLink.filter((item) => item.login == "nonLogin");
-  //     setLink(newLink);
-  //   } else if (userData && isDashboard == true) {
-  //     setLink(dashboardLink);
-  //   } else {
-  //     setLink(sidebarLink);
-  //   }
-  // }, [isDashboard, sidebarLink, userData]);
+  useEffect(() => {
+    if (userData == null) {
+      const newLink = sidebarLink.filter((item) => item.login == "nonLogin");
+      setLink(newLink);
+    } else if (userData && isDashboard == true) {
+      setLink(dashboardLink);
+    } else {
+      setLink(sidebarLink);
+    }
+  }, [userData]);
 
   const navlinkClass = "my-4 w-fit p-2 rounded-lg";
 
   return (
     <div className="w-[15vw]">
-      <div className="fixed top-[19vh] z-10 flex flex-col pl-8 pr-4">
+      <div
+        className={
+          isDashboard == true
+            ? "flex w-fit flex-col pl-8 pr-4"
+            : "fixed top-[19vh] z-10 flex flex-col pl-8 pr-4"
+        }
+      >
         {link &&
           link.map((item) => {
             if (item.onClick)
