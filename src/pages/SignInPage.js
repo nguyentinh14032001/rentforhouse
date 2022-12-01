@@ -40,36 +40,36 @@ const SignInPage = () => {
 
   useEffect(() => {
     const userData = JSON.parse(user);
-    if (userData !== "") {
-      navigate("/");
-    }
+    // if (userData !== "") {
+    //   navigate("/");
+    // }
   }, [navigate, user]);
   const handleSignIn = async (values) => {
-    // try {
-    //   await axios({
-    //     method: "post",
-    //     url: `${baseURL}/api/auth/signin`,
-    //     data: {
-    //       ...values,
-    //     },
-    //   })
-    //     .then(function (response) {
-    //       console.log(response.data.data);
-    //       localStorage.setItem("name", JSON.stringify(response.data.data));
-    //       console.log("đăng nhập thành công");
+    try {
+      await axios({
+        method: "post",
+        url: `${baseURL}/api/auth/signin`,
+        data: {
+          ...values,
+        },
+      })
+        .then(function (response) {
+          console.log(response.data.data);
+          localStorage.setItem("user", JSON.stringify(response.data.data));
+          toast.success("Đăng nhập thành công");
+          navigate("/");
+          setLoading(false);
+        })
+        .catch(function (response) {
+          toast.error("Đăng nhập thất bại");
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
 
-    //       setLoading(false);
-    //     })
-    //     .catch(function (response) {
-    //       toast.error("a");
-    //       setLoading(false);
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    //   setLoading(false);
-    // }
-
-    dispatch(authLogin(values));
+    // dispatch(authLogin(values));
     navigate("/");
   };
 

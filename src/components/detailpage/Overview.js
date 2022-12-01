@@ -21,21 +21,6 @@ const Overview = () => {
           </div>
           {/* end left */}
 
-<<<<<<< HEAD
-        <div className="ml-[5%] flex h-[50vh] w-[60%] flex-col justify-between">
-          <div className="h-[75%] w-full">
-            <img
-              src={data?.image}
-              alt=""
-              className="h-full w-full rounded-lg object-cover"
-            />
-          </div>
-          <div className="flex h-[20%] justify-between">
-            <img src={image1} alt="" className="view-images" />
-            <img src={image1} alt="" className="view-images" />
-            <img src={image1} alt="" className="view-images" />
-            <img src={image1} alt="" className="view-images" />
-=======
           <div className="ml-[5%] flex h-[50vh] w-[60%] flex-col justify-between">
             <div className="h-[75%] w-full">
               <img
@@ -50,7 +35,6 @@ const Overview = () => {
               ))} */}
               {/* <img src={newData?.image[0]} alt="" className="view-images" /> */}
             </div>
->>>>>>> homepage2
           </div>
         </div>
       </div>

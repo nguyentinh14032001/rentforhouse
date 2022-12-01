@@ -22,27 +22,24 @@ const YourHouse = () => {
     const fetchData = async () => {
       try {
         await axios({
-          method: "post",
-          url: `${baseURL}/api/houses/user/${userData.id}?limit=${limit}&page=${page}`,
-          headers: {
-            Authorization: userData.access_token,
-          },
+          method: "get",
+          url: `${baseURL}/api/houses/${userData.id}`,
+          // headers: {
+          //   Authorization: userData.access_token,
+          // },
         })
           .then(function (response) {
-            // console.log(response);
-            setPage(response?.data.data);
-            setProducts(response?.data?.data?.houses);
+            // setPage(response?.data.data);
+            setProducts([response?.data.data]);
           })
-          .catch(function (response) {
-            toast.error("a");
-          });
+          .catch(function (response) {});
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [limit, page, userData.access_token, userData.id]);
-
+  }, []);
+  console.log(products);
   const handlePageChange = (page) => {
     // const from = (page - 1) * page.total_page;
     // const to = (page - 1) * page.total_page + page.total_page;

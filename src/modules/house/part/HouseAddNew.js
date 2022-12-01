@@ -32,6 +32,7 @@ const HouseAddNew = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleSelectCategories = (value) => {
     setValue("typeIds", value);
@@ -124,17 +125,18 @@ const HouseAddNew = () => {
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const handleAddNewHouse = async (values) => {
+    setLoading(true);
     const cloneValues = { ...values };
-    console.log(cloneValues);
+
     const price = Number(cloneValues.price);
-    const image = String(cloneValues.image.url);
+    const image = String(cloneValues?.image?.url);
     console.log(typeof image);
     const address = `${cloneValues.province}, ${cloneValues.district}, ${cloneValues.ward}`;
-    console.log(address);
+
     try {
       await axios({
         method: "post",
-        url: `${baseURL}/api/houses?address=${address}&area=${cloneValues.area}&description=zxczxc&detailSumary=${cloneValues.detailSumary}&image=${image}&name=${cloneValues.name}&price=${price}&typeIds=${cloneValues.typeIds}`,
+        url: `${baseURL}/api/houses?address=${address}&area=${cloneValues.area}&description=""&detailSumary=${cloneValues.detailSumary}&image=${image}&name=${cloneValues.name}&price=${price}&typeIds=${cloneValues.typeIds}`,
         // data: {
         //   address: address,
         //   area: cloneValues.area,
@@ -150,10 +152,13 @@ const HouseAddNew = () => {
         },
       })
         .then(function (response) {
+          toast.success("Thêm căn hộ thành công");
+          setLoading(false);
           console.log(response);
         })
         .catch(function (response) {
-          toast.error("a");
+          toast.error("Thêm căn hộ thất bại");
+          setLoading(false);
         });
     } catch (error) {
       console.log(error);
@@ -170,9 +175,7 @@ const HouseAddNew = () => {
           .then(function (response) {
             setCategoriesData(response?.data?.data);
           })
-          .catch(function (response) {
-            toast.error("a");
-          });
+          .catch(function (response) {});
       } catch (error) {
         console.log(error);
       }
@@ -356,6 +359,7 @@ const HouseAddNew = () => {
             kind="primary"
             className="mx-auto bg-primary px-10 text-white"
             type="submit"
+            isLoading={loading}
           >
             Tạo bài bán căn hộ
           </Button>

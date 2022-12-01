@@ -2,12 +2,17 @@ import { Button } from "components/button";
 import SearchHomePage from "modules/homepage/SearchHomePage";
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
+  useEffect(() => {
+    if (!userData) navigate("/sign-in");
 
+    console.log(user);
+  }, [navigate, user, userData]);
   return (
     <div className="sticky top-0 z-10 mb-8 flex w-full items-center justify-between border-b bg-white py-8 px-6">
       <div className="flex flex-1 items-center gap-x-10">

@@ -7,12 +7,14 @@ import CarouselHomePage from "modules/homepage/CarouselHomePage";
 import HouseGrid from "modules/house/HouseGrid";
 import HouseItem from "modules/house/HouseItem";
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
 
 const HomePage = () => {
   const [divHeight, setDivHeight] = useState(0);
   const [isFixed, setIsFixed] = useState();
-
+  const navigate = useNavigate();
+  const user = localStorage.getItem("user");
   const homePageref = useRef(null);
   useEffect(() => {
     console.log(divHeight);
@@ -21,6 +23,7 @@ const HomePage = () => {
   useEffect(() => {
     console.log(window.height);
   }, []);
+
   const [heightSidebar, setHeightSidebar] = useState(false);
   // useEffect(() => {
   //   const footer = document.querySelector(".footer");
