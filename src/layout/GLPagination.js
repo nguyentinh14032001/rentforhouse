@@ -2,10 +2,9 @@ import React from "react";
 import { Pagination } from "@mui/material";
 
 const GLPagination = ({ pages, setPage }) => {
-  console.log(pages);
   const handlePageChange = (e, page) => {
-    console.log("page", page);
-    console.log("pages", pages);
+    // console.log("page", page);
+    // console.log("pages", pages);
     setPage(page);
   };
 
