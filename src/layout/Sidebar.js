@@ -7,7 +7,7 @@ import {
 } from "components/icons";
 
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const sidebarLink = [
   {
@@ -39,14 +39,6 @@ const sidebarLink = [
     login: "nonLogin",
   },
   {
-    icon: <IconLogout></IconLogout>,
-    text: "Đăng xuất",
-    title: "Logout",
-    url: "/xczxc",
-    login: "needLogin",
-    onClick: () => {},
-  },
-  {
     icon: <IconDarkMode></IconDarkMode>,
     title: "Light/Dark",
     url: "/cx",
@@ -58,13 +50,20 @@ const sidebarLink = [
 const dashboardLink = [
   {
     icon: <i className="fa-regular fa-user"></i>,
+    url: "/manage/usersmanage",
     text: "Người dùng",
     title: "UserManager",
-    login: "nonLogin",
+  },
+  {
+    icon: <i className="fa-solid fa-pen-to-square"></i>,
+    url: "/manage/postmanage",
+    text: "Bài Đăng",
+    title: "PostManager",
   },
 ];
 
 const Sidebar = () => {
+  const { id } = useParams();
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const [link, setLink] = useState([]);
@@ -74,7 +73,10 @@ const Sidebar = () => {
 
   useEffect(() => {
     setWindowURL(window.location.href);
-    if (windowURL == "http://localhost:3000/manage") {
+    if (
+      windowURL == `http://localhost:3000/manage/${id}` ||
+      windowURL == `http://localhost:3000/manage/${id}?`
+    ) {
       setIsDashboard(true);
     } else {
       setIsDashboard(false);
@@ -82,7 +84,6 @@ const Sidebar = () => {
   }, [windowURL]);
 
   useEffect(() => {
-    console.log("go");
     if (userData == null) {
       const newLink = sidebarLink.filter((item) => item.login == "nonLogin");
       setLink(newLink);
@@ -97,7 +98,13 @@ const Sidebar = () => {
 
   return (
     <div className="w-[15vw]">
-      <div className="fixed top-[19vh] z-10 flex flex-col pl-8 pr-4">
+      <div
+        className={
+          isDashboard == true
+            ? "flex w-fit flex-col pl-8 pr-4"
+            : "fixed top-[19vh] z-10 flex flex-col pl-8 pr-4"
+        }
+      >
         {link &&
           link.map((item) => (
             <NavLink
@@ -105,8 +112,8 @@ const Sidebar = () => {
               key={item.title}
               className={({ isActive }) =>
                 isActive
-                  ? `${navlinkClass} bg-primary bg-opacity-20 text-primary`
-                  : `${navlinkClass} text-icon-color hover:text-primary`
+                  ? `${navlinkClass} whitespace-nowrap bg-primary bg-opacity-20 text-primary`
+                  : `${navlinkClass} whitespace-nowrap text-icon-color hover:text-primary`
               }
             >
               <div className="flex">

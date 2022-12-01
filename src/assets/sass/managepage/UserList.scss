@@ -4,12 +4,16 @@
     tr {
         border: 1px solid #e3e6f0;
         border-collapse: collapse;
+        color: #858796;
         th,
         td {
-            color: #858796;
-            padding-left: 10px;
+            white-space: nowrap;
+            padding: 5px;
             border: 1px solid #e3e6f0;
             text-align: justify;
+            &.btn-control {
+                padding-right: 10px;
+            }
         }
     }
 }

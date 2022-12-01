@@ -1,45 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 
-import { baseURL } from "api/axios";
 import UserListItem from "./UserListItem";
+import { DashboardContext } from "pages/ManagePage";
 
 import "assets/sass/managepage/UserList.scss";
 const UserList = () => {
-  const user = localStorage.getItem("user");
-  const userData = JSON.parse(user);
-
-  const [users, setUsers] = useState([]);
-  const [pages, setPages] = useState([]);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        await axios({
-          method: "get",
-          url: `${baseURL}/api/users?limit=3&page=1`,
-          headers: {
-            Authorization: userData.access_token,
-          },
-        })
-          .then(function (response) {
-            setUsers(response.data.data.data);
-            // console.log(response.data.data);
-          })
-          .catch(function (response) {});
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
-
+  const value = useContext(DashboardContext);
+  const { users, setIsChange } = value;
   return (
     <>
-      <div className="flex w-[70vw] flex-col">
+      <div>
         <form action="">
-          <table className="user-list w-full">
+          <table className="user-list mr-[20px]">
             <thead className="text-left">
               <tr>
                 <th>ID</th>
@@ -48,12 +20,20 @@ const UserList = () => {
                 <th>Email</th>
                 <th>Trạng thái</th>
                 <th>Vai trò</th>
+                <th>Người tạo</th>
+                <th>Ngày tạo</th>
+                <th>Cập nhật bởi</th>
+                <th>Ngày cập nhật</th>
               </tr>
             </thead>
             <tbody>
               {users &&
                 users.map((item) => (
-                  <UserListItem key={item?.id} user={item} />
+                  <UserListItem
+                    key={item?.id}
+                    user={item}
+                    setIsChange={setIsChange}
+                  />
                 ))}
             </tbody>
           </table>

@@ -21,7 +21,7 @@ function App() {
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
-        <Route path="/manage" element={<ManagePage></ManagePage>}></Route>
+        <Route path="/manage/:id" element={<ManagePage></ManagePage>}></Route>
         <Route
           path="/sell-house"
           element={<PostSellHouse></PostSellHouse>}

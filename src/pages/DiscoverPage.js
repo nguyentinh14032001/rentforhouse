@@ -22,7 +22,7 @@ const DiscoverPage = () => {
           .get(`${baseURL}/api/houses/all`, {
             params: {
               page: page,
-              limit: 3,
+              limit: 10,
             },
           })
           .then((res) => {
