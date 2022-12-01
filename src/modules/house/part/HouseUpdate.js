@@ -7,7 +7,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, { Quill } from "react-quill";
 import ImageUploader from "quill-image-uploader";
-import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Button } from "components/button";
@@ -16,37 +15,59 @@ import { toast } from "react-toastify";
 import FormThreeCol from "components/common/FormThreeCol";
 import { imgbbAPI } from "config/config";
 import { baseURL } from "api/axios";
+import { useSearchParams } from "react-router-dom";
 
 Quill.register("modules/imageUploader", ImageUploader);
 
-const HouseAddNew = () => {
-  const { handleSubmit, control, setValue, reset, watch, getValues } =
-    useForm();
+const HouseUpdate = () => {
+  const [params] = useSearchParams();
+  const houseId = params.get("id");
+  const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      detailSumary: "xzxczxc",
+    },
+  });
   const getDropdownLabel = (name) => {
     const value = watch(name);
     return value;
   };
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [house, setHouse] = useState("");
+  const [selectcategory, setSelectCategory] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      await axios({
+        method: "get",
+        url: `${baseURL}/api/houses/${houseId}`,
+      })
+        .then(function (response) {
+          setHouse(response?.data?.data);
+        })
+        .catch(function (response) {});
+    }
 
-  const handleSelectCategories = (value) => {
+    fetchData();
+  }, [houseId, reset]);
+  useEffect(() => {
+    reset({
+      ...house,
+    });
+  }, [house, reset]);
+  const handleSelectCategories = (value, value1) => {
     setValue("typeIds", value);
+    setValue("nameCategories", value1);
   };
   const handleSelectAddress = (name1, name2, value1, value2) => {
     setValue(name1, value1);
     setValue(name2, value2);
   };
 
-  const resetValue = () => {
-    setDescription("");
-    startDate("");
-    reset({});
-  };
+  console.log(house);
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -125,18 +146,17 @@ const HouseAddNew = () => {
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const handleAddNewHouse = async (values) => {
-    setLoading(true);
     const cloneValues = { ...values };
-
-    const price = Number(cloneValues.price);
+    console.log(cloneValues);
+    const price = Number(cloneValues?.price);
     const image = String(cloneValues?.image?.url);
     console.log(typeof image);
     const address = `${cloneValues.province}, ${cloneValues.district}, ${cloneValues.ward}`;
-
+    console.log(address);
     try {
       await axios({
-        method: "post",
-        url: `${baseURL}/api/houses?address=${address}&area=${cloneValues.area}&description=""&detailSumary=${cloneValues.detailSumary}&image=${image}&name=${cloneValues.name}&price=${price}&typeIds=${cloneValues.typeIds}`,
+        method: "put",
+        url: `${baseURL}/api/houses/${houseId}?address=${address}&area=${cloneValues.area}&description=zxczxc&image=${image}&name=${cloneValues.name}&price=${price}&roomNumber=1&status=true&typeIds=${cloneValues.typeIds}`,
         // data: {
         //   address: address,
         //   area: cloneValues.area,
@@ -152,13 +172,10 @@ const HouseAddNew = () => {
         },
       })
         .then(function (response) {
-          toast.success("Thêm căn hộ thành công");
-          setLoading(false);
-          console.log(response);
+          toast.success("Sửa căn hộ thành công");
         })
         .catch(function (response) {
-          toast.error("Thêm căn hộ thất bại");
-          setLoading(false);
+          toast.error("Sửa căn hộ thất bại");
         });
     } catch (error) {
       console.log(error);
@@ -175,13 +192,21 @@ const HouseAddNew = () => {
           .then(function (response) {
             setCategoriesData(response?.data?.data);
           })
-          .catch(function (response) {});
+          .catch(function (response) {
+            toast.error("a");
+          });
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    reset({
+      ...house,
+    });
+    setValue("nameCategories", house.typeNames);
+  }, [house, reset, setValue]);
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -203,14 +228,16 @@ const HouseAddNew = () => {
               <Dropdown>
                 <Dropdown.Select
                   placeholder={
-                    getDropdownLabel("typeIds") || "Chọn loại căn hộ"
+                    getDropdownLabel("nameCategories") || "Chọn loại căn hộ"
                   }
                 ></Dropdown.Select>
                 <Dropdown.List>
                   {categoriesData?.map((category) => (
                     <Dropdown.Option
                       key={category.id}
-                      onClick={() => handleSelectCategories(category?.id)}
+                      onClick={() =>
+                        handleSelectCategories(category?.id, category?.name)
+                      }
                     >
                       <span className="capitalize">{category?.name}</span>
                     </Dropdown.Option>
@@ -359,7 +386,6 @@ const HouseAddNew = () => {
             kind="primary"
             className="mx-auto bg-primary px-10 text-white"
             type="submit"
-            isLoading={loading}
           >
             Tạo bài bán căn hộ
           </Button>
@@ -369,4 +395,4 @@ const HouseAddNew = () => {
   );
 };
 
-export default HouseAddNew;
+export default HouseUpdate;

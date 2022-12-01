@@ -1,3 +1,4 @@
+import HouseUpdate from "modules/house/part/HouseUpdate";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -21,6 +22,10 @@ function App() {
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
+        <Route
+          path="/manage/update-house"
+          element={<HouseUpdate></HouseUpdate>}
+        ></Route>
         <Route path="/manage" element={<ManagePage></ManagePage>}></Route>
         <Route
           path="/sell-house"
