@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "../layout/LayoutAuthentication";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,7 +14,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { baseURL } from "api/axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "store/auth/auth-slice";
 
 const schema = yup.object().shape({
@@ -36,31 +36,40 @@ const SignInPage = () => {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  const handleSignIn = async (values) => {
-    // try {
-    //   await axios({
-    //     method: "post",
-    //     url: `${baseURL}/api/auth/signin`,
-    //     data: {
-    //       ...values,
-    //     },
-    //   })
-    //     .then(function (response) {
-    //       console.log(response.data.data);
-    //       localStorage.setItem("name", JSON.stringify(response.data.data));
-    //       console.log("đăng nhập thành công");
+  const user = localStorage.getItem("user");
 
-    //       setLoading(false);
-    //     })
-    //     .catch(function (response) {
-    //       toast.error("a");
-    //       setLoading(false);
-    //     });
-    // } catch (error) {
-    //   console.log(error);
-    //   setLoading(false);
+  useEffect(() => {
+    const userData = JSON.parse(user);
+    // if (userData !== "") {
+    //   navigate("/");
     // }
-    dispatch(authLogin(values));
+  }, [navigate, user]);
+  const handleSignIn = async (values) => {
+    try {
+      await axios({
+        method: "post",
+        url: `${baseURL}/api/auth/signin`,
+        data: {
+          ...values,
+        },
+      })
+        .then(function (response) {
+          console.log(response.data.data);
+          localStorage.setItem("user", JSON.stringify(response.data.data));
+          toast.success("Đăng nhập thành công");
+          navigate("/");
+          setLoading(false);
+        })
+        .catch(function (response) {
+          toast.error("Đăng nhập thất bại");
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+
+    // dispatch(authLogin(values));
     navigate("/");
   };
 

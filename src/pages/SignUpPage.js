@@ -12,10 +12,10 @@ import * as yup from "yup";
 import { IconEyeToggle } from "components/icons";
 import useToggleValue from "hooks/UseToggleValue";
 import ClassName from "hooks/ClassName";
-import { requestAuthRegister } from "store/auth/auth-request";
 import axios from "axios";
 import FormRow from "components/common/FormRow";
 import { toast } from "react-toastify";
+import { baseURL } from "api/axios";
 
 const schema = yup.object().shape({
   lastName: yup.string().required("This field is required"),
@@ -47,26 +47,33 @@ const SignUpPage = () => {
   const [loading, setLoading] = useState(false);
   const handleSignUp = async (values) => {
     setLoading(true);
-    try {
-      const response = await axios({
-        method: "post",
-        url: "http://localhost:8086/api/auth/signup",
-        data: {
-          ...values,
-        },
+
+    const response = await axios({
+      method: "post",
+      url: `http://localhost:8086/api/auth/signup?email=${values.email}&firstName=${values.firstName}&lastName=${values.lastName}&password=${values.password}&userName=${values.userName}`,
+      // data: {
+      //   email: values.email,
+      //   firstName: values.firstName,
+      //   lastName: values.lastName,
+      //   password: values.password,
+      //   userName: values.userName,
+      // },
+    })
+      .then(function (response) {
+        toast.success("Đăng ký thành công");
+      })
+      .catch(function (response) {
+        toast.error("Đăng ký thất bại");
       });
-      reset({
-        firstName: "",
-        lastName: "",
-        userName: "",
-        password: "",
-        email: "",
-      });
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      toast.error("Register Failed");
-    }
+    // reset({
+    //   firstName: "",
+    //   lastName: "",
+    //   userName: "",
+    //   password: "",
+    //   email: "",
+    // });
+    console.log(values);
+    setLoading(false);
   };
   return (
     <LayoutAuthentication heading="SignUp">
