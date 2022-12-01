@@ -54,7 +54,7 @@ const DetailPage = () => {
             {/* <SimilarPlaces /> */}
           </LayoutPage>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </DetailContext.Provider>
     </>
   );

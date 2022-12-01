@@ -147,10 +147,10 @@ const Sidebar = () => {
       setLink(newLink);
     } else if (userData && isDashboard == true) {
       setLink(dashboardLink);
-    } else {
+    } else if (userData) {
       setLink(sidebarLink);
     }
-  }, [userData]);
+  }, [userData && windowURL && isDashboard]);
 
   const navlinkClass = "my-4 w-fit p-2 rounded-lg";
 

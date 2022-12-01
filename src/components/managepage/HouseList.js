@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-import axios from "api/axios";
+import { baseURL } from "api/axios";
 import { IconHouse } from "components/icons";
 
 const HouseList = ({ house, setIsChange }) => {
-  const userData = JSON.parse(localStorage.getItem("user"));
-  const [changeStatus, setChangeStatus] = useState(!house?.status);
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+
+  // const [changeStatus, setChangeStatus] = useState();
 
   const deleteHouse = async () => {
     try {
       await axios
-        .delete(`http://localhost:8086/api/houses/${house?.id}`, {
+        .delete(`${baseURL}/api/houses/${house?.id}`, {
           headers: {
             Authorization: userData.access_token,
           },
@@ -25,31 +28,31 @@ const HouseList = ({ house, setIsChange }) => {
     }
   };
 
-  const putHouseStatus = async () => {
+  const changeStatus = async () => {
     try {
-      await axios
-        .put(`http://localhost:8086/api/houses/${house?.id}/status/true`, {
-          headers: {
-            Authorization: userData.access_token,
-          },
+      await axios({
+        method: "put",
+        url: `${baseURL}/api/houses/house/${
+          house?.id
+        }/status/${!house?.status}`,
+        headers: {
+          Authorization: userData.access_token,
+        },
+      })
+        .then(function (response) {
+          setIsChange(true);
         })
-        .then((res) => {
-          // if (res?.data?.data?.message == "successful delete") {
-          //   setIsChange(true);
-          // }
-          console.log(res?.data?.data?.message);
+        .catch(function (response) {
+          console.log(response);
         });
     } catch (error) {
       console.log(error);
     }
   };
 
-  // http://localhost:8086/api/houses/27/status?status=true
-
   return (
     <>
       <div className="mb-[50px] grid w-[80vw] grid-cols-7">
-        {house?.id}
         <img
           src="https://thietkenoithatblog.com/wp-content/uploads/2020/03/thiet-ke-cai-tao-noi-that-chung-cu-55m2-3.jpg"
           alt=""
@@ -81,14 +84,14 @@ const HouseList = ({ house, setIsChange }) => {
               {house?.status == true ? (
                 <button
                   className="mr-2 whitespace-nowrap  rounded-lg px-4 py-2 font-bold text-[#ff9f03]"
-                  onClick={putHouseStatus}
+                  onClick={changeStatus}
                 >
                   Huỷ đăng
                 </button>
               ) : (
                 <button
                   className="mr-2 whitespace-nowrap  rounded-lg px-4 py-2 font-bold text-[green]"
-                  onClick={putHouseStatus}
+                  onClick={changeStatus}
                 >
                   Chấp nhận
                 </button>

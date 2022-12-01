@@ -11,6 +11,9 @@ import GLPagination from "layout/GLPagination";
 import { baseURL } from "api/axios";
 
 const DiscoverPage = () => {
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+
   const [houses, setHouses] = useState([]);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
@@ -19,15 +22,19 @@ const DiscoverPage = () => {
     const fetchApi = async () => {
       try {
         await axios
-          .get(`${baseURL}/api/houses/all`, {
+          .get(`${baseURL}/api/houses/status/true`, {
             params: {
-              page: page,
               limit: 10,
+              page: page,
+            },
+            headers: {
+              Authorization: userData.access_token,
             },
           })
           .then((res) => {
             setPages(res.data.data);
             setHouses(res.data.data.houses);
+            console.log(res.data.data);
           });
       } catch (error) {}
     };
@@ -40,7 +47,7 @@ const DiscoverPage = () => {
       <div className="flex items-start">
         <Sidebar></Sidebar>
         <LayoutHomePage>
-          <Sort />
+          {/* <Sort /> */}
           <HousesList houses={houses} />
           <GLPagination pages={pages} setPage={setPage} />
         </LayoutHomePage>
