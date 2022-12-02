@@ -18,6 +18,7 @@ const YourHouse = () => {
   const [limit, setLimit] = useState(2);
   const userData = JSON.parse(user);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {

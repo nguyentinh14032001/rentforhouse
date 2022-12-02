@@ -24,6 +24,7 @@ const schema = yup.object().shape({
     .required("This field is required")
     .min(6, "Password must be 6 character"),
 });
+
 const SignInPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -44,6 +45,7 @@ const SignInPage = () => {
     //   navigate("/");
     // }
   }, [navigate, user]);
+
   const handleSignIn = async (values) => {
     try {
       await axios({
@@ -75,6 +77,7 @@ const SignInPage = () => {
 
   const { value: showPassword, handleToggleValue: handleTogglePassword } =
     useToggleValue();
+
   return (
     <LayoutAuthentication heading="Wellcome back!">
       <p className="mb-6 text-center text-xs font-normal text-text-3 lg:mb-5 lg:text-sm">
