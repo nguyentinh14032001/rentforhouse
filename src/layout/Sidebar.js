@@ -77,7 +77,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [link, setLink] = useState([]);
   const userLogout = () => {
-    localStorage.setItem("user", JSON.stringify(""));
+    localStorage.removeItem("user");
     navigate("/sign-in");
   };
   // const link = [

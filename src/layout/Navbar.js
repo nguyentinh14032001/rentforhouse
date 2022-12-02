@@ -1,6 +1,8 @@
 import { Button } from "components/button";
 import SearchHomePage from "modules/homepage/SearchHomePage";
 
+import { baseURL } from "api/axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,9 +10,31 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
+
+  const [profile, setProfile] = useState();
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
-    if (!userData) navigate("/sign-in");
-  }, [navigate, user, userData]);
+    const fetchApi = async () => {
+      try {
+        await axios
+          .get(`${baseURL}/api/users/${userData?.id}`, {
+            headers: {
+              Authorization: userData.access_token,
+            },
+          })
+          .then((res) => {
+            setProfile(res.data.data);
+            console.log(res.data.data);
+          });
+      } catch (error) {}
+    };
+    fetchApi();
+  }, []);
+
+  const handleShow = () => {
+    setShow(!show);
+  };
 
   return (
     <div className="sticky top-0 z-10 mb-8 flex w-full items-center justify-between border-b bg-white py-8 px-6">
@@ -28,7 +52,7 @@ const Navbar = () => {
       </div>
       <div className="flex flex-1 items-center justify-end gap-x-10">
         {userData && userData.roles == "ROLE_ADMIN" ? (
-          <Link to="/manage/usersmanage">Dashboard</Link>
+          <Link to="/manage/usersmanage">Quản lý</Link>
         ) : null}
         {userData == null ? (
           <Button
@@ -40,8 +64,24 @@ const Navbar = () => {
             Login
           </Button>
         ) : (
-          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-[#000] text-white">
-            <i className="fa-regular fa-user"></i>
+          <div className="flex flex-col">
+            <div
+              className="flex items-baseline p-2 shadow-xl"
+              onClick={handleShow}
+            >
+              <div className="mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#000] text-white">
+                <i className="fa-regular fa-user text-[13px]"></i>
+              </div>
+              <div className="text-[13px] font-bold capitalize">
+                {profile?.lastName} {profile?.firstName}
+              </div>
+              <i className="fa-solid fa-caret-down ml-2"></i>
+            </div>
+            {show == true && (
+              <Link to="/profile" className="border-b-2 bg-white p-2">
+                Xem chi tiết
+              </Link>
+            )}
           </div>
         )}
       </div>

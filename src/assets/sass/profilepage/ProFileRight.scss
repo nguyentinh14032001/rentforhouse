@@ -1,0 +1,13 @@
+.text-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #969696;
+
+    &::after {
+        content: "";
+        height: 1px;
+        background-color: #969696;
+        flex-grow: 1;
+    }
+}
