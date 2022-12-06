@@ -12,19 +12,10 @@ const PopularHouses = () => {
   useEffect(() => {
     const fetchApi = async () => {
       try {
-        await axios
-          .get(`${baseURL}/api/houses/status/true`, {
-            params: {
-              limit: 4,
-              page: 1,
-            },
-            headers: {
-              Authorization: userData.access_token,
-            },
-          })
-          .then((res) => {
-            setHouses(res?.data?.data?.houses);
-          });
+        await axios.get(`${baseURL}/api/houses/top-5`).then((res) => {
+          setHouses(res?.data?.data);
+          console.log(res?.data);
+        });
       } catch (error) {}
     };
     fetchApi();

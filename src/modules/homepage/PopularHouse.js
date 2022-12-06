@@ -2,7 +2,6 @@ import React from "react";
 import { IconHouse } from "components/icons";
 
 const PopularHouse = ({ house }) => {
-  console.log(house);
   return (
     <>
       <div className="flex grid grid-rows-2 flex-col">
