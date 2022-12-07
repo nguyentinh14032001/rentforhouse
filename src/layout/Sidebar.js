@@ -116,12 +116,14 @@ const Sidebar = ({ bgLayoutPosition, isFixed }) => {
   }, [userData && windowURL && isDashboard]);
 
   useEffect(() => {
-    setSidebarM("" + (bgLayoutPosition.height - 500));
+    setSidebarM((bgLayoutPosition.height - 500).toFixed());
   }, []);
-
+  console.log("sidebarMT", sidebarMT);
   return (
     <div
-      className={isFixed == true ? "w-[15vw]" : `w-[15vw] pt-[${sidebarMT}px]`}
+      className={
+        isFixed == true ? "w-[15vw]" : "flex w-[15vw] flex-col justify-end"
+      }
     >
       <div
         className={

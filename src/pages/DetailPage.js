@@ -12,6 +12,7 @@ import SellerInfo from "components/detailpage/SellerInfo";
 import Comments from "components/detailpage/Comments";
 import SimilarPlaces from "components/detailpage/SimilarPlaces";
 import Footer from "layout/Footer";
+import BackgroundLayout from "layout/BackgroundLayout";
 
 export const DetailContext = createContext();
 const DetailPage = () => {
@@ -61,18 +62,17 @@ const DetailPage = () => {
   return (
     <>
       <DetailContext.Provider value={value}>
-        <Navbar></Navbar>
+        <Navbar />
         <div className="flex items-start gap-x-6">
-          <Sidebar></Sidebar>
-          <LayoutPage>
+          <BackgroundLayout>
             <Overview />
             <DetailInfo />
             <SellerInfo />
             <Comments idHouse={idHouse} />
             {/* <SimilarPlaces /> */}
-          </LayoutPage>
+          </BackgroundLayout>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </DetailContext.Provider>
     </>
   );

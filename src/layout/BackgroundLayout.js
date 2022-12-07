@@ -30,7 +30,7 @@ const BackgroundLayout = ({ children }) => {
     setBgLayoutPosition(ref.current.getBoundingClientRect());
   }, [windowY]);
 
-  // console.log("bgLayoutPosition", bgLayoutPosition.height);
+  console.log("bgLayoutPosition", bgLayoutPosition.height);
   // console.log("isFixed", isFixed);
   // console.log("window.scrollY", window.scrollY);
 

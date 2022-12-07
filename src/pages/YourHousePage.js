@@ -49,6 +49,7 @@ const YourHousePage = ({ children }) => {
             Đăng bài
           </Button>
         </div>
+
         <Heading number={4}>Your House</Heading>
         <HouseGrid type="secondary">
           <YourHouse></YourHouse>

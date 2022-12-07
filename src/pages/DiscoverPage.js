@@ -40,13 +40,13 @@ const DiscoverPage = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
       <BackgroundLayout>
         {/* <Sort /> */}
         <HousesList houses={houses} />
         <GLPagination pages={pages} setPage={setPage} />
       </BackgroundLayout>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 };
