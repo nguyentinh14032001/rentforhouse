@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import { baseURL } from "api/axios";
 import axios from "axios";
 
 import "assets/sass/profilepage/ProFileRight.scss";
-import { baseURL } from "api/axios";
 
 const ProFileRight = () => {
   const user = localStorage.getItem("user");

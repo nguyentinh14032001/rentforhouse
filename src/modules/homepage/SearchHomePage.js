@@ -11,7 +11,6 @@ const SearchHomePage = () => {
   const nodeRef = useRef(null);
   const [filter, setFilter] = useState(null);
   const navigate = useNavigate();
-
   const handleOnChange = debounce((e) => {
     setFilter(e.target.value);
   }, 250);

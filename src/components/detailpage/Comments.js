@@ -61,7 +61,6 @@ const Comments = ({ idHouse }) => {
     fetchApi();
   }, [isChange == true]);
 
-  console.log(isEdit);
   useEffect(() => {
     const fetchData = async () => {
       try {

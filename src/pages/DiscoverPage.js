@@ -9,6 +9,7 @@ import HousesList from "components/discoverpage/HousesList";
 import Footer from "layout/Footer";
 import GLPagination from "layout/GLPagination";
 import { baseURL } from "api/axios";
+import BackgroundLayout from "layout/BackgroundLayout";
 
 const DiscoverPage = () => {
   const user = localStorage.getItem("user");
@@ -27,14 +28,10 @@ const DiscoverPage = () => {
               limit: 10,
               page: page,
             },
-            headers: {
-              Authorization: userData.access_token,
-            },
           })
           .then((res) => {
             setPages(res.data.data);
             setHouses(res.data.data.houses);
-            console.log(res.data.data);
           });
       } catch (error) {}
     };
@@ -43,15 +40,13 @@ const DiscoverPage = () => {
 
   return (
     <>
-      <Navbar></Navbar>
-      <div className="flex items-start">
-        <Sidebar></Sidebar>
-        <LayoutHomePage>
-          {/* <Sort /> */}
-          <HousesList houses={houses} />
-          <GLPagination pages={pages} setPage={setPage} />
-        </LayoutHomePage>
-      </div>
+      <Navbar />
+      <BackgroundLayout>
+        {/* <Sort /> */}
+        <HousesList houses={houses} />
+        <GLPagination pages={pages} setPage={setPage} />
+      </BackgroundLayout>
+      <Footer />
     </>
   );
 };

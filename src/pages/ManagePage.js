@@ -8,6 +8,7 @@ import UserList from "components/managepage/UserList";
 import HouseManage from "components/managepage/HouseManage";
 import GLPagination from "layout/GLPagination";
 import { useParams } from "react-router-dom";
+import BackgroundLayout from "layout/BackgroundLayout";
 
 export const DashboardContext = createContext();
 
@@ -76,12 +77,11 @@ const ManagePage = () => {
       <DashboardContext.Provider value={value}>
         <Navbar></Navbar>
         <div className="flex items-start">
-          <Sidebar></Sidebar>
-          <LayoutHomePage>
+          <BackgroundLayout>
             {id == "usersmanage" && <UserList />}
             {id == "postmanage" && <HouseManage />}
             <GLPagination pages={pages} setPage={setPage} />
-          </LayoutHomePage>
+          </BackgroundLayout>
         </div>
       </DashboardContext.Provider>
     </>
