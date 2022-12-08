@@ -1,12 +1,12 @@
 import { Button } from "components/button";
-import Heading from "components/common/Heading";
-import BackgroundLayout from "layout/BackgroundLayout";
-import Footer from "layout/Footer";
-// import DiscoverPagination from "components/discoverpage/DiscoverPagination";
+
 import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
+import BackgroundLayout from "layout/BackgroundLayout";
+import Heading from "components/common/Heading";
 import HouseGrid from "modules/house/HouseGrid";
 import YourHouse from "modules/house/part/YourHouse";
+import SpecifiedUserHouse from "components/yourhousepage/SpecifiedUserHouse";
+import Footer from "layout/Footer";
 import React from "react";
 
 const YourHousePage = ({ children }) => {
@@ -51,9 +51,7 @@ const YourHousePage = ({ children }) => {
         </div>
 
         <Heading number={4}>Your House</Heading>
-        <HouseGrid type="secondary">
-          <YourHouse></YourHouse>
-        </HouseGrid>
+        <SpecifiedUserHouse />
       </BackgroundLayout>
       <Footer></Footer>
     </>

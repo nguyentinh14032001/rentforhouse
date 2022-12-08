@@ -1,16 +1,19 @@
 import React from "react";
 import { IconHouse } from "components/icons";
+import { Link } from "react-router-dom";
 
 const PopularHouse = ({ house }) => {
   return (
     <>
       <div className="flex grid grid-rows-2 flex-col">
         {/* house image */}
-        <img
-          src="https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          alt=""
-          className="h-full w-full rounded-2xl object-cover"
-        />
+        <Link to={`/detail/${house?.id}`}>
+          <img
+            src="https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt=""
+            className="h-full w-full rounded-2xl object-cover"
+          />
+        </Link>
 
         {/* House content */}
         <div className="mt-2 flex flex-col justify-between">
@@ -20,10 +23,12 @@ const PopularHouse = ({ house }) => {
               <IconHouse className="mr-2 h-5 w-5"></IconHouse>
               <span>{house?.typeNames}</span>
             </div>
-
-            <h1 className="my-2 mx-2 text-[20px] font-bold capitalize">
+            <Link
+              to={`/detail/${house?.id}`}
+              className="my-2 block text-[20px] font-bold capitalize"
+            >
               {house?.name}
-            </h1>
+            </Link>
           </div>
 
           {/* div bottom */}
