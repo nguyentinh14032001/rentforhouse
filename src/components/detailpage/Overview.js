@@ -1,41 +1,71 @@
-import React, { useContext } from "react";
-import { DetailContext } from "pages/DetailPage";
+import React, { useContext, useState } from "react";
 
+import { DetailContext } from "pages/DetailPage";
+import Slider from "react-slick";
+
+import house from "assets/images/house.jpg";
+import house1 from "assets/images/chungcu.png";
+import house2 from "assets/images/house2.jpg";
 import "../../assets/sass/detailpage/Overview.scss";
+import { useEffect } from "react";
 
 const Overview = () => {
   const value = useContext(DetailContext);
   const { houses } = value;
+  const [houseImages, setHouseImages] = useState([
+    house,
+    house,
+    house,
+    house2,
+    house2,
+  ]);
+
+  houseImages.map((item) => console.log(item));
+
+  console.log(houseImages);
+
+  const settings = {
+    customPaging: function (i) {
+      return (
+        <a>
+          <img src={houseImages[i]} />
+        </a>
+      );
+    },
+    dots: true,
+    dotsClass: "slick-dots slick-thumb",
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+  };
 
   return (
     <>
-      <div className="overview flex justify-between">
-        <div className="flex w-[35%] flex-col justify-between">
-          <div className="flex flex-col p-4">
-            <h1 className="mb-4  text-lg font-[600]">{houses?.name}</h1>
+      <div className="overview flex grid grid-cols-6 flex-col">
+        <div className="col-span-2 col-start-2 flex flex-col justify-between">
+          <div className="flex flex-col justify-around">
+            <h1 className="mb-4  text-lg font-[600] capitalize">
+              {houses?.name}
+            </h1>
+
             <div className="flex">
               <i className="fa-solid fa-location-dot mr-2"></i>
               <p>{houses?.address}</p>
             </div>
-            <div className="h-[70%] w-full bg-black"></div>
           </div>
-          {/* end left */}
+        </div>
+        {/* end detail content */}
 
-          <div className="ml-[5%] flex h-[50vh] w-[60%] flex-col justify-between">
-            <div className="h-[75%] w-full">
-              <img
-                src="https://thietkenoithatblog.com/wp-content/uploads/2020/03/thiet-ke-cai-tao-noi-that-chung-cu-55m2-3.jpg"
-                alt=""
-                className="h-full w-full rounded-lg object-cover"
-              />
-            </div>
-            <div className="flex h-[20%] justify-between">
-              {/* {newData?.image.map((item, index) => (
-                <img src={item} key={index} alt="" className="view-images" />
-              ))} */}
-              {/* <img src={newData?.image[0]} alt="" className="view-images" /> */}
-            </div>
-          </div>
+        <div className="col-span-3 col-start-2">
+          <Slider {...settings}>
+            {houseImages.map((item) => (
+              <div>
+                <img src={item} />
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </>

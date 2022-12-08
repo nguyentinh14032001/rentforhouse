@@ -1,5 +1,24 @@
-.view-images{
-    width: 23%;
-    object-fit: cover;
-    border-radius: 5px;
+.overview {
+    .slick-slider {
+        .slick-dots {
+            position: unset;
+            justify-content: space-between;
+            display: flex !important;
+
+            li {
+                width: 100%;
+                height: 100%;
+                margin: 0 10px 0 0;
+                &:last-child {
+                    margin-right: 0;
+                }
+                a {
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
