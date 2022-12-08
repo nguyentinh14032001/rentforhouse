@@ -24,7 +24,7 @@ const dashboardLink = [
   },
 ];
 
-const Sidebar = ({ bgLayoutPosition, isFixed }) => {
+const Sidebar = ({ isFixed }) => {
   const sidebarLink = [
     {
       icon: <i className="fa-solid fa-shop"></i>,
@@ -115,10 +115,6 @@ const Sidebar = ({ bgLayoutPosition, isFixed }) => {
     }
   }, [userData && windowURL && isDashboard]);
 
-  useEffect(() => {
-    setSidebarM((bgLayoutPosition.height - 500).toFixed());
-  }, []);
-  console.log("sidebarMT", sidebarMT);
   return (
     <div
       className={
