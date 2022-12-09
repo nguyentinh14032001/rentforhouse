@@ -1,15 +1,15 @@
-.info{
-    h1{
+.info {
+    h1 {
         font-weight: bold;
         font-size: 20px;
     }
 
-    .left{
-        h1{
-            margin: 10px 0 ;
+    .left {
+        h1 {
+            margin: 10px 0;
         }
-        .facilities{
-            small{
+        .facilities {
+            small {
                 display: inline-block;
                 margin-right: 10px;
                 font-weight: 16px;
@@ -18,11 +18,11 @@
         }
     }
 
-    .right{
-        & > div{
+    .right {
+        & > div {
             margin-bottom: 16px;
-            
-            p{
+
+            p {
                 margin-left: 10px;
             }
         }

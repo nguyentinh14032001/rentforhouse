@@ -1,14 +1,14 @@
-.seller{
-    h1{
+.seller {
+    h1 {
         font-weight: bold;
         font-size: 20px;
     }
 
-    .right{
-        & > div{
+    .right {
+        & > div {
             margin-bottom: 16px;
-            
-            p{
+
+            p {
                 margin-left: 10px;
             }
         }

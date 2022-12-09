@@ -44,7 +44,7 @@ const Overview = () => {
   return (
     <>
       <div className="overview flex grid grid-cols-6 flex-col">
-        <div className="col-span-2 col-start-2 flex flex-col justify-between">
+        <div className="col-span-4 flex flex-col justify-between">
           <div className="flex flex-col justify-around">
             <h1 className="mb-4  text-lg font-[600] capitalize">
               {houses?.name}
@@ -58,7 +58,7 @@ const Overview = () => {
         </div>
         {/* end detail content */}
 
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 col-start-1">
           <Slider {...settings}>
             {houseImages.map((item) => (
               <div>
