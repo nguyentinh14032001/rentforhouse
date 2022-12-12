@@ -3,38 +3,44 @@ import SearchHomePage from "modules/homepage/SearchHomePage";
 
 import { baseURL } from "api/axios";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
-
+  const [image, setImage] = useState();
   const [profile, setProfile] = useState();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const fetchApi = async () => {
+    async function fetchData() {
       try {
-        await axios
-          .get(`${baseURL}/api/users/${userData?.id}`, {
-            headers: {
-              Authorization: userData.access_token,
-            },
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/profiles/`,
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            setProfile(response?.data?.data);
+            setImage(response?.data?.data?.image);
           })
-          .then((res) => {
-            setProfile(res.data.data);
-          });
-      } catch (error) {}
-    };
-    fetchApi();
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
   }, []);
 
   const handleShow = () => {
     setShow(!show);
   };
 
+  console.log("navbar", JSON.parse(localStorage.getItem("profile")));
   return (
     <div className="sticky top-0 z-10 mb-8 flex w-full items-center justify-between border-b bg-white py-8 px-6">
       <div className="flex flex-1 items-center gap-x-10">
@@ -65,19 +71,35 @@ const Navbar = () => {
         ) : (
           <div className="flex flex-col">
             <div
-              className="flex items-baseline p-2 shadow-xl"
+              className={
+                image != null
+                  ? "flex items-center p-2 shadow-xl"
+                  : "flex items-baseline p-2 shadow-xl"
+              }
               onClick={handleShow}
             >
-              <div className="mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#000] text-white">
-                <i className="fa-regular fa-user text-[13px]"></i>
-              </div>
+              {image && image != "http://localhost:8086/api/file/null" ? (
+                <img
+                  src={image}
+                  alt=""
+                  className="mr-2 flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded-full object-cover"
+                />
+              ) : (
+                <div className="mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-[#000] text-white">
+                  <i className="fa-regular fa-user text-[13px]"></i>
+                </div>
+              )}
+
               <div className="text-[13px] font-bold capitalize">
                 {profile?.lastName} {profile?.firstName}
               </div>
               <i className="fa-solid fa-caret-down ml-2"></i>
             </div>
             {show == true && (
-              <Link to="/profile" className="border-b-2 bg-white p-2">
+              <Link
+                to="/profile"
+                className="absolute -bottom-2 border-b-2 bg-white p-2"
+              >
                 Xem chi tiết
               </Link>
             )}

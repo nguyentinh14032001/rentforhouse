@@ -4,15 +4,13 @@ import axios from "axios";
 
 import { baseURL } from "api/axios";
 import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
-import LayoutPage from "layout/LayoutPage";
+import BackgroundLayout from "layout/BackgroundLayout";
 import Overview from "components/detailpage/Overview";
 import DetailInfo from "components/detailpage/DetailInfo";
 import SellerInfo from "components/detailpage/SellerInfo";
 import Comments from "components/detailpage/Comments";
 import SimilarPlaces from "components/detailpage/SimilarPlaces";
 import Footer from "layout/Footer";
-import BackgroundLayout from "layout/BackgroundLayout";
 
 export const DetailContext = createContext();
 const DetailPage = () => {

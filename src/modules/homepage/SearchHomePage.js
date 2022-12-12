@@ -136,7 +136,10 @@ function SearchItem({ data, onClick = () => {} }) {
       />
       <div className="flex-1 text-sm">
         <h3 className="mb-1">
-          <strong>{data.typeNames[0]} </strong>
+          {data?.houseTypes.map((item) => (
+            <strong>{data?.name}</strong>
+          ))}
+
           {data.name}
         </h3>
         <p className="text-text-3 ">{`Liên hệ: ${data?.user.firstName}, Sđt: ${data?.user.phone}`}</p>

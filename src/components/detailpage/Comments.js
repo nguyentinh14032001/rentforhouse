@@ -110,22 +110,12 @@ const Comments = ({ idHouse }) => {
 
   return (
     <>
-      <div className="container flex flex-col">
+      <div className="flex flex-col">
         {isEdit?.check == true && <div>{isEdit.comment.id}</div>}
         <div className="flex w-fit items-center justify-center bg-black py-2 px-3">
           <h1 className="font-bold text-white">Comments</h1>
         </div>
         <div className="flex flex-col bg-[#D9D9D9] p-8">
-          {comment &&
-            comment.map((item) => (
-              <Comment
-                key={item.id}
-                comment={item}
-                setIsChange={setIsChange}
-                setIsEdit={setIsEdit}
-                setValue={setValue}
-              />
-            ))}
           {user && (
             <form
               className="flex w-full flex-col items-end"
@@ -146,6 +136,16 @@ const Comments = ({ idHouse }) => {
               </button>
             </form>
           )}
+          {comment &&
+            comment.map((item) => (
+              <Comment
+                key={item.id}
+                comment={item}
+                setIsChange={setIsChange}
+                setIsEdit={setIsEdit}
+                setValue={setValue}
+              />
+            ))}
 
           {/* End form post-reviews*/}
         </div>
