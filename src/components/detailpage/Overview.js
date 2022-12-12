@@ -4,10 +4,8 @@ import { DetailContext } from "pages/DetailPage";
 import Slider from "react-slick";
 
 import house from "assets/images/house.jpg";
-import house1 from "assets/images/chungcu.png";
 import house2 from "assets/images/house2.jpg";
 import "../../assets/sass/detailpage/Overview.scss";
-import { useEffect } from "react";
 
 const Overview = () => {
   const value = useContext(DetailContext);

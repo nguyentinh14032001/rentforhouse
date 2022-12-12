@@ -42,7 +42,9 @@ const DetailInfo = () => {
             <h1>Mức giá</h1>
             <p>{houses?.price} vnd</p>
             <h1>Loại</h1>
-            <p>{houses?.typeNames}</p>
+            {houses?.houseTypes.map((item) => (
+              <p>{item?.name}</p>
+            ))}
             <h1>Số phòng</h1>
             <p>{houses?.roomNumber} phòng</p>
             <h1>Lầu</h1>
