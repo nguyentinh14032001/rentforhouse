@@ -14,7 +14,7 @@ const DetailInfo = () => {
           <div className="my-2 flex flex-col border-y-[1px] py-2">
             <span className="opacity-60">Mức giá</span>
             <p className="block w-fit text-[18px] font-[600]">
-              {houses?.price} / tháng
+              {houses?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
             </p>
           </div>
           <div className="my-2 flex flex-col border-y-[1px] py-2">
@@ -40,7 +40,10 @@ const DetailInfo = () => {
             <h1>Diện tích</h1>
             <p>{houses?.area} m2</p>
             <h1>Mức giá</h1>
-            <p>{houses?.price} vnd</p>
+            <p>
+              {houses?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}{" "}
+              vnd
+            </p>
             <h1>Loại</h1>
             {houses?.houseTypes.map((item) => (
               <p>{item?.name}</p>

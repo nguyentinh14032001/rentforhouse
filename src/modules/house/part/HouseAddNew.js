@@ -182,12 +182,14 @@ const HouseAddNew = () => {
     };
     fetchData();
   }, []);
+
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
         <h1 className="mb-10 inline-block rounded-xl bg-white py-4 px-[60px] text-center text-[25px]  font-semibold">
           Bài đăng rao bán căn hộ 🏘️
         </h1>
+
         <form onSubmit={handleSubmit(handleAddNewHouse)}>
           <FormRow>
             <FormGroup>
@@ -198,6 +200,7 @@ const HouseAddNew = () => {
                 placeholder="Nhập tên căn hộ"
               ></Input>
             </FormGroup>
+
             <FormGroup>
               <Label>Chọn loại căn hộ* </Label>
               <Dropdown>
@@ -206,6 +209,7 @@ const HouseAddNew = () => {
                     getDropdownLabel("typeIds") || "Chọn loại căn hộ"
                   }
                 ></Dropdown.Select>
+
                 <Dropdown.List>
                   {categoriesData?.map((category) => (
                     <Dropdown.Option
@@ -219,6 +223,7 @@ const HouseAddNew = () => {
               </Dropdown>
             </FormGroup>
           </FormRow>
+
           <FormGroup>
             <Label>Mô tả ngắn* </Label>
             <Textarea
@@ -227,6 +232,7 @@ const HouseAddNew = () => {
               placeholder="Mô tả ngắn"
             ></Textarea>
           </FormGroup>
+
           <FormRow>
             <FormGroup>
               <Label>Hình ảnh* </Label>
@@ -237,6 +243,7 @@ const HouseAddNew = () => {
               ></ImageUpload>
             </FormGroup>
           </FormRow>
+
           <FormGroup>
             <Label>Chi tiết căn hộ* </Label>
             <ReactQuill
@@ -247,6 +254,7 @@ const HouseAddNew = () => {
               onChange={setDescription}
             />
           </FormGroup>
+
           <FormRow>
             <FormGroup>
               <Label>Price*</Label>
@@ -256,6 +264,7 @@ const HouseAddNew = () => {
                 placeholder="Price...."
               ></Input>
             </FormGroup>
+
             {/* <FormGroup>
               <Label>Date*</Label>
               <DatePicker
@@ -264,6 +273,7 @@ const HouseAddNew = () => {
                 format="yyyy-MM-dd"
               />
             </FormGroup> */}
+
             <FormGroup>
               <Label>Diện tích* </Label>
               <Input
@@ -273,6 +283,7 @@ const HouseAddNew = () => {
               ></Input>
             </FormGroup>
           </FormRow>
+
           <FormGroup>
             <Label>Địa chỉ</Label>
             <FormThreeCol>
@@ -327,6 +338,7 @@ const HouseAddNew = () => {
                   </Dropdown.List>
                 </Dropdown>
               </FormGroup>
+
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select

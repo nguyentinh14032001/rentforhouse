@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
-import Select from "react-select";
-
-import { ProfileContext } from "pages/ProfilePage";
 import { useForm } from "react-hook-form";
+import Select from "react-select";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment/moment";
 
+import { ProfileContext } from "pages/ProfilePage";
+import { baseURL } from "api/axios";
+import axios from "axios";
+
 const InfoControl = ({ setIsEdit }) => {
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+
   const value = useContext(ProfileContext);
   const { profile } = value;
   const dataFromInfo = {
@@ -58,16 +63,33 @@ const InfoControl = ({ setIsEdit }) => {
     { value: "nữ", label: "nữ" },
   ];
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setIsEdit(false);
-  };
-
   const handleChange = (e) => {
     setValue("sex", e.value);
   };
 
-  console.log(profile);
+  const onSubmit = (data) => {
+    console.log(data);
+    async function putData() {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/profiles?email=${data?.gmail}&firstName=${data?.firstname}&lastName=${data?.lastname}&phone=${data?.phone}`,
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    putData();
+    // setIsEdit(false);
+  };
+  // console.log(profile);
   return (
     <>
       <form

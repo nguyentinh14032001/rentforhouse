@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "api/axios";
+import axios, { baseURL } from "api/axios";
 import moment from "moment/moment";
 
 const UserListItem = ({ user, setIsChange }) => {
@@ -10,7 +10,7 @@ const UserListItem = ({ user, setIsChange }) => {
   const deleteUser = async () => {
     try {
       await axios
-        .delete(`http://localhost:8086/api/users/${user?.id}`, {
+        .delete(`${baseURL}/api/users/${user?.id}`, {
           headers: {
             Authorization: userData.access_token,
           },

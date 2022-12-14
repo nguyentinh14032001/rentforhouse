@@ -12,9 +12,6 @@ import { baseURL } from "api/axios";
 import BackgroundLayout from "layout/BackgroundLayout";
 
 const DiscoverPage = () => {
-  const user = localStorage.getItem("user");
-  const userData = JSON.parse(user);
-
   const [houses, setHouses] = useState([]);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
@@ -37,7 +34,7 @@ const DiscoverPage = () => {
     };
     fetchApi();
   }, [page]);
-
+  console.log(houses);
   return (
     <>
       <Navbar />

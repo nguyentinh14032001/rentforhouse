@@ -26,9 +26,7 @@ const DetailPage = () => {
           method: "put",
           url: `${baseURL}/api/houses/viewPlus/${idHouse}`,
         })
-          .then(function (response) {
-            console.log(response);
-          })
+          .then(function (response) {})
           .catch(function (response) {});
       } catch (error) {
         console.log(error);

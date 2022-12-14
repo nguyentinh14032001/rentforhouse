@@ -1,0 +1,81 @@
+[
+  {
+    "id": 1,
+    "name": "name",
+    "title": "tên căn hộ",
+    "type": "input",
+    "placeholder": "Nhập tên căn hộ ...",
+    "error": "errors?.name?.message"
+  },
+  {
+    "id": 2,
+    "name": "typeHouses",
+    "title": "loại căn hộ",
+    "type": "select",
+    "error": "errors?.typeHouses?.message"
+  },
+
+  {
+    "id": 3,
+    "name": "address",
+    "title": "địa chỉ",
+    "type": "input",
+    "placeholder": "Nhập tên địa chỉ ...",
+    "error": "errors?.address?.message"
+  },
+  {
+    "id": 4,
+    "name": "area",
+    "title": "diện tích",
+    "type": "input",
+    "placeholder": "Nhập diện tích ...",
+    "error": "errors?.area?.message"
+  },
+  {
+    "id": 5,
+    "name": "description",
+    "title": "mô tả",
+    "type": "textarea",
+    "placeholder": "Nhập mô tả ...",
+    "error": "errors?.description?.message"
+  },
+  {
+    "id": 6,
+    "name": "floor",
+    "title": "số tầng",
+    "type": "input",
+    "placeholder": "Nhập số tầng ...",
+    "error": "errors?.floor?.message"
+  },
+  {
+    "id": 7,
+    "name": "price",
+    "title": "giá cả",
+    "type": "input",
+    "placeholder": "Nhập giá cả ...",
+    "error": "errors?.price?.message"
+  },
+  {
+    "id": 8,
+    "name": "roomNumber",
+    "title": "số phòng",
+    "type": "input",
+    "placeholder": "Nhập số phòng ...",
+    "error": "errors?.roomNumber?.message"
+  },
+  {
+    "id": 9,
+    "name": "toilet",
+    "title": "số toilet",
+    "type": "input",
+    "placeholder": "Nhập số phòng vệ sinh ...",
+    "error": "errors?.toilet?.message"
+  },
+  {
+    "id": 10,
+    "name": "image",
+    "title": "hình ảnh",
+    "type": "img",
+    "error": "errors?.toilet?.message"
+  }
+]

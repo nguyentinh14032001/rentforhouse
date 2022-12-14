@@ -1,25 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { DetailContext } from "pages/DetailPage";
 import Slider from "react-slick";
 
-import house from "assets/images/house.jpg";
-import house2 from "assets/images/house2.jpg";
 import "../../assets/sass/detailpage/Overview.scss";
 
 const Overview = () => {
   const value = useContext(DetailContext);
   const { houses } = value;
-  const [houseImages, setHouseImages] = useState([
-    house,
-    house,
-    house,
-    house2,
-    house2,
-  ]);
+  console.log(houses);
+  const [houseImages, setHouseImages] = useState([]);
 
-  houseImages.map((item) => console.log(item));
-
+  useEffect(() => {
+    if (houses) {
+      setHouseImages((prev) => [...prev, houses?.image]);
+      if (
+        houses?.image2 !=
+        "http://rentforhouse-env.eba-sypmxta3.ap-southeast-1.elasticbeanstalk.com/api/file/load/null"
+      ) {
+        setHouseImages((prev) => [...prev, houses?.image2]);
+      }
+      if (
+        houses?.image3 !=
+        "http://rentforhouse-env.eba-sypmxta3.ap-southeast-1.elasticbeanstalk.com/api/file/load/null"
+      ) {
+        setHouseImages((prev) => [...prev, houses?.image3]);
+      }
+      if (
+        houses?.image4 !=
+        "http://rentforhouse-env.eba-sypmxta3.ap-southeast-1.elasticbeanstalk.com/api/file/load/null"
+      ) {
+        setHouseImages((prev) => [...prev, houses?.image4]);
+      }
+      if (
+        houses?.image5 !=
+        "http://rentforhouse-env.eba-sypmxta3.ap-southeast-1.elasticbeanstalk.com/api/file/load/null"
+      ) {
+        setHouseImages((prev) => [...prev, houses?.image5]);
+      }
+    }
+  }, [houses]);
   console.log(houseImages);
 
   const settings = {
@@ -58,8 +78,8 @@ const Overview = () => {
 
         <div className="col-span-4 col-start-1">
           <Slider {...settings}>
-            {houseImages.map((item) => (
-              <div>
+            {houseImages.map((item, index) => (
+              <div key={index}>
                 <img src={item} />
               </div>
             ))}

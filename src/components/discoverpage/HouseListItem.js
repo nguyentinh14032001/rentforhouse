@@ -7,9 +7,9 @@ const HouseListItem = ({ houses }) => {
     <div className="mt-4 flex w-full">
       <Link to={`/detail/${houses?.id}`}>
         <img
-          src="https://thietkenoithatblog.com/wp-content/uploads/2020/03/thiet-ke-cai-tao-noi-that-chung-cu-55m2-3.jpg"
+          src={houses?.image}
           alt=""
-          className="h-[32vh] w-[36vw] rounded-lg"
+          className="h-[40vh] w-[36vw] rounded-lg"
         />
       </Link>
       <div className="ml-6 mt-2 flex w-[30vw] flex-col">
