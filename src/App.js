@@ -1,3 +1,6 @@
+import CategoryAddNew from "modules/dashboard/manage/category/CategoryAddNew";
+import CategoryManage from "modules/dashboard/manage/category/CategoryManage";
+import CategoryUpdate from "modules/dashboard/manage/category/CategoryUpdate";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -16,7 +19,6 @@ const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));
 const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
 const YourHouse = lazy(() => import("./pages/YourHousePage"));
-const ManagePage = lazy(() => import("./pages/ManagePage"));
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
-        {/* <Route path="/manage/:id" element={<ManagePage></ManagePage>}></Route> */}
+
         <Route
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
@@ -55,6 +57,18 @@ function App() {
           <Route
             path="/manage/house"
             element={<HouseManage></HouseManage>}
+          ></Route>
+          <Route
+            path="/manage/category"
+            element={<CategoryManage></CategoryManage>}
+          ></Route>
+          <Route
+            path="/manage/add-category"
+            element={<CategoryAddNew></CategoryAddNew>}
+          ></Route>
+          <Route
+            path="/manage/update-category"
+            element={<CategoryUpdate></CategoryUpdate>}
           ></Route>
         </Route>
       </Routes>

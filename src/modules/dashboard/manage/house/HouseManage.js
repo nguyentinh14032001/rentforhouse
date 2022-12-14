@@ -25,7 +25,7 @@ const HouseManage = () => {
             onChange={handleQuery}
           />
         </div>
-        <Button kind="ghost" href="/manage/add-user">
+        <Button kind="ghost" href="/sell-house">
           Add house
         </Button>
       </div>

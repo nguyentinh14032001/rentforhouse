@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import {
   IconDarkMode,
@@ -5,10 +6,7 @@ import {
   IconLogout,
   IconSidebar,
   IconUser,
-} from "components/icons";
-
-import React, { useEffect, useRef, useState } from "react";
-import { NavLink, useParams, useNavigate } from "react-router-dom";
+} from "../components/icons";
 
 const dashboardLink = [
   {

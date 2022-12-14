@@ -183,14 +183,25 @@ const HouseUpdate = () => {
     const cloneValues = { ...values };
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
-    const image = String(cloneValues?.image?.url);
-    console.log(typeof image);
+
+    const formData = new FormData();
+
+    formData.append("image", preViewImage);
+    formData.append("image2", preViewImage1);
+    formData.append("image3", preViewImage3);
+    formData.append("image4", preViewImage4);
+    formData.append("image5", preViewImage5);
 
     try {
       await axios({
         method: "put",
-        url: `${baseURL}/api/houses/${houseId}?address=${cloneValues.address}&area=${cloneValues.area}&description=zxczxc&image=${image}&name=${cloneValues.name}&price=${price}&roomNumber=1&status=true&typeIds=${cloneValues.typeIds}`,
-        // data: {
+        url: `${baseURL}/api/houses?address=${cloneValues.address}&area=${
+          cloneValues.area
+        }&description=${description}&floor=4&name=${
+          cloneValues.name
+        }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
+          cloneValues.toilet
+        }&typeHouses=&typeHouses=${cloneValues.typeIds}`, // data: {
         //   address: address,
         //   area: cloneValues.area,
         //   description: "czxczxczxczxc",

@@ -1,77 +1,52 @@
+import { baseURL } from "api/axios";
+import axios from "axios";
+import { ActionDelete, ActionEdit, ActionView } from "components/action";
+import { Button } from "components/button";
+import { LabelStatus } from "components/label";
+import { Table } from "components/table";
+import DashboardHeading from "modules/dashboard/DashboardHeading";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import DashboardHeading from "../dashboard/DashboardHeading";
-import { Table } from "../../table";
-import LabelStatus from "../../label/LabelStatus";
-import { ActionDelete, ActionEdit, ActionView } from "../../action";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  limit,
-  onSnapshot,
-  query,
-  startAfter,
-  where,
-} from "firebase/firestore";
-import { db } from "../../../firebase/firebase-config";
-import { categoryStatus, userRole } from "../../../utils/constants";
-import { Button } from "../../button";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
-import { useSignIn } from "../../../context/SignInContext";
 
 const CATEGORY_PER_PAGE = 2;
 
 const CategoryManage = () => {
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
   const [categoryList, setCategoryList] = useState([]);
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [lastDoc, setLastDoc] = useState();
   const [total, setTotal] = useState(0);
-  const { user } = useSignIn();
-
+  const [isChange, setIsChange] = useState(false);
   //get category
   useEffect(() => {
-    async function fetchData() {
-      //connected database
-      const colRef = collection(db, "categories");
-      onSnapshot(colRef, (snapshot) => {
-        setTotal(snapshot.size);
-      });
-      const newRef = filter
-        ? query(
-            colRef,
-            where("name", ">=", filter),
-            where("name", "<=", filter + "utf8")
-          )
-        : query(colRef, limit(CATEGORY_PER_PAGE));
-      //get first doc
-      const documentSnapshots = await getDocs(newRef);
-
-      //get last doc
-      const lastVisible =
-        documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      onSnapshot(newRef, (snapshot) => {
-        let results = [];
-        snapshot.forEach((doc) => {
-          results.push({
-            id: doc.id,
-            ...doc.data(),
+    const fetchData = async () => {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/houseTypes`,
+        })
+          .then(function (response) {
+            setCategoryList(response?.data?.data);
+            console.log(response?.data?.data);
+            setIsChange(false);
+          })
+          .catch(function (response) {
+            toast.error("a");
           });
-        });
-        setCategoryList(results);
-      });
-      setLastDoc(lastVisible);
-    }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     fetchData();
-  }, [filter]);
+  }, [isChange]);
 
   //delete category
   const handleDeleteCategory = async (id) => {
-    const singleDoc = doc(db, "categories", id);
-
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -82,46 +57,61 @@ const CategoryManage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteDoc(singleDoc);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        try {
+          await axios
+            .delete(`${baseURL}/api/houseTypes/${id}`, {
+              headers: {
+                Authorization: userData.access_token,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              if (res?.data?.data?.message == "successful delete") {
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                setIsChange(true);
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }
     });
   };
   //search filter
-  const handleInputFilter = debounce((e) => {
-    setFilter(e.target.value);
-  }, 500);
+  // const handleInputFilter = debounce((e) => {
+  //   setFilter(e.target.value);
+  // }, 500);
 
   //paginate
-  const handleLoadMoreCategory = async () => {
-    const nextRef = query(
-      collection(db, "categories"),
-      startAfter(lastDoc),
-      limit(CATEGORY_PER_PAGE)
-    );
-    onSnapshot(nextRef, (snapshot) => {
-      let results = [];
-      snapshot.forEach((doc) => {
-        results.push({
-          id: doc.id,
-          ...doc.data(),
-        });
-      });
-      setCategoryList([...categoryList, ...results]);
-    });
-    //get first doc
-    const documentSnapshots = await getDocs(nextRef);
+  // const handleLoadMoreCategory = async () => {
+  //   const nextRef = query(
+  //     collection(db, "categories"),
+  //     startAfter(lastDoc),
+  //     limit(CATEGORY_PER_PAGE)
+  //   );
+  //   onSnapshot(nextRef, (snapshot) => {
+  //     let results = [];
+  //     snapshot.forEach((doc) => {
+  //       results.push({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       });
+  //     });
+  //     setCategoryList([...categoryList, ...results]);
+  //   });
+  //   //get first doc
+  //   const documentSnapshots = await getDocs(nextRef);
 
-    //get last doc
-    const lastVisible =
-      documentSnapshots.docs[documentSnapshots.docs.length - 1];
-    setLastDoc(lastVisible);
-  };
-  if (user.role !== userRole.ADMIN) return null;
+  //   //get last doc
+  //   const lastVisible =
+  //     documentSnapshots.docs[documentSnapshots.docs.length - 1];
+  //   setLastDoc(lastVisible);
+  // };
+
   return (
-    <divkk>
+    <div>
       <DashboardHeading title="Categories" desc="Manage your category">
-        <Button kind="ghost" height="60px" to="/manage/add-category">
+        <Button kind="ghost" height="60px" href="/manage/add-category">
           Create category
         </Button>
       </DashboardHeading>
@@ -130,17 +120,17 @@ const CategoryManage = () => {
           type="text"
           className="rounded-lg border-2 border-gray-200 py-4  px-5"
           placeholder="Search category....."
-          onChange={handleInputFilter}
+          // onChange={handleInputFilter}
         />
       </div>
       <Table>
         <thead>
           <tr>
             <th></th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Status</th>
+
+            <th>Loại nhà</th>
+            <th>Người tạo</th>
+            <th>Người sửa</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -150,29 +140,43 @@ const CategoryManage = () => {
             categoryList.map((item) => (
               <tr key={item?.id}>
                 <td></td>
-                <td>{item.id}</td>
+
                 <td>{item?.name}</td>
+
                 <td>
-                  <span className="italic text-gray-400">{item?.slug}</span>
+                  <div className="flex items-center justify-center gap-x-3">
+                    <div className="flex-1 ">
+                      <h3 className="font-semibold">{item?.createdBy}</h3>
+                      <time className="text-sm text-gray-400">
+                        {moment(item?.createdDate).format(
+                          "MM/DD/YYYY (hh:mm:ss a)"
+                        )}
+                      </time>
+                    </div>{" "}
+                  </div>
                 </td>
                 <td>
-                  {item.status === categoryStatus.APPROVED && (
-                    <LabelStatus type="success">Approved</LabelStatus>
-                  )}
-                  {item.status === categoryStatus.UNAPPROVED && (
-                    <LabelStatus type="warning">Unapproved</LabelStatus>
-                  )}
+                  <div className="flex items-center justify-center gap-x-3">
+                    <div className="flex-1 ">
+                      <h3 className="font-semibold">{item?.modifiedBy}</h3>
+                      <time className="text-sm text-gray-400">
+                        {moment(item?.modifiedDate).format(
+                          "MM/DD/YYYY (hh:mm:ss a)"
+                        )}
+                      </time>
+                    </div>{" "}
+                  </div>
                 </td>
                 <td>
                   <div className="flex items-center gap-x-3">
                     <ActionView></ActionView>
                     <ActionEdit
                       onClick={() =>
-                        navigate(`/manage/update-category?id=${item.id}`)
+                        navigate(`/manage/update-category?id=${item?.id}`)
                       }
                     ></ActionEdit>
                     <ActionDelete
-                      onClick={() => handleDeleteCategory(item.id)}
+                      onClick={() => handleDeleteCategory(item?.id)}
                     ></ActionDelete>
                   </div>
                 </td>
@@ -180,14 +184,14 @@ const CategoryManage = () => {
             ))}
         </tbody>
       </Table>
-      {total > categoryList.length && (
+      {/* {total > categoryList.length && (
         <div className="mt-10">
           <Button className="mx-auto" onClick={handleLoadMoreCategory}>
             Load more
           </Button>
         </div>
-      )}
-    </divkk>
+      )} */}
+    </div>
   );
 };
 
