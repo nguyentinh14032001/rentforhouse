@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { baseURL } from "api/axios";
-import { IconHouse } from "components/icons";
+import { baseURL } from "../../api/axios";
+import { IconHouse } from "../icons";
 
 const HouseList = ({ house, setIsChange }) => {
   const user = localStorage.getItem("user");

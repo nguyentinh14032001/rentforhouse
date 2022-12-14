@@ -1,5 +1,6 @@
-import React, { memo, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import React, { memo, useEffect, useRef, useState } from "react";
+
 import cmtAva1 from "../../assets/images/demoAva.jpg";
 
 const Comment = ({ comment, setIsChange, setIsEdit, setValue }) => {

@@ -14,6 +14,7 @@ const Option = ({ onClick, children }) => {
     align-items: center;
     justify-content: space-between;
     transition: all 0.1s linear;
+    z-index: 10;
     &:hover {
       --tw-bg-opacity: 1;
       background-color: rgb(243 244 246 / var(--tw-bg-opacity));

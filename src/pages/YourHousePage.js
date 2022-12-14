@@ -1,12 +1,11 @@
-import { Button } from "components/button";
-import Heading from "components/common/Heading";
-// import DiscoverPagination from "components/discoverpage/DiscoverPagination";
-import LayoutPage from "layout/LayoutPage";
-import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
-import HouseGrid from "modules/house/HouseGrid";
-import YourHouse from "modules/house/part/YourHouse";
 import React from "react";
+import Button from "../components/button/Button";
+import Heading from "../components/common/Heading";
+import LayoutPage from "../layout/LayoutPage";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
+import HouseGrid from "../modules/house/HouseGrid";
+import YourHouse from "../modules/house/part/YourHouse";
 
 const YourHousePage = ({ children }) => {
   return (

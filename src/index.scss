@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "reset";
 @layer base {
   body {
     @apply font-primary text-base font-normal;
@@ -88,5 +89,51 @@ body {
   .react-calendar__tile--now,
   .react-calendar__tile--now:hover {
     @apply bg-secondary text-white rounded-lg;
+  }
+}
+.form-layout {
+  @apply grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 mb-5 lg:mb-10;
+}
+.hidden-input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+.carousel-home-page {
+  .slick-slider {
+    max-width: 100vw;
+    min-height: 100%;
+    z-index: 1 !important;
+    display: flex;
+
+    button {
+      &.slick-arrow {
+        position: fixed;
+      }
+    }
+
+    .slick-list {
+      width: 85vw;
+      .slick-track {
+        .slick-slide {
+          .content-carousel {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            align-items: flex-start;
+          }
+          img {
+            height: 100%;
+            border-radius: 16px;
+          }
+        }
+      }
+    }
   }
 }

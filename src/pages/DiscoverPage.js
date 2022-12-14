@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
-import LayoutHomePage from "layout/LayoutPage";
-import Sort from "components/discoverpage/Sort";
-import HousesList from "components/discoverpage/HousesList";
-import Footer from "layout/Footer";
-import GLPagination from "layout/GLPagination";
-import { baseURL } from "api/axios";
+import Sidebar from "../layout/Sidebar";
+import Navbar from "../layout/Navbar";
+import GLPagination from "../layout/GLPagination";
+import { baseURL } from "../api/axios";
+import HousesList from "../components/discoverpage/HousesList";
 
 const DiscoverPage = () => {
   const user = localStorage.getItem("user");
@@ -39,18 +36,16 @@ const DiscoverPage = () => {
       } catch (error) {}
     };
     fetchApi();
-  }, [page]);
+  }, [page, userData.access_token]);
 
   return (
     <>
       <Navbar></Navbar>
       <div className="flex items-start">
         <Sidebar></Sidebar>
-        <LayoutHomePage>
-          {/* <Sort /> */}
-          <HousesList houses={houses} />
-          <GLPagination pages={pages} setPage={setPage} />
-        </LayoutHomePage>
+
+        <HousesList houses={houses} />
+        <GLPagination pages={pages} setPage={setPage} />
       </div>
     </>
   );

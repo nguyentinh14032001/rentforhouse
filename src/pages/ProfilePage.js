@@ -1,7 +1,6 @@
 import React from "react";
-
-import Navbar from "layout/Navbar";
-import ProFileRight from "components/profilepage/ProFileRight";
+import ProFileRight from "../components/profilepage/ProFileRight";
+import Navbar from "../layout/Navbar";
 
 const ProfilePage = () => {
   return (

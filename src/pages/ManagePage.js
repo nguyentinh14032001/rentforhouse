@@ -1,13 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 
-import axios, { baseURL } from "api/axios";
-import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
-import LayoutHomePage from "layout/LayoutPage";
-import UserList from "components/managepage/UserList";
-import HouseManage from "components/managepage/HouseManage";
-import GLPagination from "layout/GLPagination";
 import { useParams } from "react-router-dom";
+import GLPagination from "../layout/GLPagination";
+import axios from "axios";
+import { baseURL } from "../api/axios";
+import Navbar from "../layout/Navbar";
+import Sidebar from "../layout/Sidebar";
+import UserList from "../components/managepage/UserList";
+import HouseManage from "../components/managepage/HouseManage";
 
 export const DashboardContext = createContext();
 
@@ -77,11 +77,10 @@ const ManagePage = () => {
         <Navbar></Navbar>
         <div className="flex items-start">
           <Sidebar></Sidebar>
-          <LayoutHomePage>
-            {id == "usersmanage" && <UserList />}
-            {id == "postmanage" && <HouseManage />}
-            <GLPagination pages={pages} setPage={setPage} />
-          </LayoutHomePage>
+
+          {id == "usersmanage" && <UserList />}
+          {id == "postmanage" && <HouseManage />}
+          <GLPagination pages={pages} setPage={setPage} />
         </div>
       </DashboardContext.Provider>
     </>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+import { DashboardContext } from "../../pages/ManagePage";
 
 import HouseList from "./HouseList";
-import { DashboardContext } from "pages/ManagePage";
 
 const HouseManage = () => {
   const user = localStorage.getItem("user");

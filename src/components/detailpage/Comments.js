@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 
-import { baseURL } from "api/axios";
 import Comment from "./Comment";
+import { baseURL } from "../../api/axios";
 
 const Comments = ({ idHouse }) => {
   // const value = useContext(DetailContext);

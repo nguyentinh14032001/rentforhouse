@@ -8,7 +8,7 @@ const List = ({ children, className }) => {
     <>
       {show && (
         <div
-          className={`${className} absolute top-full left-0 max-h-[200px] w-full overflow-scroll rounded-lg bg-white shadow-sm`}
+          className={`${className} absolute top-full left-0 z-10 max-h-[200px] w-full overflow-scroll rounded-lg bg-white shadow-sm`}
         >
           {children}
         </div>

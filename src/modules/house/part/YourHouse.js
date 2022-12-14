@@ -1,10 +1,11 @@
 import { Pagination } from "@mui/material";
-import { baseURL } from "api/axios";
 import axios from "axios";
-import { Button } from "components/button";
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { baseURL } from "../../../api/axios";
+import Button from "../../../components/button/Button";
 import CategoryHouse from "./CategoryHouse";
 import HouseDesc from "./HouseDesc";
 import HouseImage from "./HouseImage";

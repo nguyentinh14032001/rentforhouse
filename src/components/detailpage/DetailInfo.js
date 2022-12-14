@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { DetailContext } from "pages/DetailPage";
+
 import "../../assets/sass/detailpage/DetailInfo.scss";
+import { DetailContext } from "../../pages/DetailPage";
 
 const DetailInfo = () => {
   const value = useContext(DetailContext);

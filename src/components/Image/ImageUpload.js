@@ -1,9 +1,9 @@
 import axios from "axios";
-import { imgbbAPI } from "config/config";
 import React from "react";
 import { toast } from "react-toastify";
+import { imgbbAPI } from "../../config/config";
 
-const ImageUpload = ({ onChange = () => {}, name = "" }) => {
+const ImageUpload = ({ onChange = () => {}, name = "", className = "" }) => {
   const handleUploadImage = async (e) => {
     const file = e.target.files;
     if (!file) return;
@@ -30,7 +30,9 @@ const ImageUpload = ({ onChange = () => {}, name = "" }) => {
     onChange(name, imageObj);
   };
   return (
-    <label className="flex h-[200px] w-full cursor-pointer items-center justify-center rounded-xl border border-dashed border-gray-200">
+    <label
+      className={`flex min-h-[200px] w-full cursor-pointer items-center justify-center rounded-lg border border-dashed bg-gray-100 ${className} group relative overflow-hidden`}
+    >
       <input type="file" onChange={handleUploadImage} className="hidden" />
       <svg
         xmlns="http://www.w3.org/2000/svg"

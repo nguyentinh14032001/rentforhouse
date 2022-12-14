@@ -1,7 +1,13 @@
-import HouseUpdate from "modules/house/part/HouseUpdate";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import DashboardLayout from "./modules/dashboard/DashboardLayout";
+import HouseManage from "./modules/dashboard/manage/house/HouseManage";
+import UserAddNew from "./modules/dashboard/manage/user/UserAddNew";
+import UserManage from "./modules/dashboard/manage/user/UserManage";
+import UserUpdate from "./modules/dashboard/manage/user/UserUpdate";
+import HouseUpdate from "./modules/house/part/HouseUpdate";
+
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
@@ -24,7 +30,7 @@ function App() {
         <Route path="/home" element={<HomePage></HomePage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
-        <Route path="/manage/:id" element={<ManagePage></ManagePage>}></Route>
+        {/* <Route path="/manage/:id" element={<ManagePage></ManagePage>}></Route> */}
         <Route
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
@@ -33,6 +39,24 @@ function App() {
           path="/sell-house"
           element={<PostSellHouse></PostSellHouse>}
         ></Route>
+        <Route element={<DashboardLayout></DashboardLayout>}>
+          <Route
+            path="/manage/user"
+            element={<UserManage></UserManage>}
+          ></Route>
+          <Route
+            path="/manage/update-user"
+            element={<UserUpdate></UserUpdate>}
+          ></Route>
+          <Route
+            path="/manage/add-user"
+            element={<UserAddNew></UserAddNew>}
+          ></Route>
+          <Route
+            path="/manage/house"
+            element={<HouseManage></HouseManage>}
+          ></Route>
+        </Route>
       </Routes>
     </Suspense>
   );

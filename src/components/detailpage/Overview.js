@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { DetailContext } from "pages/DetailPage";
 
 import "../../assets/sass/detailpage/Overview.scss";
+import { DetailContext } from "../../pages/DetailPage";
 
 const Overview = () => {
   const value = useContext(DetailContext);

@@ -1,12 +1,7 @@
-import LayoutDashboard from 'layout/LayoutPage';
-import React from 'react';
+import React from "react";
 
 const ContactPage = () => {
-    return (
-        <LayoutDashboard>
-            ok
-        </LayoutDashboard>
-    );
+  return <div></div>;
 };
 
 export default ContactPage;

@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import "CarouselHomePage.scss";
+
 import house from "../../assets/images/house.jpg";
 import house2 from "../../assets/images/house2.jpg";
 
