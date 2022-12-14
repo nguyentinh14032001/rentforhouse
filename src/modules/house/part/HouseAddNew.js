@@ -246,6 +246,7 @@ const HouseUpdate = () => {
                 placeholder="Nhập tên căn hộ"
               ></Input>
             </FormGroup>
+
             <FormGroup>
               <Label>Chọn loại căn hộ* </Label>
               <Dropdown>
@@ -515,6 +516,7 @@ const HouseUpdate = () => {
               onChange={setDescription}
             />
           </FormGroup>
+
           <FormRow>
             <FormGroup>
               <Label>Price*</Label>
@@ -534,6 +536,7 @@ const HouseUpdate = () => {
               ></Input>
             </FormGroup>
           </FormRow>
+
           <FormGroup>
             <Label>Địa chỉ</Label>
             {/* <FormThreeCol>
@@ -587,6 +590,7 @@ const HouseUpdate = () => {
                   </Dropdown.List>
                 </Dropdown>
               </FormGroup>
+
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select

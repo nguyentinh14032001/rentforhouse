@@ -1,15 +1,16 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import Overview from "../components/detailpage/Overview";
-import DetailInfo from "../components/detailpage/DetailInfo";
-import SellerInfo from "../components/detailpage/SellerInfo";
-import Comments from "../components/detailpage/Comments";
+import { baseURL } from "api/axios";
+import Navbar from "layout/Navbar";
+import BackgroundLayout from "layout/BackgroundLayout";
+import Overview from "components/detailpage/Overview";
+import DetailInfo from "components/detailpage/DetailInfo";
+import SellerInfo from "components/detailpage/SellerInfo";
+import Comments from "components/detailpage/Comments";
+import SimilarPlaces from "components/detailpage/SimilarPlaces";
+import Footer from "layout/Footer";
 import axios from "axios";
-import Navbar from "../layout/Navbar";
-import Sidebar from "../layout/Sidebar";
-import { baseURL } from "../api/axios";
-import LayoutPage from "../layout/LayoutPage";
 
 export const DetailContext = createContext();
 const DetailPage = () => {
@@ -18,6 +19,21 @@ const DetailPage = () => {
   const idHouse = Number(id);
 
   useEffect(() => {
+    //increasing view
+    async function putView() {
+      try {
+        await axios({
+          method: "put",
+          url: `${baseURL}/api/houses/viewPlus/${idHouse}`,
+        })
+          .then(function (response) {})
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    putView();
+    //get a list of houses
     async function fetchData() {
       try {
         await axios({
@@ -32,6 +48,7 @@ const DetailPage = () => {
         console.log(error);
       }
     }
+
     fetchData();
   }, []);
 
@@ -41,18 +58,17 @@ const DetailPage = () => {
   return (
     <>
       <DetailContext.Provider value={value}>
-        <Navbar></Navbar>
+        <Navbar />
         <div className="flex items-start gap-x-6">
-          <Sidebar></Sidebar>
-          <LayoutPage>
+          <BackgroundLayout>
             <Overview />
             <DetailInfo />
             <SellerInfo />
             <Comments idHouse={idHouse} />
             {/* <SimilarPlaces /> */}
-          </LayoutPage>
+          </BackgroundLayout>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </DetailContext.Provider>
     </>
   );

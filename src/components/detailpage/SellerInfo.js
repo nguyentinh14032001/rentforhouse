@@ -1,6 +1,12 @@
 import React, { useContext } from "react";
+<<<<<<< HEAD
 import "../../assets/sass/detailpage/SellerInfo.scss";
+=======
 
+import { DetailContext } from "pages/DetailPage";
+>>>>>>> homepage2
+
+import "../../assets/sass/detailpage/SellerInfo.scss";
 import sellerAva from "../../assets/images/demoAva.jpg";
 import { DetailContext } from "../../pages/DetailPage";
 
@@ -9,8 +15,8 @@ const SellerInfo = () => {
   const { houses } = value;
   return (
     <>
-      <div className="seller container my-[7vh] flex justify-between">
-        <div className="flex w-[60%]">
+      <div className="seller my-[7vh] grid grid-cols-6">
+        <div className="col-span-2 flex">
           <img src={sellerAva} alt="" className="mr-4 rounded-lg" />
           <div className="flex flex-col">
             <h1 className="my-[5px] text-xl font-bold capitalize">
@@ -30,7 +36,7 @@ const SellerInfo = () => {
           </div>
         </div>
 
-        <div className="right flex flex-col">
+        <div className="right col-span-2 col-start-4 flex flex-col">
           <div className="flex">
             <h1>Lượt xem</h1>
             <p>{houses?.view}</p>

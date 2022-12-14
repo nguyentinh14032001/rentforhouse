@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/images/6.png";
-const Footer = () => {
+
+const Footer = ({ setFooterPosition }) => {
   return (
     <div className="footer relative z-20">
       <div className="bg-black p-[30px] text-white">

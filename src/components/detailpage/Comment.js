@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { memo, useEffect, useRef, useState } from "react";
 
 import cmtAva1 from "../../assets/images/demoAva.jpg";
+import { baseURL } from "api/axios";
 
 const Comment = ({ comment, setIsChange, setIsEdit, setValue }) => {
   const user = localStorage.getItem("user");
@@ -23,7 +24,7 @@ const Comment = ({ comment, setIsChange, setIsEdit, setValue }) => {
   const deleteCommnet = async () => {
     try {
       await axios
-        .delete(`http://localhost:8086/api/comments/${comment?.id}`, {
+        .delete(`${baseURL}/api/comments/${comment?.id}`, {
           headers: {
             Authorization: userData.access_token,
           },

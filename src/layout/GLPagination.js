@@ -10,7 +10,7 @@ const GLPagination = ({ pages, setPage }) => {
 
   return (
     <div className="my-4 flex items-center justify-center">
-      <Pagination count={pages.total_page} onChange={handlePageChange} />
+      <Pagination count={pages?.total_page} onChange={handlePageChange} />
     </div>
   );
 };
