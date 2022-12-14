@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 
 import UserListItem from "./UserListItem";
-import { DashboardContext } from "pages/ManagePage";
 
-import "assets/sass/managepage/UserList.scss";
+import { DashboardContext } from "../../pages/ManagePage";
 const UserList = () => {
   const value = useContext(DashboardContext);
   const { users, setIsChange } = value;

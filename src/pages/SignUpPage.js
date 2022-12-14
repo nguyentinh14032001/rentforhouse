@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { Input } from "components/input";
-import { Label } from "components/label";
-import LayoutAuthentication from "layout/LayoutAuthentication";
-import FormGroup from "components/common/FormGroup";
-import { Button, ButtonGoogle } from "components/button";
-import { CheckBox } from "components/checkbox";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { IconEyeToggle } from "components/icons";
-import useToggleValue from "hooks/UseToggleValue";
-import ClassName from "hooks/ClassName";
+
 import axios from "axios";
-import FormRow from "components/common/FormRow";
+
 import { toast } from "react-toastify";
-import { baseURL } from "api/axios";
+
+import { useForm } from "react-hook-form";
+import ClassName from "../hooks/ClassName";
+import { Link } from "react-router-dom";
+import ButtonGoogle from "../components/button/ButtonGoogle";
+import Label from "../components/label/Label";
+import Input from "../components/input/Input";
+import IconEyeToggle from "../components/icons/IconEyeToggle";
+import Button from "../components/button/Button";
+import LayoutAuthentication from "../layout/LayoutAuthentication";
+import FormGroup from "../components/common/FormGroup";
+import CheckBox from "../components/checkbox/CheckBox";
+import { baseURL } from "../api/axios";
+import useToggleValue from "../hooks/UseToggleValue";
+import FormRow from "../components/common/FormRow";
 
 const schema = yup.object().shape({
   lastName: yup.string().required("This field is required"),
@@ -50,7 +54,7 @@ const SignUpPage = () => {
 
     const response = await axios({
       method: "post",
-      url: `http://localhost:8086/api/auth/signup?email=${values.email}&firstName=${values.firstName}&lastName=${values.lastName}&password=${values.password}&userName=${values.userName}`,
+      url: `${baseURL}/api/auth/signup?email=${values.email}&firstName=${values.firstName}&lastName=${values.lastName}&password=${values.password}&userName=${values.userName}`,
       // data: {
       //   email: values.email,
       //   firstName: values.firstName,

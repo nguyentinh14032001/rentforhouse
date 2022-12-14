@@ -2,8 +2,10 @@ import React from "react";
 import { useController } from "react-hook-form";
 import PropTypes from "prop-types";
 import { withErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "components/common/ErrorComponent";
-import ClassName, { ClassName1 } from "hooks/ClassName";
+
+import ClassName from "../../hooks/ClassName";
+import ErrorComponent from "../common/ErrorComponent";
+
 const Input = (props) => {
   const {
     control,
@@ -12,6 +14,7 @@ const Input = (props) => {
     children,
     type = "text",
     placeholder,
+    className = "",
     ...rest
   } = props;
   const { field } = useController({
@@ -21,7 +24,7 @@ const Input = (props) => {
   });
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         id={name}
         {...field}
@@ -30,7 +33,7 @@ const Input = (props) => {
         placeholder={error?.length <= 0 ? placeholder : ""}
         {...rest}
         className={ClassName(
-          " w-full rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-1",
+          `w-full  ${className} rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-1`,
           error?.length > 0
             ? "border-[2px] border-error text-error"
             : "border-strock text-text-1 dark:border-darkStroke",

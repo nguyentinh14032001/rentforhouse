@@ -1,10 +1,9 @@
-import { Button } from "components/button";
-import SearchHomePage from "modules/homepage/SearchHomePage";
-
-import { baseURL } from "api/axios";
 import axios from "axios";
 import React, { memo, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { baseURL } from "../api/axios";
+import Button from "../components/button/Button";
+import SearchHomePage from "../modules/homepage/SearchHomePage";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ const Navbar = () => {
       </div>
       <div className="flex flex-1 items-center justify-end gap-x-10">
         {userData && userData.roles == "ROLE_ADMIN" ? (
-          <Link to="/manage/usersmanage">Quản lý</Link>
+          <Link to="/manage/user">Quản lý</Link>
         ) : null}
         {userData == null ? (
           <Button

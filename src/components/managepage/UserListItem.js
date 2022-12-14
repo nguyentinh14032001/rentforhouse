@@ -1,6 +1,11 @@
 import React from "react";
+<<<<<<< HEAD
+
+=======
 import axios, { baseURL } from "api/axios";
+>>>>>>> homepage2
 import moment from "moment/moment";
+import axios from "axios";
 
 const UserListItem = ({ user, setIsChange }) => {
   const userData = JSON.parse(localStorage.getItem("user"));

@@ -3,19 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import LayoutAuthentication from "../layout/LayoutAuthentication";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { IconEyeToggle } from "components/icons";
+
 import { useForm } from "react-hook-form";
-import FormGroup from "components/common/FormGroup";
-import { Label } from "components/label";
-import { Button, ButtonGoogle } from "components/button";
-import useToggleValue from "hooks/UseToggleValue";
-import { Input } from "components/input";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { baseURL } from "api/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { authLogin } from "store/auth/auth-slice";
+
+import ButtonGoogle from "../components/button/ButtonGoogle";
+import FormGroup from "../components/common/FormGroup";
+import { Label } from "../components/label";
+import { Input } from "../components/input";
+import Button from "../components/button/Button";
+import useToggleValue from "../hooks/UseToggleValue";
+import { baseURL } from "../api/axios";
+import { IconEyeToggle } from "../components/icons";
 
 const schema = yup.object().shape({
   username: yup.string().required(""),
@@ -28,7 +29,7 @@ const schema = yup.object().shape({
 const SignInPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+
   const {
     handleSubmit,
     control,
@@ -37,14 +38,14 @@ const SignInPage = () => {
     resolver: yupResolver(schema),
     mode: "onSubmit",
   });
-  const user = localStorage.getItem("user");
+  // const user = localStorage.getItem("user");
 
-  useEffect(() => {
-    const userData = JSON.parse(user);
-    // if (userData !== "") {
-    //   navigate("/");
-    // }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   const userData = JSON.parse(user);
+  //   // if (userData !== "") {
+  //   //   navigate("/");
+  //   // }
+  // }, [navigate, user]);
 
   const handleSignIn = async (values) => {
     try {

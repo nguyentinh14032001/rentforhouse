@@ -1,52 +1,61 @@
-import FormGroup from "components/common/FormGroup";
-import FormRow from "components/common/FormRow";
-import { Dropdown } from "components/dropdown";
-import { Input, Textarea } from "components/input";
-import { Label } from "components/label";
 import React, { useEffect, useMemo, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill, { Quill } from "react-quill";
 import ImageUploader from "quill-image-uploader";
-import DatePicker from "react-date-picker";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Button } from "components/button";
-import ImageUpload from "components/Image/ImageUpload";
 import { toast } from "react-toastify";
-import FormThreeCol from "components/common/FormThreeCol";
-import { imgbbAPI } from "config/config";
-import { baseURL } from "api/axios";
+
+import { useSearchParams } from "react-router-dom";
+import FormRow from "../../../components/common/FormRow";
+import FormGroup from "../../../components/common/FormGroup";
+import Dropdown from "../../../components/dropdown/Dropdown";
+import { Label } from "../../../components/label";
+import ImageUpload from "../../../components/Image/ImageUpload";
+import FormThreeCol from "../../../components/common/FormThreeCol";
+import Button from "../../../components/button/Button";
+import { Input, Textarea } from "../../../components/input";
+import { baseURL } from "../../../api/axios";
+import { imgbbAPI } from "../../../config/config";
+import Select from "../../../components/dropdown/Select";
+import List from "../../../components/dropdown/List";
+import Option from "../../../components/dropdown/Option";
 
 Quill.register("modules/imageUploader", ImageUploader);
 
-const HouseAddNew = () => {
-  const { handleSubmit, control, setValue, reset, watch, getValues } =
-    useForm();
+const HouseUpdate = () => {
+  const [params] = useSearchParams();
+  const houseId = params.get("id");
+  const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      detailSumary: "xzxczxc",
+    },
+  });
   const getDropdownLabel = (name) => {
     const value = watch(name);
     return value;
   };
+
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [house, setHouse] = useState("");
+  const [selectCategory, setSelectCategory] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  const handleSelectCategories = (value) => {
+  const handleSelectCategories = (value, value1) => {
     setValue("typeIds", value);
+    setValue("nameCategories", value1);
+    setSelectCategory();
   };
   const handleSelectAddress = (name1, name2, value1, value2) => {
     setValue(name1, value1);
     setValue(name2, value2);
   };
+  console.log(getValues("typeIds"));
 
-  const resetValue = () => {
-    setDescription("");
-    startDate("");
-    reset({});
-  };
   const modules = useMemo(
     () => ({
       toolbar: [
@@ -75,68 +84,100 @@ const HouseAddNew = () => {
     }),
     []
   );
-  //const [addressFilter, handleOnChangeValue] = useOnChange();
+  // //const [addressFilter, handleOnChangeValue] = useOnChange();
+  // const HOST = "https://provinces.open-api.vn/api/";
+  // const getProvince = getValues("provinceCode");
+  // const getDistrict = getValues("districtCode");
+  // // //get province
+  // useEffect(() => {
+  //   async function fetchProvinces() {
+  //     try {
+  //       const response = await axios.get(`${HOST}`);
+  //       setProvinces(response.data);
+  //     } catch (error) {
+  //       toast.error(error.message);
+  //     }
+  //   }
+  //   fetchProvinces();
+  // }, []);
+  // //get districts
+  // useEffect(() => {
+  //   async function fetchDistricts() {
+  //     try {
+  //       if (getProvince) {
+  //         const response = await axios.get(`${HOST}p/${getProvince}?depth=2`);
+  //         setDistricts(response.data.districts);
+  //       }
+  //     } catch (error) {
+  //       toast.error(error.message);
+  //     }
+  //   }
+  //   fetchDistricts();
+  // }, [getProvince]);
+  // useEffect(() => {
+  //   async function fetchWards() {
+  //     try {
+  //       if (getDistrict) {
+  //         const response = await axios.get(`${HOST}d/${getDistrict}?depth=2`);
+  //         setWards(response.data.wards);
+  //       }
+  //     } catch (error) {
+  //       toast.error(error.message);
+  //     }
+  //   }
+  //   fetchWards();
+  // }, [getDistrict]);
 
-  const HOST = "https://provinces.open-api.vn/api/";
+  const [preViewImage, setPreViewImage] = useState("");
+  const [preViewImage1, setPreViewImage1] = useState("");
+  const [preViewImage3, setPreViewImage3] = useState("");
+  const [preViewImage4, setPreViewImage4] = useState("");
+  const [preViewImage5, setPreViewImage5] = useState("");
 
-  const getProvince = getValues("provinceCode");
-  const getDistrict = getValues("districtCode");
-
-  //get province
-  useEffect(() => {
-    async function fetchProvinces() {
-      try {
-        const response = await axios.get(`${HOST}`);
-        setProvinces(response.data);
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-    fetchProvinces();
-  }, []);
-
-  //get districts
-  useEffect(() => {
-    async function fetchDistricts() {
-      try {
-        if (getProvince) {
-          const response = await axios.get(`${HOST}p/${getProvince}?depth=2`);
-          setDistricts(response.data.districts);
-        }
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-    fetchDistricts();
-  }, [getProvince]);
-  useEffect(() => {
-    async function fetchWards() {
-      try {
-        if (getDistrict) {
-          const response = await axios.get(`${HOST}d/${getDistrict}?depth=2`);
-          setWards(response.data.wards);
-        }
-      } catch (error) {
-        toast.error(error.message);
-      }
-    }
-    fetchWards();
-  }, [getDistrict]);
+  const handleChange = (e) => {
+    const imageUpload = e.target.files[0];
+    imageUpload.preview = URL.createObjectURL(imageUpload);
+    setPreViewImage(imageUpload);
+  };
+  const handleChange1 = (e) => {
+    const imageUpload = e.target.files[0];
+    imageUpload.preview = URL.createObjectURL(imageUpload);
+    setPreViewImage1(imageUpload);
+  };
+  const handleChange3 = (e) => {
+    const imageUpload = e.target.files[0];
+    imageUpload.preview = URL.createObjectURL(imageUpload);
+    setPreViewImage3(imageUpload);
+  };
+  const handleChange4 = (e) => {
+    const imageUpload = e.target.files[0];
+    imageUpload.preview = URL.createObjectURL(imageUpload);
+    setPreViewImage4(imageUpload);
+  };
+  const handleChange5 = (e) => {
+    const imageUpload = e.target.files[0];
+    imageUpload.preview = URL.createObjectURL(imageUpload);
+    setPreViewImage5(imageUpload);
+  };
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
-  const handleAddNewHouse = async (values) => {
-    setLoading(true);
+  const handleAddHouse = async (values) => {
     const cloneValues = { ...values };
-
-    const price = Number(cloneValues.price);
+    console.log(cloneValues);
+    const price = Number(cloneValues?.price);
     const image = String(cloneValues?.image?.url);
     console.log(typeof image);
-    const address = `${cloneValues.province}, ${cloneValues.district}, ${cloneValues.ward}`;
 
     try {
       await axios({
         method: "post",
-        url: `${baseURL}/api/houses?address=${address}&area=${cloneValues.area}&description=""&detailSumary=${cloneValues.detailSumary}&image=${image}&name=${cloneValues.name}&price=${price}&typeIds=${cloneValues.typeIds}`,
+        url: `${baseURL}/api/api/houses?address=${cloneValues.address}&area=${
+          cloneValues.area
+        }&description=${description}&floor=4&name=${cloneValues.name}&price=${
+          cloneValues.price
+        }&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
+          cloneValues.toilet
+        }&typeHouses=&typeHouses=${cloneValues.address}`,
         // data: {
         //   address: address,
         //   area: cloneValues.area,
@@ -152,19 +193,15 @@ const HouseAddNew = () => {
         },
       })
         .then(function (response) {
-          toast.success("Thêm căn hộ thành công");
-          setLoading(false);
-          console.log(response);
+          toast.success("Sửa căn hộ thành công");
         })
         .catch(function (response) {
-          toast.error("Thêm căn hộ thất bại");
-          setLoading(false);
+          toast.error("Sửa căn hộ thất bại");
         });
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -174,23 +211,32 @@ const HouseAddNew = () => {
         })
           .then(function (response) {
             setCategoriesData(response?.data?.data);
+            console.log(response?.data?.data);
           })
-          .catch(function (response) {});
+          .catch(function (response) {
+            toast.error("a");
+          });
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    reset({
+      ...house,
+    });
+    setSelectCategory(house?.houseTypes);
+    setDescription(house?.description);
+  }, [house, reset, setValue]);
 
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
         <h1 className="mb-10 inline-block rounded-xl bg-white py-4 px-[60px] text-center text-[25px]  font-semibold">
-          Bài đăng rao bán căn hộ 🏘️
+          Thêm căn hộ 🏘️
         </h1>
-
-        <form onSubmit={handleSubmit(handleAddNewHouse)}>
+        <form onSubmit={handleSubmit()}>
           <FormRow>
             <FormGroup>
               <Label>Tên căn hộ* </Label>
@@ -204,46 +250,262 @@ const HouseAddNew = () => {
             <FormGroup>
               <Label>Chọn loại căn hộ* </Label>
               <Dropdown>
-                <Dropdown.Select
+                <Select
                   placeholder={
-                    getDropdownLabel("typeIds") || "Chọn loại căn hộ"
+                    selectCategory?.[0]?.name ||
+                    getDropdownLabel("nameCategories") ||
+                    "Chọn loại căn hộ"
                   }
-                ></Dropdown.Select>
-
-                <Dropdown.List>
-                  {categoriesData?.map((category) => (
-                    <Dropdown.Option
-                      key={category.id}
-                      onClick={() => handleSelectCategories(category?.id)}
-                    >
-                      <span className="capitalize">{category?.name}</span>
-                    </Dropdown.Option>
-                  ))}
-                </Dropdown.List>
+                ></Select>
+                <List>
+                  {categoriesData &&
+                    categoriesData?.map((category) => (
+                      <Option
+                        key={category?.id}
+                        onClick={() =>
+                          handleSelectCategories(category?.code, category?.name)
+                        }
+                      >
+                        <span className="capitalize">{category?.name}</span>
+                      </Option>
+                    ))}
+                </List>
               </Dropdown>
             </FormGroup>
           </FormRow>
-
-          <FormGroup>
-            <Label>Mô tả ngắn* </Label>
-            <Textarea
-              control={control}
-              name="detailSumary"
-              placeholder="Mô tả ngắn"
-            ></Textarea>
-          </FormGroup>
-
           <FormRow>
             <FormGroup>
-              <Label>Hình ảnh* </Label>
-              <ImageUpload
-                image={getValues("image")}
-                onChange={setValue}
-                name="image"
-              ></ImageUpload>
+              <Label>Nhà vệ sinh* </Label>
+              <Input
+                control={control}
+                name="toilet"
+                placeholder="Mô tả ngắn"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Số phòng* </Label>
+              <Input
+                control={control}
+                name="roomNumber"
+                placeholder="Số phòng "
+              ></Input>
             </FormGroup>
           </FormRow>
+          <div className="flex gap-x-3">
+            <FormGroup>
+              <Label>Hình ảnh* </Label>
+              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+                <label
+                  className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChange}
+                    className="hidden"
+                  />
 
+                  {!preViewImage && !house?.image && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                  {house?.image ? (
+                    <img
+                      src={preViewImage?.preview || house?.image}
+                      className="h-full w-full object-cover "
+                      alt=""
+                    />
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                </label>
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Label>Hình ảnh* </Label>
+              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+                <label
+                  className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChange1}
+                    className="hidden"
+                  />
+
+                  {!preViewImage1 && !house?.image2 && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                  {house?.image2 ? (
+                    <img
+                      src={preViewImage1?.preview || house?.image2}
+                      className="h-full w-full object-cover "
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                </label>
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Label>Hình ảnh* </Label>
+              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+                <label
+                  className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChange3}
+                    className="hidden"
+                  />
+
+                  {!preViewImage3 && !house?.image3 && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                  {house?.image3 ? (
+                    <img
+                      src={preViewImage3?.preview || house?.image3}
+                      className="h-full w-full object-cover "
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                </label>
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Label>Hình ảnh* </Label>
+              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+                <label
+                  className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChange4}
+                    className="hidden"
+                  />
+
+                  {!preViewImage4 && !house?.image4 && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                  {house?.image4 ? (
+                    <img
+                      src={preViewImage4?.preview || house?.image4}
+                      className="h-full w-full object-cover "
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                </label>
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <Label>Hình ảnh* </Label>
+              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+                <label
+                  className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
+                >
+                  <input
+                    type="file"
+                    onChange={handleChange5}
+                    className="hidden"
+                  />
+
+                  {!preViewImage5 && !house?.image5 && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                      />
+                    </svg>
+                  )}
+                  {house?.image5 ? (
+                    <img
+                      src={preViewImage5?.preview || house?.image5}
+                      className="h-full w-full object-cover "
+                      alt=""
+                    />
+                  ) : (
+                    ""
+                  )}
+                </label>
+              </div>
+            </FormGroup>
+          </div>
           <FormGroup>
             <Label>Chi tiết căn hộ* </Label>
             <ReactQuill
@@ -265,15 +527,6 @@ const HouseAddNew = () => {
               ></Input>
             </FormGroup>
 
-            {/* <FormGroup>
-              <Label>Date*</Label>
-              <DatePicker
-                onChange={setStartDate}
-                value={startDate}
-                format="yyyy-MM-dd"
-              />
-            </FormGroup> */}
-
             <FormGroup>
               <Label>Diện tích* </Label>
               <Input
@@ -286,7 +539,7 @@ const HouseAddNew = () => {
 
           <FormGroup>
             <Label>Địa chỉ</Label>
-            <FormThreeCol>
+            {/* <FormThreeCol>
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select
@@ -312,7 +565,6 @@ const HouseAddNew = () => {
                   </Dropdown.List>
                 </Dropdown>
               </FormGroup>
-
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select
@@ -364,16 +616,19 @@ const HouseAddNew = () => {
                   </Dropdown.List>
                 </Dropdown>
               </FormGroup>
-            </FormThreeCol>
+            </FormThreeCol> */}
+            <Input
+              control={control}
+              name="address"
+              placeholder="Nhập địa chỉ căn hộ"
+            ></Input>
           </FormGroup>
-
           <Button
             kind="primary"
             className="mx-auto bg-primary px-10 text-white"
             type="submit"
-            isLoading={loading}
           >
-            Tạo bài bán căn hộ
+            Thêm căn hộ
           </Button>
         </form>
       </div>
@@ -381,4 +636,4 @@ const HouseAddNew = () => {
   );
 };
 
-export default HouseAddNew;
+export default HouseUpdate;

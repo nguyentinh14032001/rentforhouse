@@ -1,6 +1,5 @@
-import { Router, useNavigate } from "react-router-dom";
 import { call, put } from "redux-saga/effects";
-import { saveToken } from "utils/auth";
+
 import { requestAuthSignIn } from "./auth-request";
 import { authLogin } from "./auth-slice";
 

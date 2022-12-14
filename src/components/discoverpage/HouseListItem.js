@@ -1,6 +1,7 @@
 import React from "react";
-import { IconHouse } from "components/icons";
+
 import { Link } from "react-router-dom";
+import IconHouse from "../icons/IconHouse";
 
 const HouseListItem = ({ houses }) => {
   return (

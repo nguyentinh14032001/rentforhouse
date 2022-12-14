@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
 
+<<<<<<< HEAD
+=======
 import { DetailContext } from "pages/DetailPage";
 
+>>>>>>> homepage2
 import "../../assets/sass/detailpage/DetailInfo.scss";
+import { DetailContext } from "../../pages/DetailPage";
 
 const DetailInfo = () => {
   const value = useContext(DetailContext);

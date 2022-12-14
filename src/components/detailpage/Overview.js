@@ -1,9 +1,14 @@
+<<<<<<< HEAD
+import React, { useContext } from "react";
+=======
 import React, { useContext, useEffect, useState } from "react";
 
 import { DetailContext } from "pages/DetailPage";
 import Slider from "react-slick";
+>>>>>>> homepage2
 
 import "../../assets/sass/detailpage/Overview.scss";
+import { DetailContext } from "../../pages/DetailPage";
 
 const Overview = () => {
   const value = useContext(DetailContext);

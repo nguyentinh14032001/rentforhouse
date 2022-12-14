@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import { baseURL } from "api/axios";
 import Navbar from "layout/Navbar";
@@ -11,6 +10,7 @@ import SellerInfo from "components/detailpage/SellerInfo";
 import Comments from "components/detailpage/Comments";
 import SimilarPlaces from "components/detailpage/SimilarPlaces";
 import Footer from "layout/Footer";
+import axios from "axios";
 
 export const DetailContext = createContext();
 const DetailPage = () => {
