@@ -14,7 +14,7 @@ const InfoControl = ({ setIsEdit }) => {
   const userData = JSON.parse(user);
 
   const value = useContext(ProfileContext);
-  const { profile } = value;
+  const { profile, setIsChange } = value;
   const dataFromInfo = {
     lastname: profile?.lastName,
     firstname: profile?.firstName,
@@ -72,7 +72,7 @@ const InfoControl = ({ setIsEdit }) => {
     async function putData() {
       try {
         await axios({
-          method: "get",
+          method: "put",
           url: `${baseURL}/api/profiles?email=${data?.gmail}&firstName=${data?.firstname}&lastName=${data?.lastname}&phone=${data?.phone}`,
           headers: {
             Authorization: userData.access_token,
@@ -87,9 +87,14 @@ const InfoControl = ({ setIsEdit }) => {
       }
     }
     putData();
-    // setIsEdit(false);
+    setIsEdit(false);
+    reset({});
+    setIsChange(true);
   };
   // console.log(profile);
+  const handleCancle = () => {
+    setIsEdit(false);
+  };
   return (
     <>
       <form
@@ -159,7 +164,10 @@ const InfoControl = ({ setIsEdit }) => {
             Cập nhật
           </button>
 
-          <button className="mt-4 w-fit rounded-lg bg-[red] py-2 px-4 font-bold text-white">
+          <button
+            className="mt-4 w-fit rounded-lg bg-[red] py-2 px-4 font-bold text-white"
+            onClick={handleCancle}
+          >
             Huỷ
           </button>
         </div>
