@@ -15,6 +15,7 @@ const ProfilePage = () => {
   const userData = JSON.parse(user);
 
   const [profile, setProfile] = useState();
+  const [isChange, setIsChange] = useState(false);
 
   const [show, setShow] = useState({
     editBtn: false,
@@ -42,6 +43,7 @@ const ProfilePage = () => {
               ...prevState,
               newImage: response?.data?.data?.image,
             }));
+            setIsChange(false);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -49,9 +51,9 @@ const ProfilePage = () => {
       }
     }
     fetchData();
-  }, []);
-
-  const value = { image, setImage, show, setShow, profile };
+  }, [isChange]);
+  console.log(isChange);
+  const value = { image, setImage, show, setShow, profile, setIsChange };
 
   return (
     <ProfileContext.Provider value={value}>
