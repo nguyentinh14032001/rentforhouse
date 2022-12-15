@@ -165,19 +165,25 @@ const HouseUpdate = () => {
     const cloneValues = { ...values };
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
-    const image = String(cloneValues?.image?.url);
-    console.log(typeof image);
+    // const image = String(cloneValues?.image?.url);
 
+    const formData = new FormData();
+
+    formData.append("image", preViewImage);
+    formData.append("image2", preViewImage1);
+    formData.append("image3", preViewImage3);
+    formData.append("image4", preViewImage4);
+    formData.append("image5", preViewImage5);
     try {
       await axios({
         method: "post",
-        url: `${baseURL}/api/api/houses?address=${cloneValues.address}&area=${
+        url: `${baseURL}/api/houses?address=${cloneValues.address}&area=${
           cloneValues.area
-        }&description=${description}&floor=4&name=${cloneValues.name}&price=${
-          cloneValues.price
-        }&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
+        }&description=${description}&floor=4&name=${
+          cloneValues.name
+        }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${cloneValues.address}`,
+        }&typeHouses=&typeHouses=${cloneValues.typeIds}`,
         // data: {
         //   address: address,
         //   area: cloneValues.area,
@@ -188,15 +194,17 @@ const HouseUpdate = () => {
         //   price: price,
         //   typeIds: [1],
         // },
+        data: formData,
         headers: {
           Authorization: userData.access_token,
+          "Content-Type": "multipart/form-data",
         },
       })
         .then(function (response) {
-          toast.success("Sửa căn hộ thành công");
+          toast.success("Thêm căn hộ thành công");
         })
         .catch(function (response) {
-          toast.error("Sửa căn hộ thất bại");
+          toast.error("Thêm căn hộ thất bại");
         });
     } catch (error) {
       console.log(error);
@@ -236,7 +244,7 @@ const HouseUpdate = () => {
         <h1 className="mb-10 inline-block rounded-xl bg-white py-4 px-[60px] text-center text-[25px]  font-semibold">
           Thêm căn hộ 🏘️
         </h1>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit(handleAddHouse)}>
           <FormRow>
             <FormGroup>
               <Label>Tên căn hộ* </Label>
@@ -276,11 +284,7 @@ const HouseUpdate = () => {
           <FormRow>
             <FormGroup>
               <Label>Nhà vệ sinh* </Label>
-              <Input
-                control={control}
-                name="toilet"
-                placeholder="Mô tả ngắn"
-              ></Input>
+              <Input control={control} name="toilet" placeholder="...."></Input>
             </FormGroup>
             <FormGroup>
               <Label>Số phòng* </Label>
@@ -320,27 +324,14 @@ const HouseUpdate = () => {
                       />
                     </svg>
                   )}
-                  {house?.image ? (
+                  {preViewImage || house?.image ? (
                     <img
                       src={preViewImage?.preview || house?.image}
                       className="h-full w-full object-cover "
                       alt=""
                     />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                      />
-                    </svg>
+                    ""
                   )}
                 </label>
               </div>
@@ -373,7 +364,7 @@ const HouseUpdate = () => {
                       />
                     </svg>
                   )}
-                  {house?.image2 ? (
+                  {preViewImage1 || house?.image2 ? (
                     <img
                       src={preViewImage1?.preview || house?.image2}
                       className="h-full w-full object-cover "
@@ -413,7 +404,7 @@ const HouseUpdate = () => {
                       />
                     </svg>
                   )}
-                  {house?.image3 ? (
+                  {preViewImage3 || house?.image3 ? (
                     <img
                       src={preViewImage3?.preview || house?.image3}
                       className="h-full w-full object-cover "
@@ -453,7 +444,7 @@ const HouseUpdate = () => {
                       />
                     </svg>
                   )}
-                  {house?.image4 ? (
+                  {preViewImage4 || house?.image4 ? (
                     <img
                       src={preViewImage4?.preview || house?.image4}
                       className="h-full w-full object-cover "
@@ -493,7 +484,7 @@ const HouseUpdate = () => {
                       />
                     </svg>
                   )}
-                  {house?.image5 ? (
+                  {preViewImage5 || house?.image5 ? (
                     <img
                       src={preViewImage5?.preview || house?.image5}
                       className="h-full w-full object-cover "
