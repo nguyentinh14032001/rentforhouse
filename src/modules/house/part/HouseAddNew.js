@@ -25,6 +25,7 @@ Quill.register("modules/imageUploader", ImageUploader);
 
 const HouseUpdate = () => {
   const [params] = useSearchParams();
+  const [isChange, setIsChange] = useState(false);
   const houseId = params.get("id");
   const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
     mode: "onChange",
@@ -202,7 +203,13 @@ const HouseUpdate = () => {
         },
       })
         .then(function (response) {
+          reset({});
           toast.success("Thêm căn hộ thành công");
+          setPreViewImage("");
+          setPreViewImage1("");
+          setPreViewImage3("");
+          setPreViewImage4("");
+          setPreViewImage5("");
         })
         .catch(function (response) {
           toast.error("Thêm căn hộ thất bại");

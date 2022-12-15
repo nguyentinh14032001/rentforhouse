@@ -16,11 +16,13 @@ import LabelStatus from "../../../../components/label/LabelStatus";
 import GLPagination from "../../../../layout/GLPagination";
 const OverviewTable = ({ filter }) => {
   const [houseList, setHouseList] = useState([]);
+  const [isChange, setIsChange] = useState(false);
+
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
-  const [isChange, setIsChange] = useState(true);
+
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("");
@@ -65,7 +67,7 @@ const OverviewTable = ({ filter }) => {
       }
     }
     fetchData();
-  }, [method, page, url, userData.access_token]);
+  }, [method, page, url, userData.access_token, isChange]);
   const handleDeleteUser = async (user) => {
     Swal.fire({
       title: "Are you sure?",
