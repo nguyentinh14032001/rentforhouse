@@ -20,6 +20,8 @@ import { imgbbAPI } from "../../../config/config";
 import Select from "../../../components/dropdown/Select";
 import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
+import { Field } from "components/field";
+import { Toggle } from "components/checkbox";
 
 Quill.register("modules/imageUploader", ImageUploader);
 
@@ -40,6 +42,8 @@ const HouseUpdate = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
   const [house, setHouse] = useState("");
+  const watchHot = watch("hot");
+
   const [selectCategory, setSelectCategory] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -191,13 +195,13 @@ const HouseUpdate = () => {
     formData.append("image3", preViewImage3);
     formData.append("image4", preViewImage4);
     formData.append("image5", preViewImage5);
-
+    console.log(cloneValues.typeIds);
     try {
       await axios({
         method: "put",
-        url: `${baseURL}/api/houses?address=${cloneValues.address}&area=${
-          cloneValues.area
-        }&description=${description}&floor=4&name=${
+        url: `${baseURL}/api/houses/${houseId}?address=${
+          cloneValues.address
+        }&area=${cloneValues.area}&description=${description}&floor=4&name=${
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
@@ -211,12 +215,15 @@ const HouseUpdate = () => {
         //   price: price,
         //   typeIds: [1],
         // },
+        data: formData,
         headers: {
           Authorization: userData.access_token,
+          "Content-Type": "multipart/form-data",
         },
       })
         .then(function (response) {
           toast.success("Sửa căn hộ thành công");
+          console.log(response);
         })
         .catch(function (response) {
           toast.error("Sửa căn hộ thất bại");
@@ -259,7 +266,7 @@ const HouseUpdate = () => {
         <h1 className="mb-10 inline-block rounded-xl bg-white py-4 px-[60px] text-center text-[25px]  font-semibold">
           Chỉnh sửa căn hộ 🏘️
         </h1>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit(handleUpdateHouse)}>
           <FormRow>
             <FormGroup>
               <Label>Tên căn hộ* </Label>
@@ -285,7 +292,7 @@ const HouseUpdate = () => {
                       <Option
                         key={category?.id}
                         onClick={() =>
-                          handleSelectCategories(category?.id, category?.name)
+                          handleSelectCategories(category?.code, category?.name)
                         }
                       >
                         <span className="capitalize">{category?.name}</span>
@@ -557,9 +564,10 @@ const HouseUpdate = () => {
               ></Input>
             </FormGroup>
           </FormRow>
-          <FormGroup>
-            <Label>Địa chỉ</Label>
-            {/* <FormThreeCol>
+          <FormRow>
+            <FormGroup>
+              <Label>Địa chỉ</Label>
+              {/* <FormThreeCol>
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select
@@ -636,12 +644,24 @@ const HouseUpdate = () => {
                 </Dropdown>
               </FormGroup>
             </FormThreeCol> */}
-            <Input
-              control={control}
-              name="address"
-              placeholder="Nhập địa chỉ căn hộ"
-            ></Input>
-          </FormGroup>
+              <Input
+                control={control}
+                name="address"
+                placeholder="Nhập địa chỉ căn hộ"
+              ></Input>
+            </FormGroup>
+            {/* <FormGroup>
+              <Field>
+                <Label>Feature Post</Label>
+                <Toggle
+                  on={watchHot}
+                  onClick={() => {
+                    setValue("hot", !watchHot);
+                  }}
+                ></Toggle>
+              </Field>
+            </FormGroup> */}
+          </FormRow>
           <Button
             kind="primary"
             className="mx-auto bg-primary px-10 text-white"
