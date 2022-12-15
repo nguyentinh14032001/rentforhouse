@@ -7,6 +7,7 @@ import OverviewTable from "./OverviewTable";
 
 const HouseManage = () => {
   const [filter, setFilter] = useState("");
+  const [isChange, setIsChange] = useState(false);
   const handleQuery = lodash.debounce((e) => {
     setFilter(e.target.value);
   }, 500);
