@@ -166,7 +166,8 @@ const HouseUpdate = () => {
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
     // const image = String(cloneValues?.image?.url);
-
+    const newArray = [];
+    newArray.push(cloneValues.typeIds);
     const formData = new FormData();
 
     formData.append("image", preViewImage);
@@ -183,7 +184,7 @@ const HouseUpdate = () => {
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${cloneValues.typeIds}`,
+        }&typeHouses=&typeHouses=${newArray}`,
         // data: {
         //   address: address,
         //   area: cloneValues.area,
