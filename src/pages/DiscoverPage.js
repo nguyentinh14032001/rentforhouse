@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import Navbar from "layout/Navbar";
-import Sidebar from "layout/Sidebar";
-import LayoutHomePage from "layout/LayoutPage";
-import Sort from "components/discoverpage/Sort";
+import Header from "layout/Header";
 import HousesList from "components/discoverpage/HousesList";
 import Footer from "layout/Footer";
 import GLPagination from "layout/GLPagination";
 import { baseURL } from "api/axios";
-import BackgroundLayout from "layout/BackgroundLayout";
 
 const DiscoverPage = () => {
   const [houses, setHouses] = useState([]);
@@ -22,27 +18,28 @@ const DiscoverPage = () => {
         await axios
           .get(`${baseURL}/api/houses/status/true`, {
             params: {
-              limit: 10,
+              limit: 4,
               page: page,
             },
           })
           .then((res) => {
             setPages(res.data.data);
             setHouses(res.data.data.houses);
+            console.log(res.data.data.houses);
           });
       } catch (error) {}
     };
     fetchApi();
   }, [page]);
-  console.log(houses);
+
   return (
     <>
-      <Navbar />
-      <BackgroundLayout>
-        {/* <Sort /> */}
+      <Header />
+      {/* <Sort /> */}
+      <div className="container grid grid-cols-3">
         <HousesList houses={houses} />
         <GLPagination pages={pages} setPage={setPage} />
-      </BackgroundLayout>
+      </div>
       <Footer />
     </>
   );

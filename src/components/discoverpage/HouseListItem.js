@@ -10,7 +10,7 @@ const HouseListItem = ({ houses }) => {
         <img
           src={houses?.image}
           alt=""
-          className="h-[40vh] w-[36vw] rounded-lg"
+          className="h-[40vh] w-[36vw] rounded-lg transition duration-300 ease-in-out hover:scale-95"
         />
       </Link>
       <div className="ml-6 mt-2 flex w-[30vw] flex-col">

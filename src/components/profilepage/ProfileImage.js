@@ -30,7 +30,7 @@ const ProfileImage = () => {
         />
         {show?.editBtn == true && (
           <div
-            className="absolute -bottom-[20px] flex cursor-pointer border-2 p-2 hover:opacity-80"
+            className="absolute top-[200px] flex cursor-pointer border-2 p-2 hover:opacity-80"
             onClick={handlechange}
           >
             Chỉnh sửa

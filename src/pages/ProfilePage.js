@@ -2,8 +2,8 @@ import React, { createContext, useEffect, useState } from "react";
 
 import { baseURL } from "api/axios";
 import axios from "axios";
+import Header from "layout/Header";
 import Navbar from "layout/Navbar";
-import ProfileImage from "components/profilepage/ProfileImage";
 import ProFileInfo from "components/profilepage/ProFileInfo";
 import ImageControl from "components/profilepage/ImageControl";
 
@@ -56,15 +56,15 @@ const ProfilePage = () => {
   const value = { image, setImage, show, setShow, profile, setIsChange };
 
   return (
-    <ProfileContext.Provider value={value}>
-      <Navbar />
-      <div className="mx-auto mt-8 grid w-fit max-w-[90vw] grid-cols-3 pt-8">
-        <ProfileImage />
-        <ProFileInfo />
-      </div>
+    <>
+      <Header></Header>
 
-      {show?.imageControl == true && <ImageControl />}
-    </ProfileContext.Provider>
+      <ProfileContext.Provider value={value}>
+        <ProFileInfo />
+
+        {show?.imageControl == true && <ImageControl />}
+      </ProfileContext.Provider>
+    </>
   );
 };
 

@@ -3,22 +3,23 @@ import { IconHouse } from "components/icons";
 import { Link } from "react-router-dom";
 
 const PopularHouse = ({ house }) => {
-  console.log(house);
   return (
     <>
       {house && (
-        <div className="flex grid grid-rows-2 flex-col">
+        <div className="mb-[20px] flex grid grid-rows-2 flex-col  bg-white ">
           {/* house image */}
-          <Link to={`/detail/${house?.id}`}>
-            <img
-              src={house?.image}
-              alt=""
-              className="h-full w-full rounded-2xl object-cover"
-            />
-          </Link>
+          <div className="overflow-hidden ">
+            <Link to={`/detail/${house?.id}`}>
+              <img
+                src={house?.image}
+                alt=""
+                className="h-full w-full transform object-cover transition-all duration-300 hover:scale-125"
+              />
+            </Link>
+          </div>
 
           {/* House content */}
-          <div className="mt-2 flex flex-col justify-between">
+          <div className="mt-2 flex flex-col justify-between p-2">
             {/* div top */}
             <div>
               <div className="flex text-[gray]">
