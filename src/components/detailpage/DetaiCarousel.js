@@ -9,6 +9,8 @@ import "assets/sass/detailpage/DetaiCarousel.scss";
 
 function DetaiCarousel() {
   const value = useContext(DetailContext);
+  const { house } = value;
+
   const settings = {
     className: "slider variable-width",
     dots: true,
@@ -25,19 +27,19 @@ function DetaiCarousel() {
     <div className="container-fluid container-carousel">
       <Slider {...settings}>
         <div>
-          <img src={value?.urlId[0]} alt="" />
+          <img src={house?.image} alt="" />
         </div>
         <div>
-          <img src={value?.urlId[1]} alt="" />
+          <img src={house?.image2} alt="" />
         </div>
         <div>
-          <img src={value?.urlId[2]} alt="" />
+          <img src={house?.image3} alt="" />
         </div>
         <div>
-          <img src={value?.urlId[3]} alt="" />
+          <img src={house?.image4} alt="" />
         </div>
         <div>
-          <img src={value?.urlId[4]} alt="" />
+          <img src={house?.image5} alt="" />
         </div>
       </Slider>
     </div>

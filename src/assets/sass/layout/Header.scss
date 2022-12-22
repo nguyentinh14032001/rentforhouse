@@ -12,10 +12,18 @@ a {
   }
 
   &:hover {
+    color: #ff5a3c;
     .progress-bar {
       background-color: #ff5a3c;
       animation: grown 0.5s linear;
       transform-origin: center;
+    }
+  }
+
+  &.active {
+    color: #ff5a3c;
+    .progress-bar {
+      background-color: #ff5a3c;
     }
   }
 }

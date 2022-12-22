@@ -1,20 +1,16 @@
+import { useState } from "react";
+
 import DateComment from "./detailcontent/DateComment";
 import TitleContent from "./detailcontent/TitleContent";
 import Description from "./detailcontent/Description";
 import PlaceDetail from "./detailcontent/PlaceDetail";
 import GoogleMap from "./detailcontent/GoogleMap";
 import ImageOverview from "./detailcontent/ImageOverview";
-import CustomerReviews from "./detailcontent/CustomerReviews";
+import Comments from "./detailcontent/Comments";
+
 import "../../assets/sass/detailpage/DetailContent.scss";
-import { useState } from "react";
 
 function DetailContent() {
-  const [newdata, setNewData] = useState([]);
-
-  const addComment = (item) => {
-    setNewData(item);
-  };
-
   return (
     <div className="col-8 detailcontent">
       <div className="row">
@@ -22,9 +18,9 @@ function DetailContent() {
         <TitleContent />
         <Description />
         <PlaceDetail />
-        <GoogleMap />
+        {/* <GoogleMap /> */}
         <ImageOverview />
-        <CustomerReviews addComment={addComment} />
+        <Comments />
       </div>
       {/* End row*/}
     </div>

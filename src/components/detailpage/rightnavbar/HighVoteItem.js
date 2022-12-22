@@ -1,39 +1,25 @@
-import { storage } from "../../../firebase/config";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
-import { useEffect, useState } from "react";
+import React from "react";
 
-function HighVoteItem({ data }) {
-  const imagesListRef = ref(storage, "images/");
-  const [imageUrls, setImageUrls] = useState([]);
-
-  useEffect(() => {
-    listAll(imagesListRef).then((res) => {
-      res.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageUrls((prev) =>
-            prev.find((c) => c === url) ? prev : [...prev, url]
-          );
-        });
-      });
-    });
-  }, []);
-
-  const urlId = imageUrls.filter((url) => {
-    return url.includes(data.userId);
-  });
+const HighVoteItem = ({ house }) => {
   return (
-    <div className="highvoteitem">
-      <div className="vote-item">
-        <div className="image-box">
-          <img src={urlId} alt="" />
+    <>
+      <div className="grid grid-cols-4 gap-2">
+        <div className="col-span-1 col-start-1 overflow-hidden">
+          <img
+            src={house?.image}
+            alt=""
+            className="h-full w-full transform transition duration-200 hover:scale-125"
+          />
         </div>
-        <div className="item-content">
-          <p>{data.name}</p>
-          <small>{data.price} / tháng</small>
+        <div className="col-span-3 text-left hover:opacity-80">
+          <p className="text-[14px] font-bold capitalize">{house?.name}</p>
+          <p className="font-bold text-[#ff5a3c]">
+            {house?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+          </p>
         </div>
       </div>
-    </div> /* End fragment */
+    </>
   );
-}
+};
 
 export default HighVoteItem;

@@ -6,8 +6,6 @@ import Heading from "components/common/Heading";
 import PopularHouse from "./PopularHouse";
 
 const PopularHouses = () => {
-  const user = localStorage.getItem("user");
-  const userData = JSON.parse(user);
   const [houses, setHouses] = useState();
   useEffect(() => {
     const fetchApi = async () => {

@@ -10,80 +10,72 @@ import { useParams } from "react-router-dom";
 // import SimpleBreadcrumbs from "../components/global-components/SimpleBreadcrumbs";
 import { createContext, useEffect, useState } from "react";
 import { onSnapshot, collection } from "@firebase/firestore";
-import Breadcrump from "components/detailpage/BreadCrump";
 import { db, storage } from "../firebase/config";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
+import axios from "axios";
+import { baseURL } from "api/axios";
 
 export const DetailContext = createContext();
 
 function DetailPage() {
-  const colRef = collection(db, "HouseDetail");
-  const [imageUrls, setImageUrls] = useState([]);
-
-  const [dbDatas, setDBDatas] = useState([]);
+  const [house, setHouse] = useState([]);
   const { id } = useParams();
-  const imagesListRef = ref(storage, "images/");
+  const [windowURL, setWindowURL] = useState();
 
-  const data = dbDatas.find((x) => x.id == id);
-
-  const urlId = imageUrls.filter((url) => {
-    return url.includes(data?.userId);
-  });
-
-  const value = { dbDatas, data, id, urlId };
-
-  //getdata from fỉebase
   useEffect(() => {
-    async function getData() {
-      onSnapshot(colRef, (snapshot) => {
-        let housedetail = [];
-        snapshot.docs.forEach((doc) => {
-          housedetail.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-        setDBDatas(housedetail);
-      });
+    //increasing view
+    async function putView() {
+      try {
+        await axios({
+          method: "put",
+          url: `${baseURL}/api/houses/viewPlus/${id}`,
+        })
+          .then(function (response) {})
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
     }
-    getData();
-  }, []);
+    putView();
+    //get a list of houses
+    async function fetchData() {
+      try {
+        await axios({
+          method: "get",
+          url: `${baseURL}/api/houses/${id}`,
+        })
+          .then(function (response) {
+            setHouse(response?.data?.data);
+          })
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-  //get images from storage
-  useEffect(() => {
-    listAll(imagesListRef).then((res) => {
-      res.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageUrls((prev) =>
-            prev.find((c) => c === url) ? prev : [...prev, url]
-          );
-        });
-      });
-    });
-  }, []);
+    fetchData();
+  }, [id]);
+
+  const value = { house, id };
 
   return (
     <DetailContext.Provider value={value}>
-      {data && (
-        <div className="DetailPage">
-          <Header id={id} />
-          {/* <SimpleBreadcrumbs title="Chi tiết nhà ở" /> */}
-          <DetailCarousel />
+      <div className="DetailPage">
+        <Header id={id} />
+        {/* <SimpleBreadcrumbs title="Chi tiết nhà ở" /> */}
+        <DetailCarousel />
 
-          <div className="container ">
-            <div className="row">
-              <DetailContent />
-              <RightNavbar />
-            </div>
-            {/* End row */}
+        <div className="container">
+          <div className="row">
+            <DetailContent />
+            <RightNavbar />
           </div>
-          {/* End container*/}
-
-          <SimilarPlaces id={id} />
-          <Discover />
-          <Footer />
         </div>
-      )}
+
+        {/* <SimilarPlaces id={id} /> */}
+        {/* <Discover /> */}
+        <Footer />
+      </div>
     </DetailContext.Provider>
   );
 }

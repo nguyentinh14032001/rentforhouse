@@ -12,7 +12,6 @@ import UserUpdate from "./modules/dashboard/manage/user/UserUpdate";
 import HouseUpdate from "./modules/house/part/HouseUpdate";
 
 const Main = lazy(() => import("./pages/Main"));
-const HomePage = lazy(() => import("./pages/HomePage"));
 const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
 const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
 const DetailPage = lazy(() => import("./pages/DetailPage"));
@@ -30,7 +29,7 @@ function App() {
         <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
-        <Route path="/home" element={<HomePage></HomePage>}></Route>
+        <Route path="/home" element={<Main></Main>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
 

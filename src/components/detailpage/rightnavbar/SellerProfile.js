@@ -1,22 +1,24 @@
-import avatar2 from "../../../assets/image-custom/avatar2.png";
-import "../../../assets/sass/detailpage/SellerProfile.scss";
+import { useContext } from "react";
+
+import { DetailContext } from "pages/DetailPage";
+
+import "assets/sass/detailpage/SellerProfile.scss";
 
 function SellerProfile() {
+  const value = useContext(DetailContext);
+  const { house } = value;
+  console.log(house);
   return (
-    <div className="seller-profile">
-      <img src={avatar2} alt="" />
-      <h1>Trần Xuân Tiến</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis
-        distinctio, odio, eligendi suscipit reprehenderit atque.
-      </p>
-      <div className="icon-group">
-        <i className="fa-brands fa-facebook-f"></i>
-        <i className="fa-brands fa-twitter"></i>
-        <i className="fa-brands fa-linkedin"></i>
-        <i className="fa-brands fa-youtube"></i>
+    <div className="seller-profile mx-auto w-fit">
+      <img src={house?.user?.image} alt="" />
+      <h1 className="capitalize">
+        {house?.user?.lastName}
+        {house?.user?.firstName}
+      </h1>
+      <div className="flex flex-col items-start font-bold">
+        <p>{house?.user?.email}</p>
+        <p>{house?.user?.phone}</p>
       </div>
-      <button className="btn btn-danger">Nhấn để nhập số điện thoại</button>
     </div> /* End fragment */
   );
 }

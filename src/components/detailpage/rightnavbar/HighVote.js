@@ -1,27 +1,39 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import HighVoteItem from "./HighVoteItem";
-import { Link } from "react-router-dom";
-import { DetailContext } from "pages/DetailPage";
 
-import "assets/sass/detailpage/HighVote.scss";
+import axios from "axios";
+import { baseURL } from "api/axios";
+import { Link, useNavigate } from "react-router-dom";
 
 function HighVote() {
-  const value = useContext(DetailContext);
-  const newdatas = [...value.dbDatas];
-  newdatas.sort(function (a, b) {
-    return b.vote - a.vote;
-  });
-  let slicedata = newdatas.slice(0, 5);
+  let navigate = useNavigate();
+  const [houses, setHouses] = useState();
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        await axios.get(`${baseURL}/api/houses/top-6`).then((res) => {
+          setHouses(res?.data?.data);
+          console.log(res?.data);
+        });
+      } catch (error) {}
+    };
+    fetchApi();
+  }, []);
+
+  const newHouses = houses?.splice(4, 2);
 
   return (
-    <div className="highvote">
-      <h1>Đánh giá cao</h1>
-      {slicedata.map((data, idx) => (
-        <Link to={`/detail/${data.id}`} key={idx}>
-          <HighVoteItem data={data} />
-        </Link>
-      ))}
+    <div className="highvote mt-[30px] border-[1px] border-[#e2e2e2] p-[20px]">
+      <h1 className="mb-4 border-l-[3px] border-[#ff5a3c] pl-[10px] text-[20px] font-bold">
+        Đánh giá cao
+      </h1>
+      {houses &&
+        houses.map((house) => (
+          <Link to={`/detail/${house?.id}`}>
+            <HighVoteItem house={house} key={house?.id} />
+          </Link>
+        ))}
     </div> /* End fragment */
   );
 }

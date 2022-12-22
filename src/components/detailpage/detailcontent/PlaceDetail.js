@@ -5,6 +5,8 @@ import "assets/sass/detailpage/PlaceDetail.scss";
 
 function PlaceDetail() {
   const value = useContext(DetailContext);
+  const { house } = value;
+
   return (
     <div className="col-12 place-detail">
       <h1>Chi tiết nơi ở</h1>
@@ -14,7 +16,7 @@ function PlaceDetail() {
             <p>Địa chỉ :</p>
           </div>
           <div className="col-9">
-            <small>{value.data.address}</small>
+            <small>{house?.address}</small>
           </div>
         </div>
         <div className="row">
@@ -22,7 +24,7 @@ function PlaceDetail() {
             <p>Giá cả :</p>
           </div>
           <div className="col-9">
-            <small>{value.data.price} / tháng</small>
+            <small>{house?.price} / tháng</small>
           </div>
         </div>
         <div className="row">
@@ -30,7 +32,7 @@ function PlaceDetail() {
             <p>Diện tích :</p>
           </div>
           <div className="col-9">
-            <small>{value.data.area}</small>
+            <small>{house?.area}</small>
           </div>
         </div>
         <div className="row">
@@ -38,7 +40,7 @@ function PlaceDetail() {
             <p>Tiện nghi :</p>
           </div>
           <div className="col-9">
-            <small>{value.data.detailsumary}</small>
+            <small>{house?.detailsumary}</small>
           </div>
         </div>
       </div>

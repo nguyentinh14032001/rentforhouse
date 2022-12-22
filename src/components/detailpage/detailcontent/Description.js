@@ -4,10 +4,12 @@ import "assets/sass/detailpage/Description.scss";
 
 function Description() {
   const value = useContext(DetailContext);
+  const { house } = value;
+
   return (
     <div className="col-12 description">
       <h1>Mô tả</h1>
-      <p>{value.data.description}</p>
+      <p>{house?.description}</p>
     </div>
     /* End col description*/
   );

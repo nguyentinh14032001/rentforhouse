@@ -5,14 +5,18 @@ import "assets/sass/detailpage/TitleContent.scss";
 
 function TitleContent() {
   const value = useContext(DetailContext);
+  const { house } = value;
+
   return (
     <div className="col-12 title-content">
-      <h1>{value.data.name}</h1>
-      <p>{value.data.price}</p>
-      <div className="address">
+      <h1 className="capitalize">{house?.name}</h1>
+      <div className="address mt-4">
         <i className="fa-solid fa-location-dot" />
-        <small>{value.data.address}</small>
+        <small>{house?.address}</small>
       </div>
+      <p className="mt-4 text-[24px]">
+        {house?.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} VND
+      </p>
     </div>
     /* End col title-content*/
   );

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import a from "../../assets/image-custom/1.png";
 import b from "../../assets/image-custom/2.png";
 import c from "../../assets/image-custom/3.png";
+
 function Carousel() {
   return (
     <div>

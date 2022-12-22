@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { baseURL } from "api/axios";
 import { HeaderContext } from "layout/Header";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const HeaderLists = () => {
   const authorUser = JSON.parse(localStorage.getItem("user"));
@@ -14,23 +14,23 @@ const HeaderLists = () => {
   };
   return (
     <>
-      <ul className="navbar-nav mt-lg-0 mt-2 mr-4 flex items-center">
-        <Link to="/">
+      <ul className="navbar-nav mt-2 mr-4 flex items-center">
+        <NavLink to="/home" className="mr-6">
           {/* className="active" */}
           <li className="nav-item">Trang chủ</li>
           <div className="progress-bar"></div>
-        </Link>
+        </NavLink>
 
-        <Link to="/discover">
+        <NavLink to="/discover" className="mr-6">
           <li className="nav-item">Khám phá</li>
           <div className="progress-bar"></div>
-        </Link>
+        </NavLink>
 
         {authorUser == null ? (
-          <Link to="/sign-in">
+          <NavLink to="/sign-in">
             <li className="nav-item">Đăng nhập</li>
             <div className="progress-bar"></div>
-          </Link>
+          </NavLink>
         ) : (
           <div className="mb-[2px] flex flex-col">
             <div
