@@ -25,22 +25,27 @@ function App() {
     <Suspense>
       <Routes>
         <Route path="/" element={<Main></Main>}></Route>
-        <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
-        <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
-        <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
-        <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
         <Route path="/home" element={<Main></Main>}></Route>
-        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
+        <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
+        <Route
+          path="/sell-house"
+          element={<PostSellHouse></PostSellHouse>}
+        ></Route>
+        <Route
+          path="/sell-house/:id"
+          element={<PostSellHouse></PostSellHouse>}
+        ></Route>
+        <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
+        <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
+        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
+        <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
 
         <Route
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
         ></Route>
-        <Route
-          path="/sell-house"
-          element={<PostSellHouse></PostSellHouse>}
-        ></Route>
+
         <Route element={<DashboardLayout></DashboardLayout>}>
           <Route
             path="/manage/user"

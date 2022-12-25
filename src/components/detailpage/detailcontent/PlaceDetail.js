@@ -24,7 +24,7 @@ function PlaceDetail() {
             <p>Giá cả :</p>
           </div>
           <div className="col-9">
-            <small>{house?.price} / tháng</small>
+            <small>{house?.price} vnđ</small>
           </div>
         </div>
         <div className="row">
@@ -37,10 +37,10 @@ function PlaceDetail() {
         </div>
         <div className="row">
           <div className="col-3">
-            <p>Tiện nghi :</p>
+            <p>Loại nhà :</p>
           </div>
           <div className="col-9">
-            <small>{house?.detailsumary}</small>
+            <small>{house?.houseType?.name}</small>
           </div>
         </div>
       </div>

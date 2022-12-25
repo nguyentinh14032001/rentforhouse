@@ -12,12 +12,13 @@ const PopularHouses = () => {
       try {
         await axios.get(`${baseURL}/api/houses/top-6`).then((res) => {
           setHouses(res?.data?.data);
-          console.log(res?.data);
         });
       } catch (error) {}
     };
     fetchApi();
   }, []);
+  console.log(houses);
+
   return (
     <div className="mb-10 bg-[#EBEEEF] py-4">
       <span className="mx-auto block w-fit rounded-xl bg-[#FFE4DB] px-10 py-[5px] text-center text-[13px] text-[#FF5A3C]">

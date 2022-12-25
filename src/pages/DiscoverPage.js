@@ -25,7 +25,6 @@ const DiscoverPage = () => {
           .then((res) => {
             setPages(res.data.data);
             setHouses(res.data.data.houses);
-            console.log(res.data.data.houses);
           });
       } catch (error) {}
     };

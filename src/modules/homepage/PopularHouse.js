@@ -24,9 +24,7 @@ const PopularHouse = ({ house }) => {
             <div>
               <div className="flex text-[gray]">
                 <IconHouse className="mr-2 h-5 w-5"></IconHouse>
-                {house?.houseTypes.map((item) => (
-                  <span>{item?.name}</span>
-                ))}
+                <span>{house?.houseType.name}</span>
               </div>
               <Link
                 to={`/detail/${house?.id}`}

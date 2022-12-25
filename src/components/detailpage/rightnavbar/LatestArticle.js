@@ -35,8 +35,8 @@ function LatestArticle() {
       <h1>Bài viết mới nhất</h1>
       {houses &&
         houses.map((house) => (
-          <Link to={`/detail/${house?.id}`}>
-            <LatestArticleItem house={house} key={house?.id} />
+          <Link to={`/detail/${house?.id}`} key={house?.id}>
+            <LatestArticleItem house={house} />
           </Link>
         ))}
     </div> /* End fragment */

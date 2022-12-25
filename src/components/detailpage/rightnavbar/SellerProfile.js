@@ -7,7 +7,6 @@ import "assets/sass/detailpage/SellerProfile.scss";
 function SellerProfile() {
   const value = useContext(DetailContext);
   const { house } = value;
-  console.log(house);
   return (
     <div className="seller-profile mx-auto w-fit">
       <img src={house?.user?.image} alt="" />

@@ -1,3 +1,4 @@
+import React, { createContext, useEffect, useState } from "react";
 import Header from "layout/Header";
 import DetailCarousel from "components/detailpage/DetaiCarousel";
 import DetailContent from "components/detailpage/DetailContent";
@@ -8,10 +9,6 @@ import Footer from "layout/Footer";
 
 import { useParams } from "react-router-dom";
 // import SimpleBreadcrumbs from "../components/global-components/SimpleBreadcrumbs";
-import { createContext, useEffect, useState } from "react";
-import { onSnapshot, collection } from "@firebase/firestore";
-import { db, storage } from "../firebase/config";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
 import axios from "axios";
 import { baseURL } from "api/axios";
 
@@ -20,7 +17,6 @@ export const DetailContext = createContext();
 function DetailPage() {
   const [house, setHouse] = useState([]);
   const { id } = useParams();
-  const [windowURL, setWindowURL] = useState();
 
   useEffect(() => {
     //increasing view

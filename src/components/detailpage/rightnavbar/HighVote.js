@@ -14,7 +14,6 @@ function HighVote() {
       try {
         await axios.get(`${baseURL}/api/houses/top-6`).then((res) => {
           setHouses(res?.data?.data);
-          console.log(res?.data);
         });
       } catch (error) {}
     };
@@ -30,8 +29,8 @@ function HighVote() {
       </h1>
       {houses &&
         houses.map((house) => (
-          <Link to={`/detail/${house?.id}`}>
-            <HighVoteItem house={house} key={house?.id} />
+          <Link to={`/detail/${house?.id}`} key={house?.id}>
+            <HighVoteItem house={house} />
           </Link>
         ))}
     </div> /* End fragment */

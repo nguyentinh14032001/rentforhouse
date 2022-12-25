@@ -38,6 +38,7 @@ const ProfilePage = () => {
           },
         })
           .then(function (response) {
+            console.log(response);
             setProfile(response?.data?.data);
             setImage((prevState) => ({
               ...prevState,
@@ -51,8 +52,7 @@ const ProfilePage = () => {
       }
     }
     fetchData();
-  }, [isChange]);
-  console.log(isChange);
+  }, [isChange == true]);
   const value = { image, setImage, show, setShow, profile, setIsChange };
 
   return (
@@ -60,8 +60,7 @@ const ProfilePage = () => {
       <Header></Header>
 
       <ProfileContext.Provider value={value}>
-        <ProFileInfo />
-
+        {profile && <ProFileInfo />}
         {show?.imageControl == true && <ImageControl />}
       </ProfileContext.Provider>
     </>
