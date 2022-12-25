@@ -1,22 +1,22 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-import { baseURL } from "api/axios";
-import Navbar from "layout/Navbar";
-import BackgroundLayout from "layout/BackgroundLayout";
-import Overview from "components/detailpage/Overview";
-import DetailInfo from "components/detailpage/DetailInfo";
-import SellerInfo from "components/detailpage/SellerInfo";
-import Comments from "components/detailpage/Comments";
+import Header from "layout/Header";
+import DetailCarousel from "components/detailpage/DetaiCarousel";
+import DetailContent from "components/detailpage/DetailContent";
+import RightNavbar from "components/detailpage/RightNavbar";
 import SimilarPlaces from "components/detailpage/SimilarPlaces";
+import Discover from "layout/Discover";
 import Footer from "layout/Footer";
+
+import { useParams } from "react-router-dom";
+// import SimpleBreadcrumbs from "../components/global-components/SimpleBreadcrumbs";
 import axios from "axios";
+import { baseURL } from "api/axios";
 
 export const DetailContext = createContext();
-const DetailPage = () => {
-  const [house, setHouse] = useState({});
+
+function DetailPage() {
+  const [house, setHouse] = useState([]);
   const { id } = useParams();
-  const idHouse = Number(id);
 
   useEffect(() => {
     //increasing view
@@ -24,7 +24,7 @@ const DetailPage = () => {
       try {
         await axios({
           method: "put",
-          url: `${baseURL}/api/houses/viewPlus/${idHouse}`,
+          url: `${baseURL}/api/houses/viewPlus/${id}`,
         })
           .then(function (response) {})
           .catch(function (response) {});
@@ -38,10 +38,10 @@ const DetailPage = () => {
       try {
         await axios({
           method: "get",
-          url: `${baseURL}/api/houses/${idHouse}`,
+          url: `${baseURL}/api/houses/${id}`,
         })
           .then(function (response) {
-            setHouse(response?.data);
+            setHouse(response?.data?.data);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -50,28 +50,30 @@ const DetailPage = () => {
     }
 
     fetchData();
-  }, []);
+  }, [id]);
 
-  const houses = house.data;
-  const value = { houses, idHouse };
+  const value = { house, id };
 
   return (
-    <>
-      <DetailContext.Provider value={value}>
-        <Navbar />
-        <div className="flex items-start gap-x-6">
-          <BackgroundLayout>
-            <Overview />
-            <DetailInfo />
-            <SellerInfo />
-            <Comments idHouse={idHouse} />
-            {/* <SimilarPlaces /> */}
-          </BackgroundLayout>
+    <DetailContext.Provider value={value}>
+      <div className="DetailPage">
+        <Header id={id} />
+        {/* <SimpleBreadcrumbs title="Chi tiết nhà ở" /> */}
+        <DetailCarousel />
+
+        <div className="container">
+          <div className="row">
+            <DetailContent />
+            <RightNavbar />
+          </div>
         </div>
+
+        {/* <SimilarPlaces id={id} /> */}
+        {/* <Discover /> */}
         <Footer />
-      </DetailContext.Provider>
-    </>
+      </div>
+    </DetailContext.Provider>
   );
-};
+}
 
 export default DetailPage;

@@ -1,35 +1,18 @@
-import { Button } from "components/button";
+import React from "react";
+import { Link } from "react-router-dom";
 
-import Navbar from "layout/Navbar";
-import BackgroundLayout from "layout/BackgroundLayout";
+import Header from "layout/Header";
 import Heading from "components/common/Heading";
-import HouseGrid from "modules/house/HouseGrid";
-import YourHouse from "modules/house/part/YourHouse";
 import SpecifiedUserHouse from "components/yourhousepage/SpecifiedUserHouse";
 import Footer from "layout/Footer";
-import React from "react";
 
 const YourHousePage = ({ children }) => {
   return (
     <>
-      <Navbar></Navbar>
-      <BackgroundLayout>
+      <Header></Header>
+      <div className="mx-[15vw] pt-[10vh]">
         <div className="mb-10 flex items-center justify-between rounded-3xl bg-lite py-8 px-10 ">
           <div className="flex items-start gap-x-6">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-secondary text-white opacity-60">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="h-6 w-6"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
             <div className="flex-1">
               <h1 className="mb-2 text-[22px] font-semibold">New house</h1>
               <p className="mb-2 text-sm text-text-3">
@@ -40,19 +23,17 @@ const YourHousePage = ({ children }) => {
               </a>
             </div>
           </div>
-          <Button
-            type="button"
-            kind="ghost"
-            className="px-8"
-            href="/sell-house"
+          <Link
+            to="/sell-house"
+            className="rounded-xl bg-[#2ff06e] px-4 py-3 font-bold text-white hover:opacity-80"
           >
             Đăng bài
-          </Button>
+          </Link>
         </div>
 
         <Heading number={4}>Your House</Heading>
         <SpecifiedUserHouse />
-      </BackgroundLayout>
+      </div>
       <Footer></Footer>
     </>
   );

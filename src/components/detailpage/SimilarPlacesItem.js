@@ -1,42 +1,52 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { storage } from "../../firebase/config";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
+import { useEffect, useState } from "react";
+function SimilarPlacesItem({ data }) {
+  const imagesListRef = ref(storage, "images/");
+  const [imageUrls, setImageUrls] = useState([]);
 
-import sellerAva from "../../assets/images/demoAva.jpg";
-import image1 from "../../assets/images/6.png";
+  useEffect(() => {
+    listAll(imagesListRef).then((res) => {
+      res.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageUrls((prev) =>
+            prev.find((c) => c === url) ? prev : [...prev, url]
+          );
+        });
+      });
+    });
+  }, []);
 
-const SimilarPlacesItem = () => {
+  const urlId = imageUrls.filter((url) => {
+    return url.includes(data.userId);
+  });
+
   return (
-    <>
-      <div className="mx-2">
-        <div className="image-box">
-          <img src={image1} alt="" className="rounded-lg" />
-        </div>
-        <div className="mt-4">
-          <h1 className="text-[20px] font-bold">Tính's Vilas</h1>
-          <div className="flex items-baseline justify-between">
-            <p className="mt-[10px] font-[550] text-[#40CA87]">
-              5.000.000đ / tháng
-            </p>
-            <p className="font-[550]">
-              Diện tích: <span className="font-[550] text-[#40CA87]">50m2</span>
-            </p>
-          </div>
-          <small className="mt-2 tracking-wide opacity-80">
-            Lorem Ipsum is simply dummy text of the printing and Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Quo, tempora alias.
-            Velit, ut provident libero nulla fuga magnam aliquam maiores
-          </small>
-          <div className="flex items-center">
-            <img
-              src={sellerAva}
-              alt=""
-              className="h-[40px] w-[40px] rounded-full"
-            />
-            <p className="ml-2 font-bold">Nguyên Tính</p>
-          </div>
+    <div className="col-4 place-item">
+      <div className="image-box">
+        <Link to={`/detail/${data.id}`}>
+          <img src={urlId} alt="" />
+        </Link>
+      </div>
+      <div className="item-content">
+        <Link to={`/detail/${data.id}`}>
+          <h1>{data.name}</h1>
+        </Link>
+        <p className="title">{data.price} / tháng</p>
+        <small>{data.description}</small>
+        <p>
+          Diện tích: <span>{data.area}</span>
+        </p>
+        <div className="icon-group">
+          <i className="fa-solid fa-up-right-and-down-left-from-center" />
+          <i className="fa-regular fa-heart" />
+          <i className="fa-solid fa-circle-plus" />
         </div>
       </div>
-    </>
+    </div>
+    /* End place-item */
   );
-};
+}
 
 export default SimilarPlacesItem;

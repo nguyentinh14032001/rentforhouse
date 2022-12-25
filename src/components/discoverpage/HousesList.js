@@ -3,9 +3,9 @@ import HouseListItem from "./HouseListItem";
 
 const HousesList = ({ houses }) => {
   return (
-    <div>
+    <div className="col-span-2">
       {houses &&
-        houses.map((item) => <HouseListItem key={item.id} houses={item} />)}
+        houses.map((item) => <HouseListItem key={item?.id} houses={item} />)}
     </div>
   );
 };

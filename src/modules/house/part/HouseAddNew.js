@@ -42,9 +42,6 @@ const HouseUpdate = () => {
   const [description, setDescription] = useState(false);
   const [house, setHouse] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [wards, setWards] = useState([]);
 
   const handleSelectCategories = (value, value1) => {
     setValue("typeIds", value);
@@ -55,7 +52,6 @@ const HouseUpdate = () => {
     setValue(name1, value1);
     setValue(name2, value2);
   };
-  console.log(getValues("typeIds"));
 
   const modules = useMemo(
     () => ({
@@ -67,6 +63,7 @@ const HouseUpdate = () => {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ["link", "image"],
       ],
+
       imageUploader: {
         upload: async (file) => {
           const bodyFormData = new FormData();
@@ -85,49 +82,6 @@ const HouseUpdate = () => {
     }),
     []
   );
-  // //const [addressFilter, handleOnChangeValue] = useOnChange();
-  // const HOST = "https://provinces.open-api.vn/api/";
-  // const getProvince = getValues("provinceCode");
-  // const getDistrict = getValues("districtCode");
-  // // //get province
-  // useEffect(() => {
-  //   async function fetchProvinces() {
-  //     try {
-  //       const response = await axios.get(`${HOST}`);
-  //       setProvinces(response.data);
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchProvinces();
-  // }, []);
-  // //get districts
-  // useEffect(() => {
-  //   async function fetchDistricts() {
-  //     try {
-  //       if (getProvince) {
-  //         const response = await axios.get(`${HOST}p/${getProvince}?depth=2`);
-  //         setDistricts(response.data.districts);
-  //       }
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchDistricts();
-  // }, [getProvince]);
-  // useEffect(() => {
-  //   async function fetchWards() {
-  //     try {
-  //       if (getDistrict) {
-  //         const response = await axios.get(`${HOST}d/${getDistrict}?depth=2`);
-  //         setWards(response.data.wards);
-  //       }
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchWards();
-  // }, [getDistrict]);
 
   const [preViewImage, setPreViewImage] = useState("");
   const [preViewImage1, setPreViewImage1] = useState("");
@@ -160,8 +114,10 @@ const HouseUpdate = () => {
     imageUpload.preview = URL.createObjectURL(imageUpload);
     setPreViewImage5(imageUpload);
   };
+
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
+
   const handleAddHouse = async (values) => {
     const cloneValues = { ...values };
     console.log(cloneValues);
@@ -186,16 +142,6 @@ const HouseUpdate = () => {
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
         }&typeHouses=&typeHouses=${newArray}`,
-        // data: {
-        //   address: address,
-        //   area: cloneValues.area,
-        //   description: "czxczxczxczxc",
-        //   detailSumary: cloneValues.detailSumary,
-        //   image: image,
-        //   name: cloneValues.name,
-        //   price: price,
-        //   typeIds: [1],
-        // },
         data: formData,
         headers: {
           Authorization: userData.access_token,
@@ -306,7 +252,7 @@ const HouseUpdate = () => {
           <div className="flex gap-x-3">
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -346,7 +292,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -386,7 +332,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -426,7 +372,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -466,7 +412,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -538,84 +484,6 @@ const HouseUpdate = () => {
 
           <FormGroup>
             <Label>Địa chỉ</Label>
-            {/* <FormThreeCol>
-              <FormGroup>
-                <Dropdown>
-                  <Dropdown.Select
-                    placeholder={getDropdownLabel("province") || "Tỉnh"}
-                  ></Dropdown.Select>
-                  <Dropdown.List>
-                    {provinces &&
-                      provinces.map((item) => (
-                        <Dropdown.Option
-                          key={item.name}
-                          onClick={() =>
-                            handleSelectAddress(
-                              "province",
-                              "provinceCode",
-                              item.name,
-                              item.code
-                            )
-                          }
-                        >
-                          <span className="capitalize">{item.name}</span>
-                        </Dropdown.Option>
-                      ))}
-                  </Dropdown.List>
-                </Dropdown>
-              </FormGroup>
-              <FormGroup>
-                <Dropdown>
-                  <Dropdown.Select
-                    placeholder={getDropdownLabel("district") || "Thành phố"}
-                  ></Dropdown.Select>
-                  <Dropdown.List>
-                    {districts &&
-                      districts.map((item) => (
-                        <Dropdown.Option
-                          key={item.name}
-                          onClick={() =>
-                            handleSelectAddress(
-                              "district",
-                              "districtCode",
-                              item.name,
-                              item.code
-                            )
-                          }
-                        >
-                          <span className="capitalize">{item.name}</span>
-                        </Dropdown.Option>
-                      ))}
-                  </Dropdown.List>
-                </Dropdown>
-              </FormGroup>
-
-              <FormGroup>
-                <Dropdown>
-                  <Dropdown.Select
-                    placeholder={getDropdownLabel("ward") || "Phường/Xã"}
-                  ></Dropdown.Select>
-                  <Dropdown.List>
-                    {wards &&
-                      wards.map((item) => (
-                        <Dropdown.Option
-                          key={item.name}
-                          onClick={() =>
-                            handleSelectAddress(
-                              "ward",
-                              "wardCode",
-                              item.name,
-                              item.code
-                            )
-                          }
-                        >
-                          <span className="capitalize">{item.name}</span>
-                        </Dropdown.Option>
-                      ))}
-                  </Dropdown.List>
-                </Dropdown>
-              </FormGroup>
-            </FormThreeCol> */}
             <Input
               control={control}
               name="address"

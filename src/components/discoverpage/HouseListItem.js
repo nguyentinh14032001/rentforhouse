@@ -10,15 +10,13 @@ const HouseListItem = ({ houses }) => {
         <img
           src={houses?.image}
           alt=""
-          className="h-[40vh] w-[36vw] rounded-lg"
+          className="h-[40vh] w-[36vw] rounded-lg transition duration-300 ease-in-out hover:scale-95"
         />
       </Link>
       <div className="ml-6 mt-2 flex w-[30vw] flex-col">
         <div className="flex font-bold text-text-3">
           <IconHouse className="h-5 w-5"></IconHouse>
-          {houses?.houseTypes.map((item) => (
-            <small className="ml-2 text-[16px]">{item?.name}</small>
-          ))}
+          <small className="ml-2 text-[16px]">{houses?.houseType?.name}</small>
         </div>
         <Link
           to={`/detail/${houses?.id}`}
