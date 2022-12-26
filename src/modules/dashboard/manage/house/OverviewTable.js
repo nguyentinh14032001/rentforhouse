@@ -14,12 +14,15 @@ import ActionDelete from "../../../../components/action/ActionDelete";
 import Table from "../../../../components/table/Table";
 import LabelStatus from "../../../../components/label/LabelStatus";
 import GLPagination from "../../../../layout/GLPagination";
+import LoadingDashboard from "modules/dashboard/LoadingDashboard";
+
 const OverviewTable = ({ filter }) => {
   const [houseList, setHouseList] = useState([]);
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [isChange, setIsChange] = useState(true);
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
@@ -40,6 +43,7 @@ const OverviewTable = ({ filter }) => {
     }
   }, [filter]);
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       try {
         await axios({
@@ -58,10 +62,12 @@ const OverviewTable = ({ filter }) => {
             setHouseList(response.data.data.houses);
             setIsChange(false);
             console.log(response.data.data);
+            setLoading(false);
           })
           .catch(function (response) {});
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
     fetchData();
@@ -136,7 +142,7 @@ const OverviewTable = ({ filter }) => {
               className=" h-10 w-10 flex-shrink-0 rounded-lg object-cover"
             />
             <div className="flex-1 ">
-              <h3 className="font-semibold">{`${house?.houseTypes[0].name}`}</h3>
+              <h3 className="font-semibold">{`${house?.houseTypes[0]?.name}`}</h3>
               <time className="text-sm text-gray-400">
                 {moment(house?.createdDate).format("MM/DD/YYYY (hh:mm:ss a)")}
               </time>
@@ -207,10 +213,17 @@ const OverviewTable = ({ filter }) => {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {houseList.length > 0 &&
-            houseList.map((house) => renderUserItem(house))}
-        </tbody>
+        {loading && (
+          <tbody className="relative h-[250px] w-[300px]">
+            <LoadingDashboard></LoadingDashboard>
+          </tbody>
+        )}
+        {!loading && (
+          <tbody>
+            {houseList.length > 0 &&
+              houseList.map((house) => renderUserItem(house))}
+          </tbody>
+        )}
       </Table>
       <GLPagination pages={pages} setPage={setPage} />
     </div>

@@ -5,6 +5,8 @@ import ImageUploader from "quill-image-uploader";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useSearchParams } from "react-router-dom";
 import FormRow from "../../../components/common/FormRow";
@@ -20,14 +22,45 @@ import { imgbbAPI } from "../../../config/config";
 import Select from "../../../components/dropdown/Select";
 import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
+import { error } from "jquery";
 
 Quill.register("modules/imageUploader", ImageUploader);
-
+const schema = yup.object().shape({
+  name: yup.string().required("Vui lòng nhập tên căn hộ"),
+  floor: yup
+    .number()
+    .typeError("Vui lòng nhập số")
+    .required("Không được bỏ trống"),
+  image1: yup
+    .object()
+    .shape({
+      name: yup.string().required("Vui lòng chọn ảnh"),
+    })
+    .required("File required"),
+  userName: yup.string().required("This field is required"),
+  email: yup
+    .string()
+    .required("This field is required")
+    .email("Invalid email address"),
+  password: yup
+    .string()
+    .required("This field is required")
+    .min(6, "Password must be 6 character"),
+});
 const HouseUpdate = () => {
   const [params] = useSearchParams();
   const houseId = params.get("id");
-  const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    watch,
+    getValues,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
+    resolver: yupResolver(schema),
     defaultValues: {
       detailSumary: "xzxczxc",
     },
@@ -36,7 +69,7 @@ const HouseUpdate = () => {
     const value = watch(name);
     return value;
   };
-
+  console.log(errors);
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
   const [house, setHouse] = useState("");
@@ -179,7 +212,7 @@ const HouseUpdate = () => {
         method: "post",
         url: `${baseURL}/api/houses?address=${cloneValues.address}&area=${
           cloneValues.area
-        }&description=${description}&floor=4&name=${
+        }&description=${description}&floor=${cloneValues.floor}&name=${
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
@@ -252,6 +285,7 @@ const HouseUpdate = () => {
                 control={control}
                 name="name"
                 placeholder="Nhập tên căn hộ"
+                error={errors.name?.message}
               ></Input>
             </FormGroup>
 
@@ -306,6 +340,8 @@ const HouseUpdate = () => {
                     type="file"
                     onChange={handleChange}
                     className="hidden"
+                    placeholder={errors?.image1?.message || "Hình ảnh"}
+                    name="image1"
                   />
 
                   {!preViewImage && !house?.image && (
@@ -527,10 +563,10 @@ const HouseUpdate = () => {
               ></Input>
             </FormGroup>
           </FormRow>
-
-          <FormGroup>
-            <Label>Địa chỉ</Label>
-            {/* <FormThreeCol>
+          <FormRow>
+            <FormGroup>
+              <Label>Địa chỉ</Label>
+              {/* <FormThreeCol>
               <FormGroup>
                 <Dropdown>
                   <Dropdown.Select
@@ -608,12 +644,23 @@ const HouseUpdate = () => {
                 </Dropdown>
               </FormGroup>
             </FormThreeCol> */}
-            <Input
-              control={control}
-              name="address"
-              placeholder="Nhập địa chỉ căn hộ"
-            ></Input>
-          </FormGroup>
+
+              <Input
+                control={control}
+                name="address"
+                placeholder="Nhập địa chỉ căn hộ"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Số tầng</Label>
+              <Input
+                control={control}
+                name="floor"
+                error={errors.floor?.message}
+                placeholder="03"
+              ></Input>
+            </FormGroup>
+          </FormRow>
           <Button
             kind="primary"
             className="mx-auto bg-primary px-10 text-white"

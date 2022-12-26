@@ -127,8 +127,8 @@ const UserUpdate = () => {
   const RenderRole = () => {
     return (
       role &&
-      role.length > 0 &&
-      role.map((item) => (
+      role?.length > 0 &&
+      role?.map((item) => (
         <div
           onClick={() => handleChangeCheckBox(item)}
           className="flex cursor-pointer items-center gap-4"
@@ -136,30 +136,31 @@ const UserUpdate = () => {
         >
           <div className="relative min-h-[24px] w-[24px]   rounded-md border-[1px] border-solid border-gray-400">
             <input type="checkbox" className="hidden-input" />
-            {selectRole?.map(
-              (item1) =>
-                item1?.id === item?.id && (
-                  <>
-                    <div className="productInputBefore absolute inset-0 z-[1] bg-[#15803d]"></div>
-                    <div className="productInputAfter absolute inset-0 z-[2] items-center justify-center text-white ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="h-6 w-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12.75l6 6 9-13.5"
-                        />
-                      </svg>
-                    </div>
-                  </>
-                )
-            )}
+            {selectRole &&
+              selectRole?.map(
+                (item1) =>
+                  item1?.id === item?.id && (
+                    <>
+                      <div className="productInputBefore absolute inset-0 z-[1] bg-[#15803d]"></div>
+                      <div className="productInputAfter absolute inset-0 z-[2] items-center justify-center text-white ">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="h-6 w-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                      </div>
+                    </>
+                  )
+              )}
           </div>
           <label for="Admin" className=" cursor-pointer ">
             {item?.description}
