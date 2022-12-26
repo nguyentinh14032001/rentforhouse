@@ -33,7 +33,7 @@ const ImageControl = () => {
       try {
         await axios({
           method: "post",
-          url: `${baseURL}/api/profiles/image/${userData?.id}/`,
+          url: `${baseURL}/api/profiles/image/`,
           data: formData,
           headers: {
             Authorization: userData.access_token,

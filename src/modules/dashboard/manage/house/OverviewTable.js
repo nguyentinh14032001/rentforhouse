@@ -18,6 +18,7 @@ import LoadingDashboard from "modules/dashboard/LoadingDashboard";
 
 const OverviewTable = ({ filter }) => {
   const [houseList, setHouseList] = useState([]);
+
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
@@ -71,7 +72,7 @@ const OverviewTable = ({ filter }) => {
       }
     }
     fetchData();
-  }, [method, page, url, userData.access_token]);
+  }, [method, page, url, userData.access_token, isChange]);
   const handleDeleteUser = async (user) => {
     Swal.fire({
       title: "Are you sure?",
@@ -142,7 +143,7 @@ const OverviewTable = ({ filter }) => {
               className=" h-10 w-10 flex-shrink-0 rounded-lg object-cover"
             />
             <div className="flex-1 ">
-              <h3 className="font-semibold">{`${house?.houseTypes[0]?.name}`}</h3>
+              <h3 className="font-semibold">{`${house?.houseType?.name}`}</h3>
               <time className="text-sm text-gray-400">
                 {moment(house?.createdDate).format("MM/DD/YYYY (hh:mm:ss a)")}
               </time>

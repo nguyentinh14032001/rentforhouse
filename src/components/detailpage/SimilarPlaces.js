@@ -1,19 +1,33 @@
-import React from "react";
 import SimilarPlacesItem from "./SimilarPlacesItem";
+import React, { useContext } from "react";
+import { DetailContext } from "pages/DetailPage";
+import "assets/sass/detailpage/SimilarPlaces.scss";
 
-const SimilarPlaces = () => {
+function SimilarPlaces({ id }) {
+  const value = useContext(DetailContext);
+  const getindex = value.dbDatas.findIndex((data) => data.id == id);
+  let newindex = getindex + 1;
+  let newdata = [];
+  for (let q = 1; q < 4; q++) {
+    if (newindex == value.dbDatas.length) {
+      newindex = 0;
+    }
+    newdata = [...newdata, value.dbDatas[newindex]];
+    newindex++;
+  }
+
   return (
-    <>
-      <div className="container my-[10vh] grid grid-cols-3 gap-4">
-        <div className="col-span-3">
-          <h1 className="text-[24px] font-bold">Nơi ở liên quan</h1>
-        </div>
-        <SimilarPlacesItem />
-        <SimilarPlacesItem />
-        <SimilarPlacesItem />
+    <div className="similar-places container">
+      <h1>Nơi ở tương tự</h1>
+      <div className="row">
+        {newdata.map((data, idx) => (
+          <SimilarPlacesItem data={data} key={idx} />
+        ))}
       </div>
-    </>
+      {/* End row */}
+    </div>
+    /* End container */
   );
-};
+}
 
 export default SimilarPlaces;

@@ -20,12 +20,12 @@ const UserManage = () => {
         <div className="mr-3 w-full  max-w-[300px]">
           <input
             type="text"
-            className=" w-full rounded-lg border border-solid border-gray-300 p-4"
+            className="a w-full rounded-lg border border-solid border-gray-300 p-[16px]"
             placeholder="Search user..."
             onChange={handleQuery}
           />
         </div>
-        <Button kind="ghost" href="/manage/add-user">
+        <Button kind="primary" href="/manage/add-user">
           Add new user
         </Button>
       </div>

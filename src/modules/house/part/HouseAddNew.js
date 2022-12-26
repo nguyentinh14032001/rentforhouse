@@ -24,31 +24,22 @@ import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
 import { error } from "jquery";
 
-Quill.register("modules/imageUploader", ImageUploader);
-const schema = yup.object().shape({
-  name: yup.string().required("Vui lòng nhập tên căn hộ"),
-  floor: yup
-    .number()
-    .typeError("Vui lòng nhập số")
-    .required("Không được bỏ trống"),
-  image1: yup
-    .object()
-    .shape({
-      name: yup.string().required("Vui lòng chọn ảnh"),
-    })
-    .required("File required"),
-  userName: yup.string().required("This field is required"),
-  email: yup
-    .string()
-    .required("This field is required")
-    .email("Invalid email address"),
-  password: yup
-    .string()
-    .required("This field is required")
-    .min(6, "Password must be 6 character"),
-});
-const HouseUpdate = () => {
+// Quill.register("modules/imageUploader", ImageUploader);
+// const schema = yup.object().shape({
+//   name: yup.string().required("Vui lòng nhập tên căn hộ"),
+//   floor: yup
+//     .number()
+//     .typeError("Vui lòng nhập số")
+//     .required("Không được bỏ trống"),
+//   image1: yup.object().shape({
+//     name: yup.string().required("Vui lòng chọn ảnh"),
+//   }),
+
+//   userName: yup.string().required("This field is required"),
+// });
+const HouseAddNew = () => {
   const [params] = useSearchParams();
+  const [isChange, setIsChange] = useState(false);
   const houseId = params.get("id");
   const {
     handleSubmit,
@@ -59,8 +50,8 @@ const HouseUpdate = () => {
     getValues,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
+    mode: "onSubmit",
+    // resolver: yupResolver(schema),
     defaultValues: {
       detailSumary: "xzxczxc",
     },
@@ -74,9 +65,6 @@ const HouseUpdate = () => {
   const [description, setDescription] = useState(false);
   const [house, setHouse] = useState("");
   const [selectCategory, setSelectCategory] = useState("");
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [wards, setWards] = useState([]);
 
   const handleSelectCategories = (value, value1) => {
     setValue("typeIds", value);
@@ -87,7 +75,6 @@ const HouseUpdate = () => {
     setValue(name1, value1);
     setValue(name2, value2);
   };
-  console.log(getValues("typeIds"));
 
   const modules = useMemo(
     () => ({
@@ -99,6 +86,7 @@ const HouseUpdate = () => {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ["link", "image"],
       ],
+
       imageUploader: {
         upload: async (file) => {
           const bodyFormData = new FormData();
@@ -117,49 +105,6 @@ const HouseUpdate = () => {
     }),
     []
   );
-  // //const [addressFilter, handleOnChangeValue] = useOnChange();
-  // const HOST = "https://provinces.open-api.vn/api/";
-  // const getProvince = getValues("provinceCode");
-  // const getDistrict = getValues("districtCode");
-  // // //get province
-  // useEffect(() => {
-  //   async function fetchProvinces() {
-  //     try {
-  //       const response = await axios.get(`${HOST}`);
-  //       setProvinces(response.data);
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchProvinces();
-  // }, []);
-  // //get districts
-  // useEffect(() => {
-  //   async function fetchDistricts() {
-  //     try {
-  //       if (getProvince) {
-  //         const response = await axios.get(`${HOST}p/${getProvince}?depth=2`);
-  //         setDistricts(response.data.districts);
-  //       }
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchDistricts();
-  // }, [getProvince]);
-  // useEffect(() => {
-  //   async function fetchWards() {
-  //     try {
-  //       if (getDistrict) {
-  //         const response = await axios.get(`${HOST}d/${getDistrict}?depth=2`);
-  //         setWards(response.data.wards);
-  //       }
-  //     } catch (error) {
-  //       toast.error(error.message);
-  //     }
-  //   }
-  //   fetchWards();
-  // }, [getDistrict]);
 
   const [preViewImage, setPreViewImage] = useState("");
   const [preViewImage1, setPreViewImage1] = useState("");
@@ -192,14 +137,17 @@ const HouseUpdate = () => {
     imageUpload.preview = URL.createObjectURL(imageUpload);
     setPreViewImage5(imageUpload);
   };
+
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
+
   const handleAddHouse = async (values) => {
     const cloneValues = { ...values };
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
     // const image = String(cloneValues?.image?.url);
-
+    const newArray = [];
+    newArray.push(cloneValues.typeIds);
     const formData = new FormData();
 
     formData.append("image", preViewImage);
@@ -216,17 +164,7 @@ const HouseUpdate = () => {
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${cloneValues.typeIds}`,
-        // data: {
-        //   address: address,
-        //   area: cloneValues.area,
-        //   description: "czxczxczxczxc",
-        //   detailSumary: cloneValues.detailSumary,
-        //   image: image,
-        //   name: cloneValues.name,
-        //   price: price,
-        //   typeIds: [1],
-        // },
+        }&typeHouses=&typeHouses=${newArray}`,
         data: formData,
         headers: {
           Authorization: userData.access_token,
@@ -234,7 +172,14 @@ const HouseUpdate = () => {
         },
       })
         .then(function (response) {
+          console.log(response);
+          reset({});
           toast.success("Thêm căn hộ thành công");
+          setPreViewImage("");
+          setPreViewImage1("");
+          setPreViewImage3("");
+          setPreViewImage4("");
+          setPreViewImage5("");
         })
         .catch(function (response) {
           toast.error("Thêm căn hộ thất bại");
@@ -270,7 +215,7 @@ const HouseUpdate = () => {
     setSelectCategory(house?.houseTypes);
     setDescription(house?.description);
   }, [house, reset, setValue]);
-
+  console.log(errors?.image1?.name?.message);
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -294,7 +239,7 @@ const HouseUpdate = () => {
               <Dropdown>
                 <Select
                   placeholder={
-                    selectCategory?.[0]?.name ||
+                    selectCategory?.name ||
                     getDropdownLabel("nameCategories") ||
                     "Chọn loại căn hộ"
                   }
@@ -332,7 +277,7 @@ const HouseUpdate = () => {
           <div className="flex gap-x-3">
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -340,26 +285,29 @@ const HouseUpdate = () => {
                     type="file"
                     onChange={handleChange}
                     className="hidden"
-                    placeholder={errors?.image1?.message || "Hình ảnh"}
                     name="image1"
                   />
-
-                  {!preViewImage && !house?.image && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                      />
-                    </svg>
+                  {errors?.image1?.name?.message && !preViewImage && (
+                    <p className="text-red-500">Hình ảnh không được để trống</p>
                   )}
+                  {!preViewImage &&
+                    !house?.image &&
+                    !errors?.image1?.name?.message && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                        />
+                      </svg>
+                    )}
                   {preViewImage || house?.image ? (
                     <img
                       src={preViewImage?.preview || house?.image}
@@ -374,7 +322,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -414,7 +362,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -454,7 +402,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -494,7 +442,7 @@ const HouseUpdate = () => {
             </FormGroup>
             <FormGroup>
               <Label>Hình ảnh* </Label>
-              <div className="mx-auto mb-10 h-[200px] w-[200px] rounded-full">
+              <div className="mx-auto mb-10 h-[200px] w-[175px] rounded-full">
                 <label
                   className={`group relative flex h-full min-h-[200px] w-full cursor-pointer items-center justify-center overflow-hidden  rounded-lg  border border-dashed bg-gray-100`}
                 >
@@ -663,7 +611,7 @@ const HouseUpdate = () => {
           </FormRow>
           <Button
             kind="primary"
-            className="mx-auto bg-primary px-10 text-white"
+            className="mx-auto bg-green-600 px-10 text-white"
             type="submit"
           >
             Thêm căn hộ
@@ -674,4 +622,4 @@ const HouseUpdate = () => {
   );
 };
 
-export default HouseUpdate;
+export default HouseAddNew;

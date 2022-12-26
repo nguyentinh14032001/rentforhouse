@@ -8,7 +8,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const UserHouseItem = ({ house, userData }) => {
   const navigate = useNavigate();
-  console.log(house);
   const deleteHouse = async (id) => {
     try {
       await axios({
@@ -54,9 +53,7 @@ const UserHouseItem = ({ house, userData }) => {
             <div>
               <div className="flex text-[gray]">
                 <IconHouse className="mr-2 h-5 w-5"></IconHouse>
-                {house?.houseTypes.map((item) => (
-                  <span>{item?.name}</span>
-                ))}
+                <span>{house?.houseType?.name}</span>
               </div>
               <Link
                 to={`/detail/${house?.id}`}
@@ -84,7 +81,7 @@ const UserHouseItem = ({ house, userData }) => {
 
           <div className="flex flex-col justify-end ">
             <button
-              onClick={() => navigate(`/manage/update-house?id=${house?.id}`)}
+              onClick={() => navigate(`/sell-house/${house?.id}`)}
               className="mb-2 transform rounded-lg bg-[#EDE9FD] py-2 px-4 font-bold text-white text-[#6F49FD] active:scale-90"
             >
               Edit

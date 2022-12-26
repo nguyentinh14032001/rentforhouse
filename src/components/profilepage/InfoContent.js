@@ -4,6 +4,7 @@ import { ProfileContext } from "pages/ProfilePage";
 const InfoContent = () => {
   const value = useContext(ProfileContext);
   const { profile } = value;
+
   return (
     <>
       <div className="flex">

@@ -1,8 +1,7 @@
 import React, { createContext, useState } from "react";
 
-import Navbar from "layout/Navbar";
-import BackgroundLayout from "layout/BackgroundLayout";
-import CarouselHomePage from "modules/homepage/CarouselHomePage";
+import Header from "layout/Header";
+import HomepageCarousel from "modules/homepage/HomepageCarousel";
 import PopularHouses from "modules/homepage/PopularHouses";
 import Footer from "layout/Footer";
 export const HomeContext = createContext();
@@ -10,13 +9,11 @@ export const HomeContext = createContext();
 const HomePage = () => {
   return (
     <>
-      <Navbar></Navbar>
-      <BackgroundLayout>
-        <div className="w-full rounded-3xl bg-slate-100">
-          <CarouselHomePage></CarouselHomePage>
-        </div>
-        <PopularHouses />
-      </BackgroundLayout>
+      <Header></Header>
+      <div className="w-full rounded-3xl bg-slate-100">
+        <HomepageCarousel></HomepageCarousel>
+      </div>
+      <PopularHouses />
       <Footer></Footer>
     </>
   );

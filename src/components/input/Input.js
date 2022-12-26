@@ -33,7 +33,7 @@ const Input = (props) => {
         placeholder={error?.length <= 0 ? placeholder : ""}
         {...rest}
         className={ClassName(
-          `w-full  ${className} rounded-xl border px-6 py-4 text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-1`,
+          `w-full  ${className} rounded-xl border p-[16px] text-sm font-medium placeholder:text-text-4 dark:bg-transparent dark:text-white placeholder:dark:text-text-1`,
           error?.length > 0
             ? "border-[2px] border-error text-error"
             : "border-strock text-text-1 dark:border-darkStroke",

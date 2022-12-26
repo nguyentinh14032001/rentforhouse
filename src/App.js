@@ -1,6 +1,7 @@
 import CategoryAddNew from "modules/dashboard/manage/category/CategoryAddNew";
 import CategoryManage from "modules/dashboard/manage/category/CategoryManage";
 import CategoryUpdate from "modules/dashboard/manage/category/CategoryUpdate";
+import HouseAddNew from "modules/house/part/HouseAddNew";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -11,36 +12,41 @@ import UserManage from "./modules/dashboard/manage/user/UserManage";
 import UserUpdate from "./modules/dashboard/manage/user/UserUpdate";
 import HouseUpdate from "./modules/house/part/HouseUpdate";
 
+const Main = lazy(() => import("./pages/Main"));
+const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
+const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
+const DetailPage = lazy(() => import("./pages/DetailPage"));
+const YourHouse = lazy(() => import("./pages/YourHousePage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
-const ProfilePage = lazy(() => import("./pages/ProfilePage"));
-const HomePage = lazy(() => import("./pages/HomePage"));
-const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
-const DetailPage = lazy(() => import("./pages/DetailPage"));
-const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
-const YourHouse = lazy(() => import("./pages/YourHousePage"));
 
 function App() {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
+        <Route path="/" element={<Main></Main>}></Route>
+        <Route path="/home" element={<Main></Main>}></Route>
         <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
-        <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
-        <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
-        <Route path="/home" element={<HomePage></HomePage>}></Route>
-        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
+        <Route
+          path="/sell-house"
+          element={<PostSellHouse></PostSellHouse>}
+        ></Route>
+        <Route
+          path="/sell-house/:id"
+          element={<PostSellHouse></PostSellHouse>}
+        ></Route>
+        <Route path="/detail/:id" element={<DetailPage></DetailPage>}></Route>
+        <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
+        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
+        <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
 
         <Route
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
         ></Route>
-        <Route
-          path="/sell-house"
-          element={<PostSellHouse></PostSellHouse>}
-        ></Route>
+
         <Route element={<DashboardLayout></DashboardLayout>}>
           <Route
             path="/manage/user"
@@ -57,6 +63,10 @@ function App() {
           <Route
             path="/manage/house"
             element={<HouseManage></HouseManage>}
+          ></Route>
+          <Route
+            path="/manage/add-house"
+            element={<HouseAddNew></HouseAddNew>}
           ></Route>
           <Route
             path="/manage/category"

@@ -7,6 +7,7 @@ import OverviewTable from "./OverviewTable";
 
 const HouseManage = () => {
   const [filter, setFilter] = useState("");
+  const [isChange, setIsChange] = useState(false);
   const handleQuery = lodash.debounce((e) => {
     setFilter(e.target.value);
   }, 500);
@@ -20,12 +21,12 @@ const HouseManage = () => {
         <div className="mr-3 w-full  max-w-[300px]">
           <input
             type="text"
-            className=" w-full rounded-lg border border-solid border-gray-300 p-4"
+            className=" w-full rounded-lg border border-solid border-gray-300 p-[16px]"
             placeholder="Search house..."
             onChange={handleQuery}
           />
         </div>
-        <Button kind="ghost" href="/sell-house">
+        <Button kind="ghost" href="/manage/add-house">
           Add house
         </Button>
       </div>

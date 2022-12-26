@@ -26,7 +26,6 @@ const SpecifiedUserHouse = () => {
             },
           })
           .then((res) => {
-            console.log(res?.data?.data?.houses);
             setHouses(res?.data?.data?.houses);
             setPages(res?.data?.data);
           });

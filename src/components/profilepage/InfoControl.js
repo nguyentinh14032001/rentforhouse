@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import Select from "react-select";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Select from "react-select";
 import moment from "moment/moment";
 
 import { ProfileContext } from "pages/ProfilePage";
@@ -14,7 +14,8 @@ const InfoControl = ({ setIsEdit }) => {
   const userData = JSON.parse(user);
 
   const value = useContext(ProfileContext);
-  const { profile } = value;
+  const { profile, setIsChange } = value;
+
   const dataFromInfo = {
     lastname: profile?.lastName,
     firstname: profile?.firstName,
@@ -24,6 +25,7 @@ const InfoControl = ({ setIsEdit }) => {
     // date: profile,
     // sex: profile,
   };
+
   const date = moment().format("YYYY-MM-DD");
   const gmailRegExr = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const phoneRegExr = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
@@ -72,7 +74,7 @@ const InfoControl = ({ setIsEdit }) => {
     async function putData() {
       try {
         await axios({
-          method: "get",
+          method: "put",
           url: `${baseURL}/api/profiles?email=${data?.gmail}&firstName=${data?.firstname}&lastName=${data?.lastname}&phone=${data?.phone}`,
           headers: {
             Authorization: userData.access_token,
@@ -87,33 +89,43 @@ const InfoControl = ({ setIsEdit }) => {
       }
     }
     putData();
-    // setIsEdit(false);
+    setIsEdit(false);
+    reset({});
+    setIsChange(true);
   };
-  // console.log(profile);
+  const handleCancle = () => {
+    setIsEdit(false);
+  };
+
   return (
     <>
+      <h1 className="my-4 p-2 text-[24px] font-bold">
+        Thay đổi thông tin của bạn
+      </h1>
       <form
         className="flex w-full flex-col items-start"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <input
-          className="w-full resize-none py-4"
-          type="text"
-          {...register("lastname")}
-          placeholder="Hãy nhập họ ..."
-        ></input>
-        {errors && <p className="errors">{errors?.lastname?.message}</p>}
+        <div className="flex">
+          <input
+            className="my-2 mr-2 w-full rounded-xl border-[1px] p-2"
+            type="text"
+            {...register("lastname")}
+            placeholder="Hãy nhập họ ..."
+          ></input>
+          {errors && <p className="errors">{errors?.lastname?.message}</p>}
+
+          <input
+            className="my-2 w-full rounded-xl border-[1px] p-2"
+            type="text"
+            {...register("firstname")}
+            placeholder="Hãy nhập tên ..."
+          ></input>
+          {errors && <p className="errors">{errors?.firstname?.message}</p>}
+        </div>
 
         <input
-          className="w-full resize-none py-4"
-          type="text"
-          {...register("firstname")}
-          placeholder="Hãy nhập tên ..."
-        ></input>
-        {errors && <p className="errors">{errors?.firstname?.message}</p>}
-
-        <input
-          className="w-full resize-none py-4"
+          className="my-2 w-full rounded-xl border-[1px] p-2"
           type="text"
           {...register("phone")}
           placeholder="Hãy nhập điện thoại ..."
@@ -121,7 +133,7 @@ const InfoControl = ({ setIsEdit }) => {
         {errors && <p className="errors">{errors?.phone?.message}</p>}
 
         <input
-          className="w-full resize-none py-4"
+          className="my-2 w-full rounded-xl border-[1px] p-2"
           type="text"
           {...register("address")}
           placeholder="Hãy nhập địa chỉ ..."
@@ -129,7 +141,7 @@ const InfoControl = ({ setIsEdit }) => {
         {errors && <p className="errors">{errors?.address?.message}</p>}
 
         <input
-          className="w-full resize-none py-4"
+          className="my-2 w-full rounded-xl border-[1px] p-2"
           type="text"
           {...register("gmail")}
           placeholder="Hãy nhập email ..."
@@ -159,7 +171,10 @@ const InfoControl = ({ setIsEdit }) => {
             Cập nhật
           </button>
 
-          <button className="mt-4 w-fit rounded-lg bg-[red] py-2 px-4 font-bold text-white">
+          <button
+            className="mt-4 w-fit rounded-lg bg-[red] py-2 px-4 font-bold text-white"
+            onClick={handleCancle}
+          >
             Huỷ
           </button>
         </div>

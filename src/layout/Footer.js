@@ -1,13 +1,14 @@
 import React from "react";
 import logo from "../assets/images/6.png";
 
-const Footer = ({ setFooterPosition }) => {
+const Footer = () => {
   return (
-    <div className="footer relative z-20">
+    <div className="footer">
       <div className="bg-black p-[30px] text-white">
-        <div className="grid grid-cols-4">
-          <div className="flex flex-col justify-center">
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-1 flex flex-col justify-center">
             <img src={logo} alt="" className="mb-[20px] h-[100px] w-[170px]" />
+
             <p className="text-[14px] leading-6 tracking-wide">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
               pellentesque blandit lorem placerat vestibulum. Phasellus egestas
@@ -16,26 +17,31 @@ const Footer = ({ setFooterPosition }) => {
               pulvinar risus, nec ornare urna nisi id erat
             </p>
           </div>
-          <div className="col-span-2 mx-4 grid grid-cols-3">
+
+          <div className="col-span-2 col-start-2 flex justify-between">
             <p>Nội dung</p>
             <p>Dịch vụ</p>
             <p>Chăm sóc khách hàng</p>
           </div>
-          <div className="flex flex-col justify-between">
+
+          <div className="col-span-1 col-start-4">
             <p>Nhận tin tức</p>
+
             <small className="text-[12px]">
               Đăng ký để nhận được những thông báo mới nhất từ chúng tôi
             </small>
-            <div className="mb-3">
+
+            <div className="mb-3 flex">
               <input
                 type="text"
-                className="form-control p-2 text-black"
+                className="p-2 text-black"
                 placeholder="Mail"
               />
-              <button className="ml-2 bg-[#40CA87] p-2 text-white">
-                <i className="fa-brands fa-telegram" />
+              <button className="bg-[#40CA87] px-4 text-white hover:opacity-80">
+                <i className="fa-brands fa-telegram text-[20px]" />
               </button>
             </div>
+
             <p>Phương thức thanh toán</p>
             <img src={logo} alt="" className="h-[40%] w-full" />
           </div>
