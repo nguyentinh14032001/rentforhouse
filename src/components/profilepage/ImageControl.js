@@ -4,6 +4,8 @@ import axios from "axios";
 import { baseURL } from "api/axios";
 import { ProfileContext } from "pages/ProfilePage";
 
+import "assets/sass/profilepage/ImageControl.scss";
+
 const ImageControl = () => {
   const value = useContext(ProfileContext);
   const { image, setShow, setImage } = value;
@@ -101,10 +103,16 @@ const ImageControl = () => {
           )}
 
           <div className="flex text-white">
-            <button onClick={handleApi} className="mr-4 hover:opacity-80">
+            <button
+              onClick={handleApi}
+              className="button-50 mr-4 hover:opacity-80"
+            >
               Lưu
             </button>
-            <button onClick={handleCancle} className="hover:opacity-80">
+            <button
+              onClick={handleCancle}
+              className="button-50 hover:opacity-80"
+            >
               Huỷ
             </button>
           </div>

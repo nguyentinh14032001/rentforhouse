@@ -10,6 +10,7 @@ const SpecifiedUserHouse = () => {
   const [houses, setHouses] = useState();
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
+  const [isChange, setIsChange] = useState(false);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -28,17 +29,23 @@ const SpecifiedUserHouse = () => {
           .then((res) => {
             setHouses(res?.data?.data?.houses);
             setPages(res?.data?.data);
+            setIsChange(false);
           });
       } catch (error) {}
     };
     fetchApi();
-  }, [page]);
-
+  }, [page, isChange == true]);
+  console.log(isChange);
   return (
     <>
       {houses &&
         houses.map((house) => (
-          <UserHouseItem key={house?.id} house={house} userData={userData} />
+          <UserHouseItem
+            key={house?.id}
+            house={house}
+            userData={userData}
+            setIsChange={setIsChange}
+          />
         ))}
       <GLPagination pages={pages} setPage={setPage} />
     </>
