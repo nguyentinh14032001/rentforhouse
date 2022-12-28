@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { IconHouse } from "components/icons";
 import { Link, useNavigate } from "react-router-dom";
 
-const UserHouseItem = ({ house, userData }) => {
+const UserHouseItem = ({ house, userData, setIsChange }) => {
   const navigate = useNavigate();
   const deleteHouse = async (id) => {
     try {
@@ -18,8 +18,8 @@ const UserHouseItem = ({ house, userData }) => {
         },
       })
         .then(function (response) {
-          console.log(response);
-          // Này là xoá được rồi mà nó không tự render cái trang lại mày xem thử chứ t không biết.
+          console.log(response?.data?.message);
+          setIsChange(true);
         })
         .catch(function (response) {
           toast.error("a");
