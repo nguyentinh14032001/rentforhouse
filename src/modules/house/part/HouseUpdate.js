@@ -206,7 +206,7 @@ const HouseUpdate = () => {
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${cloneValues.typeIds}`, // data: {
+        }&codeHouseType=${cloneValues.typeIds}`, // data: {
         //   address: address,
         //   area: cloneValues.area,
         //   description: "czxczxczxczxc",
