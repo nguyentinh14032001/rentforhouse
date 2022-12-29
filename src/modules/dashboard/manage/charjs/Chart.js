@@ -136,6 +136,11 @@ const Chart = () => {
                 placeholder={`Tháng ${selectMonth}` || "Chọn tháng"}
               ></Select>
               <List>
+                <Option onClick={() => setSelectMonth("")}>
+                  <span className="w-full text-[16px] font-semibold">
+                    Tháng
+                  </span>
+                </Option>
                 {months &&
                   months?.map((item) => (
                     <Option key={item} onClick={() => setSelectMonth(item)}>
