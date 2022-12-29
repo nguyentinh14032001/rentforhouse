@@ -130,12 +130,12 @@ function SearchItem({ data, onClick = () => {} }) {
       className="flex cursor-pointer items-center gap-x-5 rounded-lg p-2 text-black hover:bg-slate-200"
     >
       <img
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+        src={data?.image}
         className="h-[50px] w-[50px] rounded-lg object-cover"
         alt=""
       />
       <div className="flex-1 text-sm">
-        <h3 className="mb-1">{data?.houseType?.name}</h3>
+        <h3 className="mb-1 text-sm font-semibold">{data?.name}</h3>
         <p className="text-text-3 ">{`Liên hệ: ${data?.user.firstName}, Sđt: ${data?.user.phone}`}</p>
       </div>
     </div>

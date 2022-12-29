@@ -56,13 +56,14 @@ const HouseUpdate = () => {
         url: `${baseURL}/api/houses/${houseId}`,
       })
         .then(function (response) {
-          console.log(response?.data?.data);
+          console.log(response?.data?.data?.houseType);
+
           setHouse(response?.data?.data);
         })
         .catch(function (response) {});
     }
     fetchData();
-  }, [houseId, reset]);
+  }, [houseId]);
   useEffect(() => {
     reset({
       ...house,
@@ -71,7 +72,6 @@ const HouseUpdate = () => {
   const handleSelectCategories = (value, value1) => {
     setValue("typeIds", value);
     setValue("nameCategories", value1);
-    setSelectCategory();
   };
   const handleSelectAddress = (name1, name2, value1, value2) => {
     setValue(name1, value1);
@@ -228,6 +228,7 @@ const HouseUpdate = () => {
         })
         .catch(function (response) {
           toast.error("Sửa căn hộ thất bại");
+          console.log(response);
         });
     } catch (error) {
       console.log(error);
@@ -257,10 +258,11 @@ const HouseUpdate = () => {
     reset({
       ...house,
     });
-    setSelectCategory(house?.houseTypes);
+    setSelectCategory(house?.houseType);
+    setValue("typeIds", house?.houseType?.code);
     setDescription(house?.description);
   }, [house, reset, setValue]);
-
+  console.log(selectCategory);
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -282,7 +284,7 @@ const HouseUpdate = () => {
               <Dropdown>
                 <Select
                   placeholder={
-                    selectCategory?.[0]?.name ||
+                    selectCategory?.name ||
                     getDropdownLabel("nameCategories") ||
                     "Chọn loại căn hộ"
                   }
@@ -357,20 +359,7 @@ const HouseUpdate = () => {
                       alt=""
                     />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                      />
-                    </svg>
+                    ""
                   )}
                 </label>
               </div>

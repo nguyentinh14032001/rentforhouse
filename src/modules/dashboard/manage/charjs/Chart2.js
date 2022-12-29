@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 export const Chart2 = (prop) => {
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(4);
   const [houseList, setHouseList] = useState([]);
   const [isChange, setIsChange] = useState(true);
   const user = localStorage.getItem("user");
@@ -93,7 +94,7 @@ export const Chart2 = (prop) => {
           url: `${baseURL}/api/houses/status/false`,
           params: {
             page: page,
-            limit: 4,
+            limit: limit,
           },
           headers: {
             Authorization: userData.access_token,
@@ -113,7 +114,7 @@ export const Chart2 = (prop) => {
       }
     }
     fetchData();
-  }, [page, userData.access_token, isChange]);
+  }, [page, userData.access_token, isChange, limit]);
 
   const handleAccept = (id) => {
     async function fetchData() {
@@ -135,6 +136,9 @@ export const Chart2 = (prop) => {
       }
     }
     fetchData();
+  };
+  const handleLoadMore = () => {
+    setLimit(limit + limit);
   };
   return (
     <div className="dashboard d-flex">
@@ -233,6 +237,7 @@ export const Chart2 = (prop) => {
                     <p
                       // onClick={() => setPage(prev=>...(page + 1))}
                       className="c-p text-dark font-weight-bold mt-auto mr-3 text-right"
+                      onClick={() => handleLoadMore()}
                     >
                       See More
                       <i className="fas fa-arrow-right ml-1"></i>
