@@ -47,7 +47,7 @@ const MenuUser = () => {
 
         {authorUser && authorUser.roles == "ROLE_ADMIN" ? (
           <Link
-            to="/manage/user"
+            to="/manage/dashboard"
             className="my-2 flex w-fit items-baseline border-b-[1px] border-white pb-2 text-white hover:opacity-80"
           >
             <i className="fa-solid fa-clipboard mr-2"></i>

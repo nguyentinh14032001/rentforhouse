@@ -7,36 +7,35 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useSearchParams } from "react-router-dom";
 import FormRow from "../../../components/common/FormRow";
 import FormGroup from "../../../components/common/FormGroup";
 import Dropdown from "../../../components/dropdown/Dropdown";
 import { Label } from "../../../components/label";
-import ImageUpload from "../../../components/Image/ImageUpload";
-import FormThreeCol from "../../../components/common/FormThreeCol";
 import Button from "../../../components/button/Button";
-import { Input, Textarea } from "../../../components/input";
+import { Input } from "../../../components/input";
 import { baseURL } from "../../../api/axios";
 import { imgbbAPI } from "../../../config/config";
 import Select from "../../../components/dropdown/Select";
 import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
-import { error } from "jquery";
 
-// Quill.register("modules/imageUploader", ImageUploader);
-// const schema = yup.object().shape({
-//   name: yup.string().required("Vui lòng nhập tên căn hộ"),
-//   floor: yup
-//     .number()
-//     .typeError("Vui lòng nhập số")
-//     .required("Không được bỏ trống"),
-//   image1: yup.object().shape({
-//     name: yup.string().required("Vui lòng chọn ảnh"),
-//   }),
+Quill.register("modules/imageUploader", ImageUploader);
+const schema = yup.object().shape({
+  name: yup.string().required("Vui lòng nhập tên căn hộ"),
+  floor: yup
+    .number()
+    .typeError("Vui lòng nhập số")
+    .required("Không được bỏ trống"),
+  // image1: yup
+  //   .mixed()
+  //   .required("Vui lòng chọn hình ảnh")
+  //   .test("a", "b", (value) => {
+  //     console.log(value);
+  //     return value && value[0].size <= 200000;
+  //   }),
+});
 
-//   userName: yup.string().required("This field is required"),
-// });
 const HouseAddNew = () => {
   const [params] = useSearchParams();
   const [isChange, setIsChange] = useState(false);
@@ -47,11 +46,12 @@ const HouseAddNew = () => {
     setValue,
     reset,
     watch,
+    register,
     getValues,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
     defaultValues: {
       detailSumary: "xzxczxc",
     },
@@ -146,8 +146,7 @@ const HouseAddNew = () => {
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
     // const image = String(cloneValues?.image?.url);
-    const newArray = [];
-    newArray.push(cloneValues.typeIds);
+
     const formData = new FormData();
 
     formData.append("image", preViewImage);
@@ -164,7 +163,7 @@ const HouseAddNew = () => {
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${newArray}`,
+        }&codeHouseType=${cloneValues.typeIds}`,
         data: formData,
         headers: {
           Authorization: userData.access_token,

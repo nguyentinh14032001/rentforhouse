@@ -52,7 +52,7 @@ const OverviewTable = ({ filter }) => {
           url: `${url}`,
           params: {
             page: page,
-            limit: 4,
+            limit: 10,
           },
           headers: {
             Authorization: userData.access_token,
@@ -73,7 +73,7 @@ const OverviewTable = ({ filter }) => {
     }
     fetchData();
   }, [method, page, url, userData.access_token, isChange]);
-  const handleDeleteUser = async (user) => {
+  const handleDeleteUser = async (house) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -86,7 +86,7 @@ const OverviewTable = ({ filter }) => {
       if (result.isConfirmed) {
         try {
           await axios
-            .delete(`${baseURL}/api/users/${user?.id}`, {
+            .delete(`${baseURL}/api/houses/${house?.id}`, {
               headers: {
                 Authorization: userData.access_token,
               },
@@ -132,6 +132,7 @@ const OverviewTable = ({ filter }) => {
   const renderUserItem = (house) => {
     return (
       <tr key={house?.id}>
+        <td>{house?.id}</td>
         <td className="whitespace-nowrap">
           <div
             title={house?.name}
@@ -188,7 +189,9 @@ const OverviewTable = ({ filter }) => {
 
         <td>
           <div className="flex items-center gap-x-3">
-            <ActionView></ActionView>
+            <ActionView
+              onClick={() => navigate(`/detail/${house?.id}`)}
+            ></ActionView>
             <ActionEdit
               onClick={() => navigate(`/manage/update-house?id=${house?.id}`)}
             ></ActionEdit>
@@ -206,6 +209,7 @@ const OverviewTable = ({ filter }) => {
       <Table>
         <thead>
           <tr>
+            <th>Id</th>
             <th>Nhà</th>
             <th>Người bán</th>
             <th>Địa chỉ</th>

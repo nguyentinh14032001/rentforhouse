@@ -2,6 +2,8 @@ import CategoryAddNew from "modules/dashboard/manage/category/CategoryAddNew";
 import CategoryManage from "modules/dashboard/manage/category/CategoryManage";
 import CategoryUpdate from "modules/dashboard/manage/category/CategoryUpdate";
 import HouseAddNew from "modules/house/part/HouseAddNew";
+import DashboardPage from "pages/DashboardPage";
+import NotFoundPage from "pages/NotFoundPage";
 import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -27,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main></Main>}></Route>
         <Route path="/home" element={<Main></Main>}></Route>
+        <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
         <Route path="/discover" element={<DiscoverPage></DiscoverPage>}></Route>
         <Route path="/your-house" element={<YourHouse></YourHouse>}></Route>
         <Route
@@ -48,6 +51,10 @@ function App() {
         ></Route>
 
         <Route element={<DashboardLayout></DashboardLayout>}>
+          <Route
+            path="/manage/dashboard"
+            element={<DashboardPage></DashboardPage>}
+          ></Route>
           <Route
             path="/manage/user"
             element={<UserManage></UserManage>}

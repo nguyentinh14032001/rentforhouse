@@ -7,10 +7,11 @@ const Button = ({
   children,
   className,
   isLoading = false,
+  onClick = () => {},
   ...rest
 }) => {
   const child = !!isLoading ? (
-    <div className="h-10 w-10 animate-spin rounded-full border-4 border-white border-b-transparent border-t-transparent"></div>
+    <div className="h-[40px] w-[40px] animate-spin rounded-full border-[4px]  border-[#fff] border-b-transparent border-t-transparent"></div>
   ) : (
     children
   );
@@ -47,6 +48,7 @@ const Button = ({
       }  `}
       type={type}
       {...rest}
+      onClick={onClick}
     >
       {child}
     </button>
