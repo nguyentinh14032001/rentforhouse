@@ -41,7 +41,7 @@ const SearchHomePage = () => {
 
   return (
     <div className="relative z-50">
-      <div className="flex items-center rounded-full bg-white p-2 shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)]">
+      <div className="flex items-center rounded-full bg-white p-[5px] shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)]">
         <div className="flex-1">
           <input
             type="text"
@@ -123,11 +123,11 @@ const SearchHomePage = () => {
 };
 
 function SearchItem({ data, onClick = () => {} }) {
-  // console.log(data);
+  console.log(data);
   return (
     <div
       onClick={onClick}
-      className="flex cursor-pointer items-center gap-x-5 rounded-lg p-2 hover:bg-slate-200 "
+      className="flex cursor-pointer items-center gap-x-5 rounded-lg p-2 text-black hover:bg-slate-200"
     >
       <img
         src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
@@ -135,13 +135,7 @@ function SearchItem({ data, onClick = () => {} }) {
         alt=""
       />
       <div className="flex-1 text-sm">
-        <h3 className="mb-1">
-          {data?.houseTypes.map((item) => (
-            <strong>{data?.name}</strong>
-          ))}
-
-          {data.name}
-        </h3>
+        <h3 className="mb-1">{data?.houseType?.name}</h3>
         <p className="text-text-3 ">{`Liên hệ: ${data?.user.firstName}, Sđt: ${data?.user.phone}`}</p>
       </div>
     </div>

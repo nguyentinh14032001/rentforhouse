@@ -39,7 +39,6 @@ const Navbar = () => {
     setShow(!show);
   };
 
-  console.log("navbar", JSON.parse(localStorage.getItem("profile")));
   return (
     <div className="sticky top-0 z-10 mb-8 flex w-full items-center justify-between border-b bg-white py-8 px-6">
       <div className="flex flex-1 items-center gap-x-10">

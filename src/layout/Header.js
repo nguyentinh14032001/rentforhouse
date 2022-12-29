@@ -5,6 +5,7 @@ import axios from "axios";
 import { baseURL } from "api/axios";
 import HeaderLists from "components/header/HeaderLists";
 import MenuUser from "components/header/MenuUser";
+import SearchHomePage from "../modules/homepage/SearchHomePage";
 
 import logo from "assets/images/logo-new.png";
 import logo2 from "assets/images/logo-new-2.png";
@@ -83,6 +84,9 @@ function Header({ main, id }) {
               <img src={logo} alt="" />
             )}
           </Link>
+          <div className="w-full max-w-[458px]">
+            <SearchHomePage></SearchHomePage>
+          </div>
           <button
             className="navbar-toggler"
             type="button"
