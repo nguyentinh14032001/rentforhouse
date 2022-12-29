@@ -127,8 +127,8 @@ const UserUpdate = () => {
   const RenderRole = () => {
     return (
       role &&
-      role.length > 0 &&
-      role.map((item) => (
+      role?.length > 0 &&
+      role?.map((item) => (
         <div
           onClick={() => handleChangeCheckBox(item)}
           className="flex cursor-pointer items-center gap-4"
@@ -136,7 +136,7 @@ const UserUpdate = () => {
         >
           <div className="relative min-h-[24px] w-[24px]   rounded-md border-[1px] border-solid border-gray-400">
             <input type="checkbox" className="hidden-input" />
-            {selectRole.length > 0 &&
+            {selectRole &&
               selectRole?.map(
                 (item1) =>
                   item1?.id === item?.id && (

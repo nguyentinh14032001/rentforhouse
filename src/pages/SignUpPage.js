@@ -69,13 +69,7 @@ const SignUpPage = () => {
       .catch(function (response) {
         toast.error("Đăng ký thất bại");
       });
-    // reset({
-    //   firstName: "",
-    //   lastName: "",
-    //   userName: "",
-    //   password: "",
-    //   email: "",
-    // });
+
     console.log(values);
     setLoading(false);
   };

@@ -1,59 +1,95 @@
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase/firebase-config";
-import Modal from "react-modal";
-import Table from "../component/table/Table";
-import { ActionView } from "../component/action";
-import { customStyles, postStatus, userRole } from "../utils/constants";
-import { useSignIn } from "../context/SignInContext";
-import { LoadingSpinner } from "../component/loading";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import LoadingDashboard from "modules/dashboard/LoadingDashboard";
 
+import { ActionView } from "components/action";
+import axios from "axios";
+import { baseURL } from "api/axios";
+import ActionCheck from "components/action/ActionCheck";
+import HouseImage from "modules/house/part/HouseImage";
+import HouseTitle from "modules/house/part/HouseTitle";
+import HouseDesc from "modules/house/part/HouseDesc";
+import { toast } from "react-toastify";
+import Chart from "modules/dashboard/manage/charjs/Chart";
+import { Chart2 } from "modules/dashboard/manage/charjs/Chart2";
+import FormGroup from "components/common/FormGroup";
+import { Label } from "components/label";
+export const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "100%",
+  },
+};
 const DashboardPage = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(false);
-  const { user } = useSignIn();
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
-  const [total, setTotal] = useState(0);
+  const [pages, setPages] = useState([]);
+  const [total, setTotal] = useState("");
+  const [page, setPage] = useState(1);
+  const [houseList, setHouseList] = useState([]);
+
+  const user = localStorage.getItem("user");
+  const userData = JSON.parse(user);
+  const [isChange, setIsChange] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const colRef = query(
-      collection(db, "posts"),
-      where("status", "==", postStatus.PENDING)
-    );
-    onSnapshot(colRef, (snapshot) => {
-      setTotal(snapshot.size);
-    });
-    onSnapshot(colRef, (snapshot) => {
-      if (snapshot.docs.length > 0) {
-        const result = [];
-        snapshot.forEach((doc) => {
-          result.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-        setPosts(result);
+    async function fetchData() {
+      try {
+        await axios({
+          method: `get`,
+          url: `${baseURL}/api/houses/status/false`,
+          params: {
+            page: page,
+            limit: 10,
+          },
+          headers: {
+            Authorization: userData.access_token,
+          },
+        })
+          .then(function (response) {
+            setPages(response.data.data);
+            setHouseList(response.data.data.houses);
+            setIsChange(true);
+
+            setLoading(false);
+          })
+          .catch(function (response) {});
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-      } else {
-        setLoading(true);
       }
-    });
-  }, [status]);
-  const navigate = useNavigate();
-  if (user?.role !== userRole.ADMIN) return null;
+    }
+    fetchData();
+  }, [page, userData.access_token, isChange]);
+  console.log();
+  //localhost:5000/api/houses/house/61/status/true
+  // http: console.log(houseList);
+  const scrollTo = (ref) => {
+    if (ref && ref.current /* + other conditions */) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const ref = useRef(null);
+
+  const handleClick = () => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <div className=" transition-all ">
-      <div className="ml-auto mr-5 flex items-center gap-5 transition-all">
-        <span className="relative w-8 cursor-pointer  " onClick={openModal}>
+      <div
+        onClick={handleClick}
+        className="ml-auto mr-5 inline-flex cursor-pointer items-center gap-5 rounded-lg bg-slate-200 p-3 transition-all hover:bg-slate-100"
+      >
+        <span className="relative w-8 cursor-pointer  ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-full"
@@ -70,67 +106,24 @@ const DashboardPage = () => {
             />
           </svg>
           <span className="absolute top-0 right-0 flex h-5 w-5 translate-x-2/4 items-center justify-center rounded-full bg-red-400 ">
-            {total}
+            {pages?.size}
           </span>
         </span>
         <p className=" text-lg font-semibold ">
-          Posts are waiting for approval
+          Còn <span className="text-red-600">{pages?.size}</span> căn nhà chưa
+          được duyệt
         </p>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        {loading && (
-          <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            <LoadingSpinner type="primary"></LoadingSpinner>
-          </div>
-        )}
-        {!loading && (
-          <Table>
-            <thead>
-              <tr>
-                <th>Post</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {total > 0 &&
-                posts.length !== 0 &&
-                posts.map((item) => (
-                  <tr>
-                    <td>
-                      <div className="flex items-center gap-x-3">
-                        <img
-                          src={item?.image}
-                          alt=""
-                          className="h-[77px] w-[88px] rounded object-cover"
-                        />
-                        <div className="flex-1 whitespace-pre-wrap">
-                          <h3 className="max-w-[400px] text-lg font-semibold">
-                            {item.title}
-                          </h3>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-x-3 text-lg  text-gray-500">
-                        <ActionView
-                          onClick={() =>
-                            navigate(`/manage/update-post?id=${item?.id}`)
-                          }
-                        ></ActionView>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
-        )}
-      </Modal>
+
+      <div className="">
+        <Chart></Chart>
+        <div>
+          <FormGroup>
+            <p className="text-xl font-semibold">Thống kê</p>
+            <Chart2 click={ref}></Chart2>
+          </FormGroup>
+        </div>
+      </div>
     </div>
   );
 };

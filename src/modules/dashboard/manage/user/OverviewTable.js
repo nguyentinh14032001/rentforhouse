@@ -18,9 +18,11 @@ import GLPagination from "../../../../layout/GLPagination";
 const OverviewTable = ({ filter }) => {
   const [userList, setUserList] = useState([]);
   const user = localStorage.getItem("user");
+  
   const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [isChange, setIsChange] = useState(true);
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
@@ -43,6 +45,7 @@ const OverviewTable = ({ filter }) => {
   }, [filter]);
   useEffect(() => {
     async function fetchData() {
+      setLoading(true);
       try {
         await axios({
           method: `${method}`,
@@ -60,6 +63,7 @@ const OverviewTable = ({ filter }) => {
             setUserList(response.data.data.data);
             console.log("log", response.data.data);
             setIsChange(false);
+            setLoading(false);
           })
           .catch(function (response) {});
       } catch (error) {
@@ -188,10 +192,19 @@ const OverviewTable = ({ filter }) => {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {userList.length > 0 && userList.map((user) => renderUserItem(user))}
-        </tbody>
+        {loading && (
+          <tbody className="relative h-[250px] w-[300px]">
+            <div className=" absolute right-2/4 top-2/4 h-10 w-10  animate-spin  rounded-full border-[7px] border-green-600 border-b-transparent border-t-transparent"></div>
+          </tbody>
+        )}
+        {!loading && (
+          <tbody>
+            {userList.length > 0 &&
+              userList.map((user) => renderUserItem(user))}
+          </tbody>
+        )}
       </Table>
+
       <GLPagination pages={pages} setPage={setPage} />
     </div>
   );

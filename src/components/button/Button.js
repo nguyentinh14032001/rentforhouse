@@ -7,27 +7,28 @@ const Button = ({
   children,
   className,
   isLoading = false,
+  onClick = () => {},
   ...rest
 }) => {
   const child = !!isLoading ? (
-    <div className="h-10 w-10 animate-spin rounded-full border-4 border-white border-b-transparent border-t-transparent"></div>
+    <div className="h-[40px] w-[40px] animate-spin rounded-full border-[4px]  border-[#fff] border-b-transparent border-t-transparent"></div>
   ) : (
     children
   );
 
   let defaultBtnClassName =
-    "flex justify-center min-h-[56px] items-center rounded-2xl p-4 text-base font-semibold";
+    "flex justify-center min-h-[56px] items-center rounded-2xl p-[16px] text-base font-semibold";
 
   switch (rest.kind) {
     case "primary":
-      defaultBtnClassName = defaultBtnClassName + " bg-primary text-white";
+      defaultBtnClassName = defaultBtnClassName + " bg-[#1DC071] text-[#fff]";
       break;
     case "secondary":
-      defaultBtnClassName = defaultBtnClassName + " bg-secondary text-white";
+      defaultBtnClassName = defaultBtnClassName + " bg-[#6F49FD] text-[#fff]";
       break;
     case "ghost":
       defaultBtnClassName =
-        defaultBtnClassName + " bg-secondary bg-opacity-10 text-secondary";
+        defaultBtnClassName + " bg-[#6F49FD] bg-opacity-10 text-[#6F49FD]";
       break;
 
     default:
@@ -47,6 +48,7 @@ const Button = ({
       }  `}
       type={type}
       {...rest}
+      onClick={onClick}
     >
       {child}
     </button>

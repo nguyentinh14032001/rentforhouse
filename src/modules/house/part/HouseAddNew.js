@@ -5,16 +5,15 @@ import ImageUploader from "quill-image-uploader";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "react-router-dom";
 import FormRow from "../../../components/common/FormRow";
 import FormGroup from "../../../components/common/FormGroup";
 import Dropdown from "../../../components/dropdown/Dropdown";
 import { Label } from "../../../components/label";
-import ImageUpload from "../../../components/Image/ImageUpload";
-import FormThreeCol from "../../../components/common/FormThreeCol";
 import Button from "../../../components/button/Button";
-import { Input, Textarea } from "../../../components/input";
+import { Input } from "../../../components/input";
 import { baseURL } from "../../../api/axios";
 import { imgbbAPI } from "../../../config/config";
 import Select from "../../../components/dropdown/Select";
@@ -22,13 +21,37 @@ import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
 
 Quill.register("modules/imageUploader", ImageUploader);
+const schema = yup.object().shape({
+  name: yup.string().required("Vui lòng nhập tên căn hộ"),
+  floor: yup
+    .number()
+    .typeError("Vui lòng nhập số")
+    .required("Không được bỏ trống"),
+  // image1: yup
+  //   .mixed()
+  //   .required("Vui lòng chọn hình ảnh")
+  //   .test("a", "b", (value) => {
+  //     console.log(value);
+  //     return value && value[0].size <= 200000;
+  //   }),
+});
 
-const HouseUpdate = () => {
+const HouseAddNew = () => {
   const [params] = useSearchParams();
   const [isChange, setIsChange] = useState(false);
   const houseId = params.get("id");
-  const { handleSubmit, control, setValue, reset, watch, getValues } = useForm({
-    mode: "onChange",
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    watch,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(schema),
     defaultValues: {
       detailSumary: "xzxczxc",
     },
@@ -37,7 +60,7 @@ const HouseUpdate = () => {
     const value = watch(name);
     return value;
   };
-
+  console.log(errors);
   const [categoriesData, setCategoriesData] = useState([]);
   const [description, setDescription] = useState(false);
   const [house, setHouse] = useState("");
@@ -123,8 +146,7 @@ const HouseUpdate = () => {
     console.log(cloneValues);
     const price = Number(cloneValues?.price);
     // const image = String(cloneValues?.image?.url);
-    const newArray = [];
-    newArray.push(cloneValues.typeIds);
+
     const formData = new FormData();
 
     formData.append("image", preViewImage);
@@ -137,11 +159,11 @@ const HouseUpdate = () => {
         method: "post",
         url: `${baseURL}/api/houses?address=${cloneValues.address}&area=${
           cloneValues.area
-        }&description=${description}&floor=4&name=${
+        }&description=${description}&floor=${cloneValues.floor}&name=${
           cloneValues.name
         }&price=${price}&roomNumber=${Number(cloneValues.roomNumber)}&toilet=${
           cloneValues.toilet
-        }&typeHouses=&typeHouses=${newArray}`,
+        }&codeHouseType=${cloneValues.typeIds}`,
         data: formData,
         headers: {
           Authorization: userData.access_token,
@@ -149,6 +171,7 @@ const HouseUpdate = () => {
         },
       })
         .then(function (response) {
+          console.log(response);
           reset({});
           toast.success("Thêm căn hộ thành công");
           setPreViewImage("");
@@ -191,7 +214,7 @@ const HouseUpdate = () => {
     setSelectCategory(house?.houseTypes);
     setDescription(house?.description);
   }, [house, reset, setValue]);
-
+  console.log(errors?.image1?.name?.message);
   return (
     <div className="rounded-xl bg-lite  py-10 px-[66px]">
       <div className="text-center">
@@ -206,6 +229,7 @@ const HouseUpdate = () => {
                 control={control}
                 name="name"
                 placeholder="Nhập tên căn hộ"
+                error={errors.name?.message}
               ></Input>
             </FormGroup>
 
@@ -214,7 +238,7 @@ const HouseUpdate = () => {
               <Dropdown>
                 <Select
                   placeholder={
-                    selectCategory?.[0]?.name ||
+                    selectCategory?.name ||
                     getDropdownLabel("nameCategories") ||
                     "Chọn loại căn hộ"
                   }
@@ -260,24 +284,29 @@ const HouseUpdate = () => {
                     type="file"
                     onChange={handleChange}
                     className="hidden"
+                    name="image1"
                   />
-
-                  {!preViewImage && !house?.image && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                      />
-                    </svg>
+                  {errors?.image1?.name?.message && !preViewImage && (
+                    <p className="text-red-500">Hình ảnh không được để trống</p>
                   )}
+                  {!preViewImage &&
+                    !house?.image &&
+                    !errors?.image1?.name?.message && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                        />
+                      </svg>
+                    )}
                   {preViewImage || house?.image ? (
                     <img
                       src={preViewImage?.preview || house?.image}
@@ -481,18 +510,107 @@ const HouseUpdate = () => {
               ></Input>
             </FormGroup>
           </FormRow>
+          <FormRow>
+            <FormGroup>
+              <Label>Địa chỉ</Label>
+              {/* <FormThreeCol>
+              <FormGroup>
+                <Dropdown>
+                  <Dropdown.Select
+                    placeholder={getDropdownLabel("province") || "Tỉnh"}
+                  ></Dropdown.Select>
+                  <Dropdown.List>
+                    {provinces &&
+                      provinces.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "province",
+                              "provinceCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
+                        </Dropdown.Option>
+                      ))}
+                  </Dropdown.List>
+                </Dropdown>
+              </FormGroup>
+              <FormGroup>
+                <Dropdown>
+                  <Dropdown.Select
+                    placeholder={getDropdownLabel("district") || "Thành phố"}
+                  ></Dropdown.Select>
+                  <Dropdown.List>
+                    {districts &&
+                      districts.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "district",
+                              "districtCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
+                        </Dropdown.Option>
+                      ))}
+                  </Dropdown.List>
+                </Dropdown>
+              </FormGroup>
 
-          <FormGroup>
-            <Label>Địa chỉ</Label>
-            <Input
-              control={control}
-              name="address"
-              placeholder="Nhập địa chỉ căn hộ"
-            ></Input>
-          </FormGroup>
+              <FormGroup>
+                <Dropdown>
+                  <Dropdown.Select
+                    placeholder={getDropdownLabel("ward") || "Phường/Xã"}
+                  ></Dropdown.Select>
+                  <Dropdown.List>
+                    {wards &&
+                      wards.map((item) => (
+                        <Dropdown.Option
+                          key={item.name}
+                          onClick={() =>
+                            handleSelectAddress(
+                              "ward",
+                              "wardCode",
+                              item.name,
+                              item.code
+                            )
+                          }
+                        >
+                          <span className="capitalize">{item.name}</span>
+                        </Dropdown.Option>
+                      ))}
+                  </Dropdown.List>
+                </Dropdown>
+              </FormGroup>
+            </FormThreeCol> */}
+
+              <Input
+                control={control}
+                name="address"
+                placeholder="Nhập địa chỉ căn hộ"
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label>Số tầng</Label>
+              <Input
+                control={control}
+                name="floor"
+                error={errors.floor?.message}
+                placeholder="03"
+              ></Input>
+            </FormGroup>
+          </FormRow>
           <Button
             kind="primary"
-            className="mx-auto bg-primary px-10 text-white"
+            className="mx-auto bg-green-600 px-10 text-white"
             type="submit"
           >
             Thêm căn hộ
@@ -503,4 +621,4 @@ const HouseUpdate = () => {
   );
 };
 
-export default HouseUpdate;
+export default HouseAddNew;

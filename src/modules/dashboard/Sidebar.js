@@ -47,7 +47,7 @@ const Sidebar = () => {
   const sidebarLinks = [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/manage/dashboard",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -118,7 +118,7 @@ const CategoryManage = () => {
       <div className="mb-10 flex justify-end">
         <input
           type="text"
-          className="rounded-lg border-2 border-gray-200 py-4  px-5"
+          className="rounded-lg border-2 border-gray-200 p-[16px]"
           placeholder="Search category....."
           // onChange={handleInputFilter}
         />

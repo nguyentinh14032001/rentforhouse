@@ -24,13 +24,11 @@ const TableStyles = styled.div`
   td {
     padding: 15px 25px;
   }
-  tbody {
-  }
 `;
-const Table = ({ children }) => {
+const Table = ({ children, className = "" }) => {
   return (
     <TableStyles>
-      <table>{children}</table>
+      <table className={className}>{children}</table>
     </TableStyles>
   );
 };

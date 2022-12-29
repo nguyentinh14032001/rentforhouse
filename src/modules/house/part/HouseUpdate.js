@@ -22,6 +22,7 @@ import List from "../../../components/dropdown/List";
 import Option from "../../../components/dropdown/Option";
 import { Field } from "components/field";
 import { Toggle } from "components/checkbox";
+import * as yup from "yup";
 
 Quill.register("modules/imageUploader", ImageUploader);
 

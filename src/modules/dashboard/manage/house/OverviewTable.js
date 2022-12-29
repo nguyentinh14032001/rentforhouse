@@ -14,15 +14,17 @@ import ActionDelete from "../../../../components/action/ActionDelete";
 import Table from "../../../../components/table/Table";
 import LabelStatus from "../../../../components/label/LabelStatus";
 import GLPagination from "../../../../layout/GLPagination";
+import LoadingDashboard from "modules/dashboard/LoadingDashboard";
+
 const OverviewTable = ({ filter }) => {
   const [houseList, setHouseList] = useState([]);
-  const [isChange, setIsChange] = useState(false);
 
   const user = localStorage.getItem("user");
   const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [loading, setLoading] = useState(false);
+  const [isChange, setIsChange] = useState(true);
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("");
@@ -42,6 +44,7 @@ const OverviewTable = ({ filter }) => {
     }
   }, [filter]);
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       try {
         await axios({
@@ -49,7 +52,7 @@ const OverviewTable = ({ filter }) => {
           url: `${url}`,
           params: {
             page: page,
-            limit: 4,
+            limit: 10,
           },
           headers: {
             Authorization: userData.access_token,
@@ -60,15 +63,17 @@ const OverviewTable = ({ filter }) => {
             setHouseList(response.data.data.houses);
             setIsChange(false);
             console.log(response.data.data);
+            setLoading(false);
           })
           .catch(function (response) {});
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
     fetchData();
   }, [method, page, url, userData.access_token, isChange]);
-  const handleDeleteUser = async (user) => {
+  const handleDeleteUser = async (house) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -81,7 +86,7 @@ const OverviewTable = ({ filter }) => {
       if (result.isConfirmed) {
         try {
           await axios
-            .delete(`${baseURL}/api/users/${user?.id}`, {
+            .delete(`${baseURL}/api/houses/${house?.id}`, {
               headers: {
                 Authorization: userData.access_token,
               },
@@ -127,6 +132,7 @@ const OverviewTable = ({ filter }) => {
   const renderUserItem = (house) => {
     return (
       <tr key={house?.id}>
+        <td>{house?.id}</td>
         <td className="whitespace-nowrap">
           <div
             title={house?.name}
@@ -138,7 +144,7 @@ const OverviewTable = ({ filter }) => {
               className=" h-10 w-10 flex-shrink-0 rounded-lg object-cover"
             />
             <div className="flex-1 ">
-              <h3 className="font-semibold">{`${house?.houseTypes[0].name}`}</h3>
+              <h3 className="font-semibold">{`${house?.houseType?.name}`}</h3>
               <time className="text-sm text-gray-400">
                 {moment(house?.createdDate).format("MM/DD/YYYY (hh:mm:ss a)")}
               </time>
@@ -183,7 +189,9 @@ const OverviewTable = ({ filter }) => {
 
         <td>
           <div className="flex items-center gap-x-3">
-            <ActionView></ActionView>
+            <ActionView
+              onClick={() => navigate(`/detail/${house?.id}`)}
+            ></ActionView>
             <ActionEdit
               onClick={() => navigate(`/manage/update-house?id=${house?.id}`)}
             ></ActionEdit>
@@ -201,6 +209,7 @@ const OverviewTable = ({ filter }) => {
       <Table>
         <thead>
           <tr>
+            <th>Id</th>
             <th>Nhà</th>
             <th>Người bán</th>
             <th>Địa chỉ</th>
@@ -209,10 +218,17 @@ const OverviewTable = ({ filter }) => {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          {houseList.length > 0 &&
-            houseList.map((house) => renderUserItem(house))}
-        </tbody>
+        {loading && (
+          <tbody className="relative h-[250px] w-[300px]">
+            <LoadingDashboard></LoadingDashboard>
+          </tbody>
+        )}
+        {!loading && (
+          <tbody>
+            {houseList.length > 0 &&
+              houseList.map((house) => renderUserItem(house))}
+          </tbody>
+        )}
       </Table>
       <GLPagination pages={pages} setPage={setPage} />
     </div>
