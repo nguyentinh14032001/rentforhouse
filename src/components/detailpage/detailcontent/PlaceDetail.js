@@ -24,7 +24,12 @@ function PlaceDetail() {
             <p>Giá cả :</p>
           </div>
           <div className="col-9">
-            <small>{house?.price} vnđ</small>
+            <small>
+              {house?.price.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </small>
           </div>
         </div>
         <div className="row">
@@ -32,7 +37,7 @@ function PlaceDetail() {
             <p>Diện tích :</p>
           </div>
           <div className="col-9">
-            <small>{house?.area}</small>
+            <small>{house?.area} m2</small>
           </div>
         </div>
         <div className="row">

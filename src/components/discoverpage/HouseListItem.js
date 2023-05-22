@@ -31,8 +31,10 @@ const HouseListItem = ({ houses }) => {
           <p className="text-text-3">{houses?.address}</p>
           <div className="mt-2 flex justify-between font-[550]">
             <p>
-              {houses?.price}
-              <span> vnđ</span>
+              {houses?.price.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
             </p>
             <p className="text-text-3">
               {houses?.view} <span>view</span>
