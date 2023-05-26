@@ -41,12 +41,12 @@ const Input = (props) => {
         )}
       />
       {error?.length > 0 && (
-        <span className="input-error pointer-events-none absolute left-6 top-2/4 -translate-y-2/4 text-sm font-medium text-error">
+        <span className="input-error pointer-events-none absolute left-[24px] top-2/4 -translate-y-2/4 text-sm font-medium text-error">
           {error}
         </span>
       )}
       {children && (
-        <span className="absolute top-2/4 right-6 -translate-y-2/4 cursor-pointer select-none pl-4 ">
+        <span className="absolute top-2/4 right-6 -translate-y-2/4 cursor-pointer select-none pl-[16px] ">
           {children}
         </span>
       )}

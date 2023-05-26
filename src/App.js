@@ -1,10 +1,11 @@
-import CategoryAddNew from "modules/dashboard/manage/category/CategoryAddNew";
+import React from "react";
+import Modal from "react-modal";
+// import CategoryAddNew from "modules/dashboard/manage/role/RoleAddNew";
 import CategoryManage from "modules/dashboard/manage/category/CategoryManage";
 import CategoryUpdate from "modules/dashboard/manage/category/CategoryUpdate";
 import HouseAddNew from "modules/house/part/HouseAddNew";
 import DashboardPage from "pages/DashboardPage";
 import NotFoundPage from "pages/NotFoundPage";
-import React from "react";
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import DashboardLayout from "./modules/dashboard/DashboardLayout";
@@ -13,7 +14,11 @@ import UserAddNew from "./modules/dashboard/manage/user/UserAddNew";
 import UserManage from "./modules/dashboard/manage/user/UserManage";
 import UserUpdate from "./modules/dashboard/manage/user/UserUpdate";
 import HouseUpdate from "./modules/house/part/HouseUpdate";
-
+import HouseView from "./modules/house/part/HouseView";
+import HouseFeature from "./modules/house/part/HouseFeature";
+// import RoleManage from "modules/dashboard/manage/role/RoleManage";
+// import RoleAddNew from "modules/dashboard/manage/role/RoleAddNew";
+import CheckHouse from "modules/dashboard/manage/checkhouse/CheckHouseManage";
 const Main = lazy(() => import("./pages/Main"));
 const PostSellHouse = lazy(() => import("./pages/PostSellHouse"));
 const DiscoverPage = lazy(() => import("./pages/DiscoverPage"));
@@ -24,6 +29,12 @@ const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
 
 function App() {
+  const customStyles = {
+    content: {},
+  };
+  Modal.setAppElement("#root");
+  Modal.defaultStyles = {};
+
   return (
     <Suspense>
       <Routes>
@@ -49,7 +60,11 @@ function App() {
           path="/manage/update-house"
           element={<HouseUpdate></HouseUpdate>}
         ></Route>
-
+        <Route path="/houseview" element={<HouseView></HouseView>}></Route>
+        <Route
+          path="/housefeature"
+          element={<HouseFeature></HouseFeature>}
+        ></Route>
         <Route element={<DashboardLayout></DashboardLayout>}>
           <Route
             path="/manage/dashboard"
@@ -79,13 +94,29 @@ function App() {
             path="/manage/category"
             element={<CategoryManage></CategoryManage>}
           ></Route>
-          <Route
+          {/* <Route
             path="/manage/add-category"
             element={<CategoryAddNew></CategoryAddNew>}
-          ></Route>
+          ></Route> */}
           <Route
             path="/manage/update-category"
             element={<CategoryUpdate></CategoryUpdate>}
+          ></Route>
+          {/* <Route
+            path="/manage/role"
+            element={<RoleManage></RoleManage>}
+          ></Route> */}
+          {/* <Route
+            path="/manage/add-role"
+            element={<RoleAddNew></RoleAddNew>}
+          ></Route>
+          <Route
+            path="/manage/update-role"
+            element={<RoleAddNew></RoleAddNew>}
+          ></Route> */}
+          <Route
+            path="/manage/checkhouse"
+            element={<CheckHouse></CheckHouse>}
           ></Route>
         </Route>
       </Routes>

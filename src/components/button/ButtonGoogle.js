@@ -8,7 +8,7 @@ const ButtonGoogle = ({ text = "Sign up with Google", onClick = () => {} }) => {
     <div>
       <button
         onClick={onClick}
-        className="mb-5 flex w-full items-center justify-center gap-x-3 rounded-lg border border-strock py-4 font-semibold text-text-2 dark:border-darkStroke dark:text-white lg:mb-5"
+        className="mb-5 flex w-full items-center justify-center gap-x-3 rounded-lg border border-strock py-[16px] font-semibold text-text-2 dark:border-darkStroke dark:text-white lg:mb-5"
       >
         <img srcSet="/icon-google.png 2x" alt="" />
         <span className="">{text}</span>

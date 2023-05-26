@@ -1,20 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import LoadingDashboard from "modules/dashboard/LoadingDashboard";
 
-import { ActionView } from "components/action";
 import axios from "axios";
 import { baseURL } from "api/axios";
-import ActionCheck from "components/action/ActionCheck";
-import HouseImage from "modules/house/part/HouseImage";
-import HouseTitle from "modules/house/part/HouseTitle";
-import HouseDesc from "modules/house/part/HouseDesc";
-import { toast } from "react-toastify";
+
 import Chart from "modules/dashboard/manage/charjs/Chart";
 import { Chart2 } from "modules/dashboard/manage/charjs/Chart2";
 import FormGroup from "components/common/FormGroup";
-import { Label } from "components/label";
+
 export const customStyles = {
   content: {
     top: "50%",
@@ -27,11 +19,10 @@ export const customStyles = {
   },
 };
 const DashboardPage = () => {
-  const [modalIsOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(false);
+
   const [pages, setPages] = useState([]);
-  const [total, setTotal] = useState("");
+
   const [page, setPage] = useState(1);
   const [houseList, setHouseList] = useState([]);
 

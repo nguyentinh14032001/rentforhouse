@@ -10,7 +10,7 @@ const HouseMeta = ({
     <div className={`${size === "small" ? "text-sm" : "text-xl"}`}>
       <p className={` mb-3 text-sm font-normal text-text-3`}>{address}</p>
       <div className="mb-5 flex items-start justify-between gap-x-5">
-        <h4 className="text-sm font-semibold text-text-1">{price}</h4>
+        <h4 className="text-sm font-semibold text-text-1">{`Giá: ${price}`}</h4>
         <h4 className="text-sm font-semibold text-text-3">{`${view} view`} </h4>
       </div>
     </div>
