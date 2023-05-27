@@ -140,6 +140,7 @@ export const Chart2 = (prop) => {
   const handleLoadMore = () => {
     setLimit(limit + limit);
   };
+  console.log(houseList);
   return (
     <div className="dashboard d-flex">
       <div></div>
@@ -212,9 +213,9 @@ export const Chart2 = (prop) => {
                               ></HouseImage>
 
                               <div>
-                                <HouseTitle className="mb-3">
+                                <p className="mb-3 text-sm text-[18px] font-bold">
                                   {item?.name}
-                                </HouseTitle>
+                                </p>
                                 <p className="">{`Mô tả: Số phòng ${item?.roomNumber}, toilet ${item?.toilet}`}</p>
                                 <p className="">{`Địa chỉ: ${item?.address}`}</p>
 
