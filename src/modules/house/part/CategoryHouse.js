@@ -7,9 +7,9 @@ const CategoryHouse = ({ text = "Chung cư", className = "text-sm" }) => {
     <div>
       <Link
         to={"/"}
-        className={`${className} mb-4 flex items-center gap-x-3  font-medium text-text-3`}
+        className={`${className} mb-[16px] flex items-center gap-x-3  font-medium text-text-3`}
       >
-        <IconHouse className="h-5 w-5"></IconHouse>
+        <IconHouse className="h-[20px] w-[20px]"></IconHouse>
         <span className="block">{text}</span>
       </Link>
     </div>

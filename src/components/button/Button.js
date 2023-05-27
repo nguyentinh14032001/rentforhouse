@@ -30,6 +30,10 @@ const Button = ({
       defaultBtnClassName =
         defaultBtnClassName + " bg-[#6F49FD] bg-opacity-10 text-[#6F49FD]";
       break;
+    case "warning":
+      defaultBtnClassName =
+        defaultBtnClassName + " bg-[#4B5264] bg-opacity-10 text-[#FFFFFF]";
+      break;
 
     default:
       break;

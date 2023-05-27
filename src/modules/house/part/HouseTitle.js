@@ -5,7 +5,7 @@ const HouseTitle = ({
   className = "font-semibold",
 }) => {
   return (
-    <h3 className={`${className} mb-4 font-semibold text-text-1`}>{name}</h3>
+    <h3 className={`mb-2 ${className}  font-semibold text-text-1`}>{name}</h3>
   );
 };
 

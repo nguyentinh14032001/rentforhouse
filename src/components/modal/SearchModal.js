@@ -4,9 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../api/axios";
 
-const SearchHomePage = ({ className = "" }) => {
+const SearchModal = () => {
   const [houseList, setHouseList] = useState([]);
-  const [search, setSearch] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const nodeRef = useRef(null);
   const [filter, setFilter] = useState(null);
@@ -40,7 +39,7 @@ const SearchHomePage = ({ className = "" }) => {
   };
 
   return (
-    <div className={`${className} relative z-50`}>
+    <div className="relative z-50">
       <div className="flex items-center rounded-full bg-white p-[5px] shadow-[10px_10px_20px_rgba(218,_213,_213,_0.15)]">
         <div className="flex-1">
           <input
@@ -141,4 +140,4 @@ function SearchItem({ data, onClick = () => {} }) {
     </div>
   );
 }
-export default SearchHomePage;
+export default SearchModal;

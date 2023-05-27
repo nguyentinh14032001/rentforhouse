@@ -26,15 +26,15 @@ const ActionDeleteStyles = styled.span`
     color: white;
   } */
 `;
-const ActionDelete = ({ onClick = () => {} }) => {
+const ActionDelete = ({ className = "", onClick = () => {} }) => {
   return (
     <ActionDeleteStyles
-      className="flex items-center justify-center w-10 h-10 border border-red-500 opacity-70 transition-opacity hover:opacity-100 text-red-500 rounded cursor-pointer"
+      className={`${className} flex h-10 w-10 cursor-pointer items-center justify-center rounded border border-red-500 text-red-500 opacity-70 transition-opacity hover:opacity-100`}
       onClick={onClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="w-5 h-5"
+        className="h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
