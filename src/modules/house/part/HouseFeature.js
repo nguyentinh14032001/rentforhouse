@@ -12,19 +12,39 @@ import Heading from "components/common/Heading";
 import Gap from "components/common/Gap";
 import axios, { baseURL } from "api/axios";
 import moment from "moment";
-import { Button } from "components/button";
 import { ActionDelete, ActionEdit } from "components/action";
+import Swal from "sweetalert2";
+import HouseListItem from "components/discoverpage/HouseListItem";
+const user = localStorage.getItem("user");
+const userData = JSON.parse(user);
+
 const HouseFeature = () => {
-  const user = localStorage.getItem("user");
-  const userData = JSON.parse(user);
   const [pages, setPages] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
   const [houseList, setHouseList] = useState([]);
+  const [houseListReject, setHouseListReject] = useState([]);
   const [isChange, setIsChange] = useState(true);
-
+  useEffect(() => {
+    const fetchApi = async () => {
+      try {
+        await axios
+          .get(`${baseURL}/api/houses/get-hide-posts/${userData?.id}`, {
+            headers: {
+              Authorization: userData.access_token,
+            },
+          })
+          .then((res) => {
+            console.log(res?.data?.data);
+            setHouseListReject(res?.data?.data);
+          });
+      } catch (error) {}
+    };
+    fetchApi();
+  }, []);
   useEffect(() => {
     //setLoading(true)
+
     async function fetchData() {
       try {
         await axios({
@@ -42,7 +62,7 @@ const HouseFeature = () => {
             setPages(response.data.data);
             setHouseList(response.data.data.houses);
             setIsChange(false);
-            console.log(response.data.data);
+
             //setLoading(false);
           })
           .catch(function (response) {});
@@ -52,7 +72,8 @@ const HouseFeature = () => {
       }
     }
     fetchData();
-  }, [page, userData.access_token, isChange, limit]);
+  }, [page, isChange, limit]);
+
   return (
     <div>
       <Header></Header>
@@ -66,11 +87,9 @@ const HouseFeature = () => {
         <Gap></Gap>
         <Heading>Các bài viết đã bị từ chối</Heading>
         <HouseGrid>
-          {Array(4)
-            .fill(0)
-            .map((item) => (
-              <HouseItemReject key={v4()}></HouseItemReject>
-            ))}
+          {houseListReject.map((item) => (
+            <HouseItemReject data={item} key={v4()}></HouseItemReject>
+          ))}
         </HouseGrid>
       </div>
     </div>
@@ -78,6 +97,37 @@ const HouseFeature = () => {
 };
 
 const HouseItemPending = ({ data }) => {
+  const handleDeleteHouse = async (house) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios
+            .delete(`${baseURL}/api/houses/${house?.id}`, {
+              headers: {
+                Authorization: userData.access_token,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              if (res?.data?.data?.message == "successful delete") {
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+                //setIsChange(true);
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  };
   const currentDate = moment(data?.createdDate).format("DD/MM/YYYY");
   return (
     <div>
@@ -85,7 +135,7 @@ const HouseItemPending = ({ data }) => {
         <HouseImage image={data?.image}></HouseImage>
         <div className="absolute right-0 mt-[2px] flex gap-x-1">
           <ActionEdit></ActionEdit>
-          <ActionDelete></ActionDelete>
+          <ActionDelete onClick={() => handleDeleteHouse(data)}></ActionDelete>
         </div>
       </div>
 

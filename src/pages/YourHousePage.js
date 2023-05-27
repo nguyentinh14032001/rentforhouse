@@ -63,12 +63,14 @@ const YourHousePage = ({ children }) => {
         <div className="mb-[40px] flex items-center justify-between rounded-3xl bg-lite py-[32px] px-[40px] ">
           <div className="flex items-start gap-x-6">
             <div className="flex-1">
-              <h1 className="mb-[8px] text-[22px] font-semibold">New house</h1>
+              <h1 className="mb-[8px] text-[22px] font-semibold">
+                Tạo bài đăng bán nhà
+              </h1>
               <p className="mb-[8px] text-sm text-text-3">
                 Bạn muốn bán nhà? Chúng tôi sẽ giúp bạn
               </p>
               <a href="/" className="text-sm text-primary">
-                Need any more? Learn more...
+                Bạn cần gì nữa không? Tìm hiểu thêm...
               </a>
             </div>
           </div>

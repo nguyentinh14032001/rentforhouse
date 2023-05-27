@@ -37,7 +37,7 @@ const ModalThisBack = () => {
       } catch (error) {}
     };
     fetchApi();
-  }, []);
+  }, [userData.access_token, userData?.id]);
   const handleViewPost = (house) => {
     console.log(house?.id);
     navigate(`/detail/${house?.id}`);
